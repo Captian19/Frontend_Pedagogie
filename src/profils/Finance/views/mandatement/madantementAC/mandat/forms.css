@@ -1,0 +1,128 @@
+.abc:focus{
+    background-color: #F7DC6F;
+    width: 100%;
+    border: none;
+    font-family: cursive;
+    color: dimgray;
+  }
+.abc{
+    background-color: #F7DC6F;
+    width: 100%;
+    text-align: center;
+    border: none;
+    font-family: cursive;
+    color: dimgray;
+    font-size: 1.1em;
+}
+.cab:focus{
+    background-color: #F7DC6F;
+    width: 100%;
+    border: none;
+    font-family: cursive;
+    color: dimgray;
+  }
+.cab{
+    background-color: #F7DC6F;
+    width: 100%;
+    text-align: center;
+    border: none;
+    font-family: cursive;
+    color: dimgray;
+    font-size: 0.95em;
+}
+
+.cq{
+    height:40px;
+}
+.sign{
+    display: none;
+}
+.sub{
+    background-color: #F7DC6F;
+    border: none;  
+    font-weight: bold;
+    font-size: 1.2em;
+}
+
+.sub:focus {
+    background-color: #F7DC6F;
+    border: none;  
+}
+
+/*  */
+
+
+.bas{
+    font-family: cursive;
+    color: dimgray;
+    font-style: oblique;
+}
+.largeur{
+    height: 800px;
+    font-size: 2em;
+    
+}
+.abcd:focus{
+    background-color: rgb(118, 196, 199);
+    width: 100%;
+    border: none;
+    font-family: cursive;
+    color: dimgray;
+    font-size: 1.10em;
+  }
+.abcd{
+    background-color: rgb(118, 196, 199);
+    width: 100%;
+    text-align: center;
+    border: none;
+    font-family: cursive;
+    color: dimgray;
+    font-size: 1.10em;
+}
+.abcde{
+    background-color: rgb(118, 196, 199);
+    width: 100%;
+    text-align: center;
+    border: none;
+    font-family: cursive;
+    color: dimgray;
+    font-size: 0.95em;
+}
+.abcde:focus{
+    background-color: rgb(118, 196, 199);
+    width: 100%;
+    text-align: center;
+    border: none;
+    font-family: cursive;
+    color: dimgray;
+    font-size: 0.9em;
+}
+.subr{
+    background-color: rgb(118, 196, 199);
+    border: none;  
+    font-weight: bold;
+    font-size: 1.5em;
+}
+
+.subr:focus {
+    background-color: rgb(118, 196, 199);
+    border: none;  
+    
+}
+.table{border-collapse:collapse!important;font-size: 0.7em; padding:.75rem;vertical-align:top; font-weight: bold;}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    /* display: none; <- Crashes Chrome on hover */
+    -webkit-appearance: none;
+    margin: 0; /* <-- Apparently some margin are still there even though it's hidden */
+}
+
+input[type=number] {
+    -moz-appearance:textfield; /* Firefox */
+}
+
+.bordure{
+    border:1px solid #dee2e6;
+     font-weight:bold;
+}

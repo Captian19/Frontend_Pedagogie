@@ -1,0 +1,23 @@
+/* 
+@keyframes App-logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+} */
+
+.shaking_box {
+  width: 345px;
+  /* height: 100px; */
+  background: red;
+  transition: width 2s, height 2s, transform 2s;
+}
+
+.shaking_box:hover {
+  width: 347px;
+  transform: rotate(-1deg);
+  box-shadow: 5px 5px 5px;
+  transition: width 2s, transform 0.5s;
+}
