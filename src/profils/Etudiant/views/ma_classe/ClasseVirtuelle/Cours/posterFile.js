@@ -16,7 +16,7 @@ import {
 } from '@coreui/react'
 import { useForm } from "react-hook-form";
 import axios from "axios";
-
+import {connect} from "react-redux";
 
 const Collapses = (props) => {
 
@@ -29,6 +29,7 @@ const Collapses = (props) => {
   const [fichier, setFichier] = useState("")
   const [is_getted, setIsGetted] = useState(false)
   const { handleSubmit } = useForm()
+  const [id_auteur,setIdAuteur] = useState(props.user.id);
 
   const getCours = async (id) => {
     await axios.get(`http://localhost:8000/cours_virtuel/${id}`)
@@ -85,6 +86,7 @@ const Collapses = (props) => {
     formData.append("fichier", fichier);
     formData.append("annonce", annonce);
     formData.append("cours", cours.id);
+    formData.append("id_auteur",id_auteur);
     // formData.append("first_name", props.user.first_name);
     // formData.append("last_name", props.user.last_name);;
     
@@ -100,6 +102,7 @@ const Collapses = (props) => {
       })
   }
 
+
   return (
     is_getted == false
       ?
@@ -107,7 +110,7 @@ const Collapses = (props) => {
       :
       <>
           <div class="row justify-content-center">
-          <div class="col-8">
+          <div class="col-12">
           <CRow>
             <CCol xl="12">
               <div id="accordion" className="mt-3">
@@ -118,9 +121,9 @@ const Collapses = (props) => {
                     onClick={() => setAccordion(accordion === 0 ? null : 0)}
                     borderColor="none"
                   >
-                    <h6 className="m-0 p-0" className="text-center " >
-                      Faire une annonce pour votre classe
-                    </h6>
+                    <h5 className="py-2 text-center" >
+                      <b>Faire une annonce pour votre classe</b>
+                    </h5>
                   </CButton>
                 </CCardHeader>
                 <CCollapse show={accordion === 0}>
@@ -169,4 +172,8 @@ const Collapses = (props) => {
   )
 }
 
-export default Collapses
+const mapStateToProps = (state) => ({
+  user: state.auth.user 
+})
+
+export default connect(mapStateToProps,null)(Collapses)

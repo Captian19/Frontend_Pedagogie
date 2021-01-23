@@ -128,7 +128,11 @@ const DetailCours = (props) => {
       </AppBar>
     )}
       
-      
+      <div className="row">
+      <div className="col-md-3">
+      <div className="card m-3">Hello</div>
+      </div>
+      <div className="col-md-9">
       {is_getted ? (
         <PosterFile cours={props.cours} reloadComponent={reloadComponent} />
       ):(
@@ -138,6 +142,9 @@ const DetailCours = (props) => {
 
       
       <Publication reloader={reloader} />
+      </div>
+      </div>
+      
     </div>
   );
 }

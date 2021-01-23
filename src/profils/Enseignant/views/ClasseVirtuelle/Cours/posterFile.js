@@ -107,7 +107,7 @@ const Collapses = (props) => {
       :
       <>
       <div class="row justify-content-center">
-      <div class="col-8">
+      <div class="col-12">
       <CRow>
         <CCol xl="12">
           <div id="accordion" className="mt-3">
@@ -118,8 +118,8 @@ const Collapses = (props) => {
                 onClick={() => setAccordion(accordion === 0 ? null : 0)}
                 borderColor="none"
               >
-                <h6 className="m-0 p-0" className="text-center " >
-                  Faire une annonce pour votre classe
+                <h6 className="py-2 text-center" >
+                  <b>Faire une annonce pour votre classe</b>
                 </h6>
               </CButton>
             </CCardHeader>

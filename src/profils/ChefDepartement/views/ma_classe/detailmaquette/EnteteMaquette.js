@@ -1,24 +1,15 @@
 import React from "react";
 import {connect} from 'react-redux' ;
 
-import axios from 'axios';
-// import {
-//     CCard,
-//     CCardBody,
-//     CCardFooter,
-//     CCardHeader,
-//     CCol,
-//     CRow,
-//   } from '@coreui/react'
 
 
   function EnteteMaquette(props){
 
 
     return(
-        <thead className="table-primary">
+        <thead className="table-primary ml-0 mr-0">
             <tr id="entete">
-                <th colSpan={43} className="py-3"><center><h3>Maquette  {props.role.departement} </h3> </center></th>
+                <th colSpan={43} className="py-3"><center><h3>Maquette {props.roles.departement || props.role.departement} </h3> </center></th>
             </tr>
             <tr>
                 <th className="text-center" colSpan={2} rowSpan="2">Classe</th>
@@ -51,5 +42,6 @@ import axios from 'axios';
   
 const mapStateToProps = state => ({
     role: state.auth.user.CurrentRoles[0],
+    roles: state.auth.user.CurrentRoles[1],
 })
   export default connect(mapStateToProps,null)(EnteteMaquette);

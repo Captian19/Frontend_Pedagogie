@@ -38,7 +38,11 @@ class Maquette extends Component {
 
     componentDidMount() {
         // this.props.user.departement
-        this.getMaquetteDept(this.props.role.departement);
+        if(this.props.role.departement === undefined){
+        this.getMaquetteDept(this.props.roles.departement);}
+        else{
+            this.getMaquetteDept(this.props.role.departement)
+        }
     }
 
     
@@ -47,7 +51,7 @@ class Maquette extends Component {
         return (
 
             <>
-                <table className="col-md-10 offset-md-1" border={2}>
+                <table className="mr-auto ml-auto" border={2}>
                     <ElementMaquette/>
                     <tbody>
                     {this.state.is_getted ? (
@@ -70,18 +74,18 @@ class Maquette extends Component {
                                         </>
                                     ): (<>
                                         <tr>
-                                    <td className="text-center" colSpan={2} rowSpan={ue.element.length}>{ue.classe}</td>
-                                    <td className="text-center" colSpan={2} rowSpan={ue.element.length}>{ue.semestre}</td>
-                                    <td className="text-center" colSpan={4} rowSpan={ue.element.length}>{ue.nom}</td>
-                                    <td className="text-center" colSpan={3} rowSpan={ue.element.length}>{ue.codeUE}</td>
-                                        <td className="text-center" colSpan={16}>{ue.element[0].nom}</td>
-                                        <td className="text-center" colSpan={4}>{ue.element[0].codeEC}</td>
-                                        <td className="text-center">{ue.element[0].CM}</td>
-                                        <td className="text-center">{ue.element[0].TD_TP}</td>
-                                        <td className="text-center">{ue.element[0].total_heures}</td>
-                                        <td className="text-center">{ue.element[0].TPE}</td>
-                                        <td className="text-center">{ue.element[0].creditEC}</td>
-                                        <td className="text-center">{ue.element[0].coef}</td>
+                                    <td className="text-center" colSpan={2} rowSpan={ue.element.length}><b>{ue.classe}</b></td>
+                                    <td className="text-center" colSpan={2} rowSpan={ue.element.length}><b>{ue.semestre}</b></td>
+                                    <td className="text-center" colSpan={4} rowSpan={ue.element.length}><b>{ue.nom}</b></td>
+                                    <td className="text-center" colSpan={3} rowSpan={ue.element.length}><b>{ue.codeUE}</b></td>
+                                        <td className="text-center" colSpan={16}><b>{ue.element[0].nom}</b></td>
+                                        <td className="text-center" colSpan={4}><b>{ue.element[0].codeEC}</b></td>
+                                        <td className="text-center"><b>{ue.element[0].CM}</b></td>
+                                        <td className="text-center"><b>{ue.element[0].TD_TP}</b></td>
+                                        <td className="text-center"><b>{ue.element[0].total_heures}</b></td>
+                                        <td className="text-center"><b>{ue.element[0].TPE}</b></td>
+                                        <td className="text-center"><b>{ue.element[0].creditEC}</b></td>
+                                        <td className="text-center"><b>{ue.element[0].coef}</b></td>
                                         {this.state.is_chef_dpt ? (
                                         <td className="text-center"><CButton className="btn-danger float-right"
                                                                                               value={ue.element[0].id}
@@ -99,31 +103,23 @@ class Maquette extends Component {
                                     <>
 
                                         <tr>
-                                            <td className="text-center" colSpan={16}>{ec.nom}</td>
-                                            <td className="text-center" colSpan={4}>{ec.codeEC}</td>
-                                            <td className="text-center">{ec.CM}</td>
-                                            <td className="text-center">{ec.TD_TP}</td>
-                                            <td className="text-center">{ec.total_heures}</td>
-                                            <td className="text-center">{ec.TPE}</td>
-                                            <td className="text-center">{ec.creditEC}</td>
-                                            <td className="text-center">{ec.coef}</td>
+                                            <td className="text-center" colSpan={16}><b>{ec.nom}</b></td>
+                                            <td className="text-center" colSpan={4}><b>{ec.codeEC}</b></td>
+                                            <td className="text-center"><b>{ec.CM}</b></td>
+                                            <td className="text-center"><b>{ec.TD_TP}</b></td>
+                                            <td className="text-center"><b>{ec.total_heures}</b></td>
+                                            <td className="text-center"><b>{ec.TPE}</b></td>
+                                            <td className="text-center"><b>{ec.creditEC}</b></td>
+                                            <td className="text-center"><b>{ec.coef}</b></td>
                                             {this.state.is_chef_dpt ? (
-                                        <td className="text-center"><CButton className="btn-danger float-right" value={ue.element[0].id}>del</CButton></td>
+                                        <td className="text-center"><CButton className="btn-danger float-right" value={ue.element[1].id} onClick={() => this.handleDelete(ue.element[0].id)}>del</CButton></td>
                                     ) : (
                                         <td className="text-center">none</td>
                                     )}
 
                                         </tr>
-{/* 
-                                    <nav>
-                                        <span>CM : Cours Magistral</span>
-                                        <span>TD : Travaux Dirigés</span>
-                                        <span>TP : Travaux Pratiques</span>
-                                        <span>TPE : Travail Personnel de l'Etudiant</span>
-                                        <span>ECTS : European CreditTransfer System</span>
-                                        <span>U.E. : Unité d'enseignement</span>
-                                        <span>E.C. : Elément constitutif</span>
-                                    </nav> */}
+
+
 
                                     </>
                                 ))
@@ -141,11 +137,24 @@ class Maquette extends Component {
                 </table>
                 <hr/>
 
-                <button type="button" className="btn btn-primary">
-                    <CLink to = '/chef-departement/AddEC_UE' > 
-                        Ajouter EC/UE
-                    </CLink>
-                </button>
+                <>
+                <CLink to = '/chef-departement/AddEC' >
+                <button type="button" className="btn btn-primary">Ajouter EC</button>
+                </CLink>
+                <CLink to = '/chef-departement/AddUE' >
+                <button type="button" className="btn btn-primary">Ajouter UE</button>
+                </CLink>
+                </>
+
+                <footer mt="3">
+                    <b><p>CM : Cours Magistral</p></b>
+                    <b><p>TD : Travaux Dirigés</p></b>
+                    <b><p>TP : Travaux Pratiques</p></b>
+                    <b><p>TPE : Travail Personnel de l'Etudiant</p></b>
+                    <b><p>ECTS : European CreditTransfer System</p></b>
+                    <b><p>U.E. : Unité d'enseignement</p></b>
+                    <b><p>E.C. : Elément constitutif</p></b>
+                </footer>
             </>
 
         )
@@ -154,7 +163,8 @@ class Maquette extends Component {
 
 const mapStateToProps = state => ({
     user:state.auth.user,
-    role: state.auth.user.CurrentRoles[0],
+    role:state.auth.user.CurrentRoles[0],
+    roles:state.auth.user.CurrentRoles[1],
     token:state.auth.token
 })
 

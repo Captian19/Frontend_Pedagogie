@@ -4,5 +4,6 @@ export const API_URL_Support_cours =  "http://localhost:8000/Support_cours";
 export const API_URL_UE =  "http://localhost:8000/UE";
 export const API_URL =  "http://localhost:8000/";
 export const API_URL_UE_POST =  "http://localhost:8000/POST_UE";
+export const API_URL_COURS =  "http://localhost:8000/COURS";
 // export const API_URL_prof = "http://localhost:8000/";
 // export const API_URL_prof = "http://localhost:8000/Professeurs";

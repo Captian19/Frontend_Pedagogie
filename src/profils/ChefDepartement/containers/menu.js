@@ -35,41 +35,51 @@ export default [
       ]
     },
     {
-      _tag: 'CSidebarNavItem',
-      name: 'Maquette',
-      to: '/chef-departement/maquette',
+      _tag: 'CSidebarNavDropdown',
+      name: 'Gestion Maquette',
       icon: 'cil-list',
-    },
+      _children: [
+        {
+          _tag: 'CSidebarNavItem',
+          name: 'Maquette',
+          to: '/chef-departement/maquette',
+          icon: 'cil-list',
+        },
+        {
+          _tag: 'CSidebarNavItem',
+          name: 'Ajouter EC',
+          to: '/chef-departement/AddEC',
+          icon: 'cil-list',
+        },
+        {
+          _tag: 'CSidebarNavItem',
+          name: 'Ajouter UE',
+          to: '/chef-departement/AddUE',
+          icon: 'cil-list',
+        }
+    ]},
     {
-      _tag: 'CSidebarNavItem',
-      name: 'Nouveau cours Virtuel',
-      to: '/chef-departement/AddCourse',
+      _tag: 'CSidebarNavDropdown',
+      name: 'Cours virtuels',
       icon: 'cil-list',
-      badge: {
-        color: 'info',
-        text: 'NEW',
-      }
-      // _children: [
-      //   {
-      //     _tag: 'CSidebarNavItem',
-      //     name: 'DIC1',
-      //     to: '/chef-departement/gestionEnseignants',
-      //     icon: 'cilNotes',
-      //   },
-      //   {
-      //     _tag: 'CSidebarNavItem',
-      //     name: 'DIC2',
-      //     to: '/chef-departement/gestionEnseignants',
-      //     icon: 'cilNotes',
-      //   },
-      //   {
-      //     _tag: 'CSidebarNavItem',
-      //     name: 'DIC3',
-      //     to: '/chef-departement/gestionEnseignants',
-      //     icon: 'cilNotes',
-      //   }
-      // ]
-    },
+      _children: [
+        {
+          _tag: 'CSidebarNavItem',
+          name: 'liste des Cours virtuels',
+          to: '/chef-departement/ListCourse',
+          icon: 'cil-list',
+        },
+        {
+          _tag: 'CSidebarNavItem',
+          name: 'Nouveau cours Virtuel',
+          to: '/chef-departement/AddCourse',
+          icon: 'cil-list',
+          badge: {
+            color: 'info',
+            text: 'NEW',
+          }
+        }
+    ]},
     {
       _tag: 'CSidebarNavItem',
       name: 'Details',

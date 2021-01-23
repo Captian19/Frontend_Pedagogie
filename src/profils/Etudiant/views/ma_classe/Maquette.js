@@ -10,10 +10,7 @@ import {
 import ElementMaquette from "./detailmaquette/EnteteMaquette";
 import axios from 'axios';
 import {API_URL_EC, API_URL_UE} from "../../../../constants/pedagogie/index";
-//import classes from "*.module.css";
-//import NewECForm from "./newECForm";
 
-// import UE from './ec';
 
 
 class Maquette extends Component {
@@ -118,16 +115,6 @@ class Maquette extends Component {
                                     )}
 
                                         </tr>
-{/* 
-                                    <nav>
-                                        <span>CM : Cours Magistral</span>
-                                        <span>TD : Travaux Dirigés</span>
-                                        <span>TP : Travaux Pratiques</span>
-                                        <span>TPE : Travail Personnel de l'Etudiant</span>
-                                        <span>ECTS : European CreditTransfer System</span>
-                                        <span>U.E. : Unité d'enseignement</span>
-                                        <span>E.C. : Elément constitutif</span>
-                                    </nav> */}
 
                                     </>
                                 ))
@@ -145,6 +132,15 @@ class Maquette extends Component {
                 </table>
 
                 <hr/>
+                <footer mt="3">
+                    <b><p>CM : Cours Magistral</p></b>
+                    <b><p>TD : Travaux Dirigés</p></b>
+                    <b><p>TP : Travaux Pratiques</p></b>
+                    <b><p>TPE : Travail Personnel de l'Etudiant</p></b>
+                    <b><p>ECTS : European CreditTransfer System</p></b>
+                    <b><p>U.E. : Unité d'enseignement</p></b>
+                    <b><p>E.C. : Elément constitutif</p></b>
+                </footer>
             </>
 
         )

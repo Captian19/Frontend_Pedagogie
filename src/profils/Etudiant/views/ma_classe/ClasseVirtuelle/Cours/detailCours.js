@@ -1,15 +1,10 @@
 // publication et lecture de publication
-// rendre devoir
-// discussions
-
 import React,  { useState, useEffect } from 'react';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
-// import MenuIcon from '@material-ui/icons/Menu';
-// import SearchIcon from '@material-ui/icons/Search';
 import MoreIcon from '@material-ui/icons/MoreVert';
 import PosterFile from './posterFile';
 import Publication from './publication';
@@ -128,7 +123,11 @@ const DetailCours = (props) => {
       </AppBar>
     )}
       
-      
+    <div className="row">
+      <div className="col-md-3">
+      <div className="card m-3">Hello</div>
+      </div>
+      <div className="col-md-9">      
       {is_getted ? (
         <PosterFile cours={props.cours} reloadComponent={reloadComponent} />
       ):(
@@ -136,6 +135,8 @@ const DetailCours = (props) => {
       )}
       
       <Publication reloader={reloader} />
+    </div>
+    </div>
     </div>
   );
 }
