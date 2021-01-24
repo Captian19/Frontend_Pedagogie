@@ -16,7 +16,7 @@ import {
 } from '@coreui/react'
 import { useForm } from "react-hook-form";
 import axios from "axios";
-
+import {connect} from "react-redux";
 
 const Collapses = (props) => {
 
@@ -29,6 +29,7 @@ const Collapses = (props) => {
   const [fichier, setFichier] = useState("")
   const [is_getted, setIsGetted] = useState(false)
   const { handleSubmit } = useForm()
+  const [id_auteur,setIdAuteur] = useState(props.user.id);
 
   const getCours = async (id) => {
     await axios.get(`http://localhost:8000/cours_virtuel/${id}`)
@@ -85,6 +86,7 @@ const Collapses = (props) => {
     formData.append("fichier", fichier);
     formData.append("annonce", annonce);
     formData.append("cours", cours.id);
+    formData.append("id_auteur",id_auteur);
     // formData.append("first_name", props.user.first_name);
     // formData.append("last_name", props.user.last_name);;
     
@@ -172,4 +174,8 @@ const Collapses = (props) => {
   )
 }
 
-export default Collapses
+const mapStateToProps = (state) => ({
+  user: state.auth.user 
+})
+
+export default connect(mapStateToProps,null)(Collapses)

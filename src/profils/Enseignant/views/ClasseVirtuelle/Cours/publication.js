@@ -4,10 +4,7 @@ import {
   CCard,
   CCardBody,
   CCol,
-  CRow,
-  CCardHeader,
-  CCardFooter,
-  CProgress
+  CRow
 } from '@coreui/react'
 import axios from "axios";
 import img from '../../../../../img/file.png';
@@ -22,7 +19,7 @@ const Publication = (props) => {
   const [pub, setPub] = useState([])
   const [is_getted, setIsGetted] = useState(false)
   const [pub_is_getted, set_pub_bool] = useState(false)
-  const [auteur, setAuteur] = useState('')
+  const [auteur, setAuteur] = useState([])
 
   const getCours = (id) => {
    axios.get(`http://localhost:8000/cours_virtuel/${id}`)
@@ -40,28 +37,35 @@ const getPub = (id) => {
   }).catch( err => console.log(err))
 }
 
+const [isOK, setIsOK] = useState(false)
+
 const GetUserInPub = (id) => {
-  axios.get(`https://users-ent.herokuapp.com/api/auth/users/${id}`)
+  axios.get(`https://users-ent.herokuapp.com/api/auth/ETUDIANT/${props.role.departement}/`)
       .then((res) => {
-        setAuteur(res.data.first_name + " " + res.data.last_name);
-        console.log(auteur)
+        console.log("hs", res.data);
+        setAuteur(res.data);
+        setIsOK(true)
       })
       .catch(err => console.log(err))
-  return auteur
+  // return auteur
 }
 
 useEffect(async () => {
   getCours(window.location.href.split("/")[window.location.href.split("/").length -1])
   getPub(window.location.href.split("/")[window.location.href.split("/").length -1])
+  GetUserInPub()
+
 },[props.reloader]);
 return (
   <>  
-      {is_getted ? (
+      {(is_getted && isOK)  ? (
         <>
         {pub_is_getted ? (
           <>
           {pub.map(p => {
-
+            let aut = [...auteur.filter(el=> (el.id == p.id_auteur))][0]
+            console.log(aut);
+            let nom =aut != undefined ? aut.user.first_name + " " + aut.user.last_name : "Moi"
 
           return (
             p.fichier === null ?  (
@@ -79,7 +83,7 @@ return (
                         </CCol>
                         <CCol md="8">
                           <div className="float-left">
-                          <h5 className="mb-0">{GetUserInPub(p.id_auteur)}</h5>
+                          <h5 className="mb-0">{nom}</h5>
                           <span>{p.dateDepot}</span>
                           </div>
                         </CCol>
@@ -92,7 +96,7 @@ return (
 
                        </CCol>
                        <CCol md="11">
-                        <p className="mt-3">{p.annonce}</p>
+                        <p className="mt-4">{p.annonce}</p>
                        </CCol>
                       </CRow>
                     </CCardBody>
@@ -119,7 +123,7 @@ return (
                         </CCol>
                         <CCol md="8">
                           <div className="float-left">
-                          <h5 className="mb-0">{GetUserInPub(p.id_auteur)}</h5>
+                          <h5 className="mb-0">{nom}</h5>
                           <span>{p.dateDepot}</span>
                           </div>
                         </CCol>
@@ -132,7 +136,7 @@ return (
                       
                        </CCol>
                        <CCol md="11">
-                        <p className="mt-3">{p.annonce}</p>
+                        <p className="mt-4">{p.annonce}</p>
                        </CCol>
                       </CRow>
                     </CCardBody>
@@ -143,9 +147,9 @@ return (
                       <img src={img} className="img-fluid" alt="fichier"/>
                       </a>
 
-                      <a className="btn btn-info mt-2 text-center" href={"http://localhost:8000" + p.fichier } target="_blank">
+                      {/* <a className="btn btn-info mt-2 text-center" href={"http://localhost:8000" + p.fichier } target="_blank">
                         <small>Voir fichier</small>
-                      </a>
+                      </a> */}
                       </div>
                     </CCol>
                   </CRow>

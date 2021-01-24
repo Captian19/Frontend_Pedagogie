@@ -3,25 +3,25 @@ import React, { useState, useEffect} from 'react'
 import {
   CCard,
   CCardBody,
-  CCardFooter,
   CCol,
   CRow
 } from '@coreui/react'
 import axios from "axios";
-import {connect} from "react-redux"
 import img from '../../../../../../img/file.png';
- 
-import avatar from "./../../../../../../assets/img/avatar.png";
+import avatar from '../../../../../../assets/img/avatar.png';
+import {connect} from "react-redux"
+
+
 
 
 const Publication = (props) => {
   const [cours, setCours] = useState(null)
   const [pub, setPub] = useState([])
   const [is_getted, setIsGetted] = useState(false)
-  const [pub_is_getted, set_pub_bool] = useState(false);
-  const [auteur, setAuteur] = useState('');
+  const [pub_is_getted, set_pub_bool] = useState(false)
+  const [auteur, setAuteur] = useState([])
 
-  const getCours =  (id) => {
+  const getCours = (id) => {
    axios.get(`http://localhost:8000/cours_virtuel/${id}`)
       .then(res => {
         setCours(res.data);
@@ -37,29 +37,35 @@ const getPub = (id) => {
   }).catch( err => console.log(err))
 }
 
-const GetUserInPub = async (id) => {
-  await axios.get(`https://users-ent.herokuapp.com/api/auth/users/${id}`)
+const [isOK, setIsOK] = useState(false)
+
+const GetUserInPub = (id) => {
+  axios.get(`https://users-ent.herokuapp.com/api/auth/ETUDIANT/${props.role.departement}/`)
       .then((res) => {
-        setAuteur(res.data); //.first_name + " " + res.data.last_name);
-        console.log(auteur)
+        console.log("hs", res.data);
+        setAuteur(res.data);
+        setIsOK(true)
       })
       .catch(err => console.log(err))
-      return auteur
+  // return auteur
 }
 
 useEffect(async () => {
-   getCours(window.location.href.split("/")[window.location.href.split("/").length -1])
-   getPub(window.location.href.split("/")[window.location.href.split("/").length -1]);
-},[props.reloader]);
+  getCours(window.location.href.split("/")[window.location.href.split("/").length -1])
+  getPub(window.location.href.split("/")[window.location.href.split("/").length -1])
+  GetUserInPub()
 
-  return (
-    <>  
-      {is_getted ? (
+},[props.reloader]);
+return (
+  <>  
+      {(is_getted && isOK)  ? (
         <>
         {pub_is_getted ? (
           <>
           {pub.map(p => {
-
+            let aut = [...auteur.filter(el=> (el.id == p.id_auteur))][0]
+            console.log(aut);
+            let nom =aut != undefined ? aut.user.first_name + " " + aut.user.last_name : "Le Professeur"
 
           return (
             p.fichier === null ?  (
@@ -77,7 +83,7 @@ useEffect(async () => {
                         </CCol>
                         <CCol md="8">
                           <div className="float-left">
-                          <h5 className="mb-0">{GetUserInPub(p.id_auteur)&& auteur}</h5>
+                          <h5 className="mb-0">{nom}</h5>
                           <span>{p.dateDepot}</span>
                           </div>
                         </CCol>
@@ -90,7 +96,7 @@ useEffect(async () => {
 
                        </CCol>
                        <CCol md="11">
-                        <p className="mt-3">{p.annonce}</p>
+                        <p className="mt-4">{p.annonce}</p>
                        </CCol>
                       </CRow>
                     </CCardBody>
@@ -117,7 +123,7 @@ useEffect(async () => {
                         </CCol>
                         <CCol md="8">
                           <div className="float-left">
-                          <h5 className="mb-0">{GetUserInPub(p.id_auteur) && auteur}</h5>
+                          <h5 className="mb-0">{nom}</h5>
                           <span>{p.dateDepot}</span>
                           </div>
                         </CCol>
@@ -130,7 +136,7 @@ useEffect(async () => {
                       
                        </CCol>
                        <CCol md="11">
-                        <p className="mt-3">{p.annonce}</p>
+                        <p className="mt-4">{p.annonce}</p>
                        </CCol>
                       </CRow>
                     </CCardBody>
@@ -141,17 +147,16 @@ useEffect(async () => {
                       <img src={img} className="img-fluid" alt="fichier"/>
                       </a>
 
-                      <a className="btn btn-info mt-2 text-center" href={"http://localhost:8000" + p.fichier } target="_blank">
+                      {/* <a className="btn btn-info mt-2 text-center" href={"http://localhost:8000" + p.fichier } target="_blank">
                         <small>Voir fichier</small>
-                      </a>
+                      </a> */}
                       </div>
                     </CCol>
                   </CRow>
                 </CCard>
                 </div>
-                </div>    
-                
-              </>
+                </div> 
+                </>
 
               
               
@@ -171,9 +176,9 @@ useEffect(async () => {
           <h1>Liste des publications du cours</h1>
         )}
     </>
-      
-    )
-  
+    
+  )
+
 }
 
 const mapStateToProps = state => ({

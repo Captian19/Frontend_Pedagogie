@@ -86,7 +86,7 @@ const Collapses = (props) => {
     formData.append("fichier", fichier);
     formData.append("annonce", annonce);
     formData.append("cours", cours.id);
-    formData.append("id_auteur",id_auteur);
+    formData.append("id_auteur",props.user.id);
     // formData.append("first_name", props.user.first_name);
     // formData.append("last_name", props.user.last_name);;
     
@@ -173,7 +173,7 @@ const Collapses = (props) => {
 }
 
 const mapStateToProps = (state) => ({
-  user: state.auth.user 
+  user: state.auth.user.CurrentRoles[0]
 })
 
 export default connect(mapStateToProps,null)(Collapses)
