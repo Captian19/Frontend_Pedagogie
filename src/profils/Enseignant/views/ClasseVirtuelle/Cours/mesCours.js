@@ -73,7 +73,7 @@ class MesCours extends Component {
                           <img src="http://chaire-eti.org/wp-content/uploads/2018/01/avatar-homme.png" alt="profile-image" class="profile"/>
                           <h5 class="card-title"><CLink to={ "/enseignant/ClasseVirtuelle/detailCours/" + cours.id}>{cours.ec.nom}</CLink></h5>
                           <p class="card-text">{cours.description}</p>
-                          <div class="icon-block"><a href="#"><i class="fa fa-facebook"></i></a><a href="#"> <i class="fa fa-twitter"></i></a><a href="#"> <i class="fa fa-google-plus"></i></a></div>
+                          <div class="icon-block float-right"><a href="#"> <i class="fa fa-google-plus"></i></a></div>
                       </div>
                   </div>
             </div>
