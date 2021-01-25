@@ -18,13 +18,13 @@ import routes from './../routes'
 
 import { 
   TheHeaderDropdown,
-  TheHeaderDropdownMssg,
-  TheHeaderDropdownNotif,
 }  from './HeaderElements/index'
 
-const Header = () => {
+import {connect} from "react-redux";
+
+const Header = (props) => {
   const dispatch = useDispatch()
-  const sidebarShow = useSelector(state => state.sidebarShow)
+  const sidebarShow = useSelector(state => state.layout.sidebarShow)
 
   const toggleSidebar = () => {
     const val = [true, 'responsive'].includes(sidebarShow) ? false : 'responsive'
@@ -49,18 +49,17 @@ const Header = () => {
         onClick={toggleSidebar}
       />
       <CHeaderBrand className="mx-auto d-lg-none" to="/">
-        <p>ESPACE NUMERIQUE DE TRAVAIL</p>
+        <h5>ESPACE NUMERIQUE DE TRAVAIL</h5>
       </CHeaderBrand>
 
       <CHeaderNav className="d-md-down-none mr-auto">
         <CHeaderNavItem className="px-3" >
-        <CHeaderNavLink><CIcon name="cil-user"/> Etudiant</CHeaderNavLink>
+        <CHeaderNavLink><b><CIcon name="cil-user" height={15}/> Etudiant</b></CHeaderNavLink>
         </CHeaderNavItem>
       </CHeaderNav>
 
       <CHeaderNav className="px-3">
-        <TheHeaderDropdownNotif/>
-        <TheHeaderDropdownMssg/>
+      <span className="py-2">{props.user.first_name} {props.user.last_name}</span>
         <TheHeaderDropdown/>
       </CHeaderNav>
 
@@ -86,4 +85,8 @@ const Header = () => {
   )
 }
 
-export default Header
+const mapStateTopProps = state => ({
+  user:state.auth.user
+})
+
+export default connect(mapStateTopProps,null)(Header)

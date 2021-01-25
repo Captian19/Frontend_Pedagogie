@@ -18,13 +18,13 @@ import routes from './../routes'
 
 import { 
   TheHeaderDropdown,
-  TheHeaderDropdownMssg,
-  TheHeaderDropdownNotif,
 }  from './HeaderElements/index'
 
-const Header = () => {
+import {connect} from "react-redux";
+
+const Header = (props) => {
   const dispatch = useDispatch()
-  const sidebarShow = useSelector(state => state.sidebarShow)
+  const sidebarShow = useSelector(state => state.layout.sidebarShow)
 
   const toggleSidebar = () => {
     const val = [true, 'responsive'].includes(sidebarShow) ? false : 'responsive'
@@ -48,25 +48,38 @@ const Header = () => {
         className="ml-3 d-md-down-none"
         onClick={toggleSidebar}
       />
-      <CHeaderBrand className="mx-auto d-lg-none" to="/enseignant">
-        <p>ESPACE NUMERIQUE DE TRAVAIL</p>
+      <CHeaderBrand className="mx-auto d-lg-none">
+        <h5>ESPACE NUMERIQUE DE TRAVAIL</h5>
       </CHeaderBrand>
 
       <CHeaderNav className="d-md-down-none mr-auto">
-        <CHeaderNavItem className="px-3" >
-          <CHeaderNavLink to="/directeur"><CIcon name="cil-user"/> Directeur</CHeaderNavLink>
-        </CHeaderNavItem>
-        <CHeaderNavItem  className="px-3">
-          <CHeaderNavLink to="/directeur-etudes"><CIcon name="cil-user"/> Directeur des etudes</CHeaderNavLink>
-        </CHeaderNavItem>
-        <CHeaderNavItem className="px-3">
-          <CHeaderNavLink to="/chef-departement"><CIcon name="cil-user"/> Chef de Département</CHeaderNavLink>
-        </CHeaderNavItem>
+        {props.roles.map((role) => {
+          if(role.role_type=="CHEF_DE_DEPARTEMENT"){
+            return(
+              <CHeaderNavItem className="px-3">
+            <CHeaderNavLink to="/chef-departement"><CIcon name="cil-user"/> Chef de Département</CHeaderNavLink>
+            </CHeaderNavItem>
+            )
+          } else if (role.role_type=="DIRECTEUR_DE_L_ECOLE"){
+            return(
+              <CHeaderNavItem className="px-3" >
+            <CHeaderNavLink to="/directeur"><CIcon name="cil-user"/> Directeur</CHeaderNavLink>
+            </CHeaderNavItem>
+            )
+          } else if (role.role_type=="DIRECTEUR_DES_ETUDES"){
+            return(
+              <CHeaderNavItem  className="px-3">
+            <CHeaderNavLink to="/directeur-etudes"><CIcon name="cil-user"/> Directeur des etudes</CHeaderNavLink>
+            </CHeaderNavItem>
+            )
+          }
+        } 
+        )}
+
       </CHeaderNav>
 
       <CHeaderNav className="px-3">
-        <TheHeaderDropdownNotif/>
-        <TheHeaderDropdownMssg/>
+      <span className="py-2">{props.user.first_name} {props.user.last_name}</span>
         <TheHeaderDropdown/>
       </CHeaderNav>
 
@@ -76,18 +89,15 @@ const Header = () => {
           routes={routes} 
         />
           <div className="d-md-down-none mfe-2 c-subheader-nav">
-            <CLink className="c-subheader-nav-link"href="#">
-              <CIcon name="cil-speech" alt="Settings" />
-            </CLink>
             <CLink 
               className="c-subheader-nav-link" 
               aria-current="page" 
-              to="/dashboard"
+              to="/enseignant/dashboard"
             >
               <CIcon name="cil-graph" alt="Dashboard" />&nbsp;Dashboard
             </CLink>
-            <CLink className="c-subheader-nav-link" href="#">
-              <CIcon name="cil-settings" alt="Settings" />&nbsp;Settings
+            <CLink className="c-subheader-nav-link" to="/enseignant/profil">
+              <CIcon name="cil-settings" alt="Settings" />&nbsp;Mon profil
             </CLink>
           </div>
       </CSubheader>
@@ -95,5 +105,9 @@ const Header = () => {
   )
 }
 
+const mapStateToProps = state => ({
+  roles: state.auth.user.CurrentRoles,
+  user: state.auth.user
+})
 
-export default Header
+export default connect(mapStateToProps,null)(Header)

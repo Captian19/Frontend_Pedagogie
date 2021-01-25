@@ -2,7 +2,7 @@ const initialState = {
     sidebarShow: 'responsive'
   }
   
-const layout = (state = initialState, { type, ...rest }) => {
+export default function layout(state = initialState, { type, ...rest }) {
     switch (type) {
         case 'set':
         return {...state, ...rest }

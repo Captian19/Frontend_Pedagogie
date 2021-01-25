@@ -12,19 +12,17 @@ import {
   CLink
 } from '@coreui/react'
 import CIcon from '@coreui/icons-react'
-
+import {connect} from "react-redux";
 // routes config
 import routes from './../routes'
 
 import { 
   TheHeaderDropdown,
-  TheHeaderDropdownMssg,
-  TheHeaderDropdownNotif,
 }  from './HeaderElements/index'
 
-const Header = () => {
+const Header = (props) => {
   const dispatch = useDispatch()
-  const sidebarShow = useSelector(state => state.sidebarShow)
+  const sidebarShow = useSelector(state => state.layout.sidebarShow)
 
   const toggleSidebar = () => {
     const val = [true, 'responsive'].includes(sidebarShow) ? false : 'responsive'
@@ -48,19 +46,18 @@ const Header = () => {
         className="ml-3 d-md-down-none"
         onClick={toggleSidebar}
       />
-      <CHeaderBrand className="mx-auto d-lg-none" to="/departement">
-        <p>ESPACE NUMERIQUE DE TRAVAIL</p>
+      <CHeaderBrand className="mx-auto d-lg-none">
+        <h5>ESPACE NUMERIQUE DE TRAVAIL</h5>
       </CHeaderBrand>
 
       <CHeaderNav className="d-md-down-none mr-auto">
         <CHeaderNavItem className="px-3" >
-        <CHeaderNavLink><CIcon name="cil-user"/> Assistant Chef Département</CHeaderNavLink>
+        <CHeaderNavLink><b><CIcon name="cil-user" height={15}/> Assistant Chef Département</b></CHeaderNavLink>
         </CHeaderNavItem>
       </CHeaderNav>
 
       <CHeaderNav className="px-3">
-        <TheHeaderDropdownNotif/>
-        <TheHeaderDropdownMssg/>
+        <span className="py-2">{props.user.first_name} {props.user.last_name}</span>
         <TheHeaderDropdown/>
       </CHeaderNav>
 
@@ -73,11 +70,11 @@ const Header = () => {
             <CLink 
               className="c-subheader-nav-link" 
               aria-current="page" 
-              to="/departement/dashboard"
+              to="/assistant-departement/dashboard"
             >
               <CIcon name="cil-graph" alt="Dashboard"/>&nbsp;Dashboard
             </CLink>
-            <CLink className="c-subheader-nav-link" to="/departement/profil">
+            <CLink className="c-subheader-nav-link" to="/assistant-departement/profil">
               <CIcon name="cil-settings" alt="Settings" />&nbsp;Mon profil
             </CLink>
           </div>
@@ -86,4 +83,8 @@ const Header = () => {
   )
 }
 
-export default Header
+const mapStateTopProps = state => ({
+  user:state.auth.user
+})
+
+export default connect(mapStateTopProps,null)(Header)
