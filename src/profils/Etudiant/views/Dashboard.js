@@ -16,9 +16,9 @@ class Dashboard extends Component {
             <CCardBody>
             <CRow>
                 <CCol sm="12">
-                    <h1>Hello World Etudiant</h1>
                     {this.props.user.CurrentRoles[0].classe}
                     {this.props.user.CurrentRoles[0].departement}
+                    <h5>Ops, Votre Emploi du temps n'est pas encore disponible</h5>
                 </CCol>
             </CRow>
             </CCardBody>

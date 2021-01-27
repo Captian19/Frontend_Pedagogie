@@ -1,4 +1,7 @@
-// publication et lecture de publication
+// Ce composant affiche l'ensemble des publications d'un cours donné publication.
+// On y trouve également le formulaire permettent de poster de nouvelle publication ou annonce
+
+
 import React,  { useState, useEffect } from 'react';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
@@ -10,6 +13,7 @@ import PosterFile from './posterFile';
 import Publication from './publication';
 import axios from 'axios';
 import {connect} from "react-redux";
+import welcome from "../../../../../../img/bienvenue.png";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -37,8 +41,9 @@ const DetailCours = (props) => {
   const [prof, setProf] = useState(24)
   const [is_getted, setIsGetted] = useState(false)
   const [prof_is_getted, set_prof_bool] = useState(false)
-  const [reloader, setReloaderState] = React.useState(false) //
+  const [reloader, setReloaderState] = React.useState(false) 
 
+  // Recharger uniquement le component publication lors d'une nouvelle publication 
   const reloadComponent = () => {
     setReloaderState(!reloader)
   };
@@ -49,7 +54,9 @@ const DetailCours = (props) => {
     },
 }
 
-  const getCours = (id) => {
+  
+// Recupération d'un cours donné grâce à son identifaint (id) et à celui du professeur correspondant
+const getCours = (id) => {
     axios.get(`http://localhost:8000/cours_virtuel/${id}`)
         .then(res => {
           setCours(res.data);
@@ -74,14 +81,7 @@ const DetailCours = (props) => {
 
       <AppBar position="static" class="text-white bg-dark p-2 rounded">
         <Toolbar className={classes.toolbar}>
-          {/* <IconButton
-            edge="start"
-            className={classes.menuButton}
-            color="inherit"
-            aria-label="open drawer"
-          >
-            <MenuIcon />
-          </IconButton> */}
+
           <Typography className={classes.title} variant="h4" color="blue"  noWrap>
             {cours.ec.nom}</Typography>
             {prof_is_getted ? (
@@ -89,10 +89,7 @@ const DetailCours = (props) => {
             ):(
               <Typography className = {classes.AppBar} variant= "subtitle2">nom professeur</Typography>
             )}
-          
-          {/* <IconButton aria-label="search" color="inherit">
-            <SearchIcon />
-          </IconButton> */}
+
           <IconButton aria-label="display more actions" edge="end" color="inherit">
             <MoreIcon />
           </IconButton>
@@ -102,20 +99,11 @@ const DetailCours = (props) => {
 
       <AppBar position="static" class="text-white bg-dark p-2 rounded">
         <Toolbar className={classes.toolbar}>
-          {/* <IconButton
-            edge="start"
-            className={classes.menuButton}
-            color="inherit"
-            aria-label="open drawer"
-          >
-            <MenuIcon />
-          </IconButton> */}
+
           <Typography className={classes.title} variant="h4" color="blue"  noWrap>
             Default Subject</Typography>
           <Typography className = {classes.AppBar} variant= "subtitle2">Default Prof</Typography>
-          {/* <IconButton aria-label="search" color="inherit">
-            <SearchIcon />
-          </IconButton> */}
+
           <IconButton aria-label="display more actions" edge="end" color="inherit">
             <MoreIcon />
           </IconButton>
@@ -125,7 +113,7 @@ const DetailCours = (props) => {
       
     <div className="row">
       <div className="col-md-3">
-      <div className="card m-3">Hello</div>
+      <div className="card m-3"><img src={welcome}/></div>
       </div>
       <div className="col-md-9">      
       {is_getted ? (

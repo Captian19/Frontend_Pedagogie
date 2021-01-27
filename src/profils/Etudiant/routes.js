@@ -30,7 +30,6 @@ const MesStages = React.lazy(() => import("./views/SuiviStage/MesStages/stages")
 
 const ListeClasse = React.lazy(() => import('./views/ma_classe/ListeClasse')); // pedagogie = ma_classe
 const Maquette = React.lazy(() => import('./views/ma_classe/Maquette'));
-const ClasseVirtuelle = React.lazy(() => import('./views/ma_classe/ClasseVirtuelle'));
 const MesCours = React.lazy(() => import('./views/ma_classe/ClasseVirtuelle/Cours/mesCours'));
 const DetailCours = React.lazy(() => import('./views/ma_classe/ClasseVirtuelle/Cours/detailCours'));
 //End Pedagogie
@@ -62,7 +61,6 @@ const routes = [
      // Pedagogie
     { path:'/etudiant/classe/liste', name:"Liste Classe",component:ListeClasse},
     { path:'/etudiant/classe/maquette', name:"Maquette",component:Maquette},
-    { path: '/etudiant/classe/virtuelle', name:"Classe Virtuelle", component:ClasseVirtuelle},
     { path: '/etudiant/finInscription',name:"fin inscription",component:EndPage},
     { path: '/etudiant/ma_classe/ClasseVirtuelle/mesCours', name: 'MesCours', component: MesCours},
     { path: '/etudiant/ClasseVirtuelle/detailCours/**', name: 'DetailCours', component: DetailCours}, 

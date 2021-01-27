@@ -1,3 +1,5 @@
+// Ce composant contient les éléments qui constituent l'entete de la maquette
+
 import React from "react";
 import {connect} from 'react-redux' ;
 

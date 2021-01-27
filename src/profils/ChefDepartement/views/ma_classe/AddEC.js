@@ -1,3 +1,5 @@
+// Ce composant contient le formulaire d'ajout d'un nouvel EC.
+
 import React, { useState, useEffect } from "react"
 
 import {CCard, CCardHeader, CCardBody,CCol, CRow,
@@ -23,6 +25,8 @@ const AddEC = (props) => {
     const [message, setMessage] = useState('');
     const [departement, setDepartement] = useState('');
 
+
+    // Recupération du departement de l'utilisateur en cours.
     const getDepartement = () => {
         props.roles.map((role) => {
             if(role.role_type == "CHEF_DE_DEPARTEMENT"){
@@ -31,6 +35,7 @@ const AddEC = (props) => {
         })
     }    
 
+        // Soumission des données pour la creation d'un nouvel EC à l'aide de Axios
     const onSubmit = e => {
         e.preventDefault()
         axios.post(`http://localhost:8000/EC/POST_EC`,{"nom":nom,"CM":CM, "TD_TP":TD_TP, "TPE":TPE, "coef":coef, "creditEC":creditEC, "total_heures":total_heures, "codeEC":codeEC, "ue":singleUE})
@@ -61,8 +66,8 @@ const AddEC = (props) => {
         },
     }
 
+        // Obtenir la liste de l'ensemble des UE 
     const getListUE = () => {
-       // var id_dept = departement.toString();
         axios.get(API_URL_UE) //`http://localhost:8000/UE/departement/${id_dept}`)
         .then(res => {
             setListUE(res.data);
@@ -78,7 +83,6 @@ const AddEC = (props) => {
         getDepartement();
     },[])
 
-    console.log("Amou", departement.toString());
     return (
         <CRow>
         <CCol xs="12" sm="12">

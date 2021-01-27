@@ -31,6 +31,8 @@ const Collapses = (props) => {
   const { handleSubmit } = useForm()
   const [id_auteur,setIdAuteur] = useState(props.user.id);
 
+
+  // Recupération d'un cours donné grâce à son identifiant (id)
   const getCours = async (id) => {
     await axios.get(`http://localhost:8000/cours_virtuel/${id}`)
       .then(res => {
@@ -80,6 +82,7 @@ const Collapses = (props) => {
     console.log(file);
   }
 
+  // Soumission des données via axios pour une nouvelle publication.
   const onSubmit = () => {
 
     let formData = new FormData();
@@ -87,9 +90,6 @@ const Collapses = (props) => {
     formData.append("annonce", annonce);
     formData.append("cours", cours.id);
     formData.append("id_auteur",props.user.id);
-    // formData.append("first_name", props.user.first_name);
-    // formData.append("last_name", props.user.last_name);;
-    
 
     axios.post(`http://localhost:8000/Support_cours`, formData)
       .then(res => {
@@ -145,7 +145,6 @@ const Collapses = (props) => {
                                   
                                 </CFormGroup>
                                 <div className="float-left" padding="0">
-                                  {/* <button className="btn btn-info">Joindre Fichier</button> */}
                                   <input id="file-input" name="fichier"
                                     type="file" 
                                     required = {false}

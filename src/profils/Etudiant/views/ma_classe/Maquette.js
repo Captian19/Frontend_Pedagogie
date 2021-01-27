@@ -1,10 +1,11 @@
+// Ce composant renvoie la maquette globale (des cours) du département de l'utilisateur en cours.
+
 import React, {Component} from "react";
 import {connect} from "react-redux" 
 
 
 import {
-    CButton,
-    CLink
+    CButton
   } from '@coreui/react'
 
 import ElementMaquette from "./detailmaquette/EnteteMaquette";
@@ -22,16 +23,12 @@ class Maquette extends Component {
         somme: 0
     };
 
+    // Obtenir les UE par département et par classe
     getMaquetteDept(dept, classe) {
         axios.get(API_URL_UE + "/departement/" + dept + "/classe/" + classe).then(res => this.setState({maquette: res.data, is_getted: true}))
     };
 
-    handleDelete(id){
-        axios.delete(API_URL_EC + "/" + id)
-    }
-
     componentDidMount() {
-        // this.props.user.departement
         this.getMaquetteDept(this.props.role.departement, this.props.role.classe);
         if(this.state.is_getted){
             
@@ -84,9 +81,7 @@ class Maquette extends Component {
                                         <td className="text-center">{ue.element[0].creditEC}</td>
                                         <td className="text-center">{ue.element[0].coef}</td>
                                         {this.state.is_chef_dpt ? (
-                                        <td className="text-center"><CButton className="btn-danger float-right"
-                                                                                              value={ue.element[0].pk}
-                                                                                              onClick={() => this.handleDelete(ue.element[0].pk)}>delete</CButton></td>
+                                        <td className="text-center"><CButton className="btn-danger float-right">delete</CButton></td>
                                     ) : (
                                         <td className="text-center">none</td>
                                     )} <td className="text-center" rowSpan={ue.element.length}>{ue.coefUE}</td>

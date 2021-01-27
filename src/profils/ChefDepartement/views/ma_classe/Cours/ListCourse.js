@@ -1,3 +1,5 @@
+// Ce composant renvoie l'ensemble des cours virtuels d'un département donné.
+
 import React, { Component } from "react";
 import { Table } from "reactstrap";
 import {connect} from 'react-redux' ;
@@ -17,7 +19,7 @@ class CourseList extends Component {
     };
 
 
-
+    // Recupération de l'ensemble des cours pour un département donné.
     getCoursDept(dept) {
         axios.get(`https://users-ent.herokuapp.com/api/auth/ENSEIGNANT/`, {
             headers: {
@@ -29,7 +31,6 @@ class CourseList extends Component {
                  this.setState({listeEnseignant:res.data});
                 })
                 .then(() => {
-                    //let id_prof = this.state.listeEnseignant.map(prof => prof.user.id)
                     axios.get(API_URL_COURS + "/departement/" + dept).then(res => {
                         let data = []
                         res.data.map(cours => {
@@ -43,6 +44,7 @@ class CourseList extends Component {
     })
     };
 
+    // Suppression d'un EC de la maquette
     handleDelete(id){
         axios.delete(API_URL_COURS + "/DEL/" + id)
         .then((data) =>{
@@ -55,7 +57,6 @@ class CourseList extends Component {
 
 
     componentDidMount() {
-        //this.getCoursDept(this.props.role.departement);
         if(this.props.role.departement === undefined){
             this.getCoursDept(this.props.roles.departement);}
             else{

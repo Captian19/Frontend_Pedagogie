@@ -2,17 +2,10 @@
         
 import React, {Component} from 'react'
 import {
-  CCard,
-  CCardBody,
-  CCardHeader,
-  CCol,
-  CRow,
   CLink
 } from  '@coreui/react'
-import CIcon from '@coreui/icons-react';
 import "../../../../../assets/css/cours.css"
-import { cilBold } from '@coreui/icons';
-import {connect} from "react-redux" // add
+import {connect} from "react-redux" 
 import { API_URL } from  "../../../../../constants/pedagogie/index";
 import axios from "axios";
 
@@ -20,13 +13,12 @@ class MesCours extends Component {
   constructor(props){
     super(props)
     this.state={
-      // is_chef_dpt: true,
       liste_cours: [],
       cours_getted: false
     }
   }
 
-
+// Recupérations des cours d'un professeur donné grâce à son identifiant. 
   getCoursVirtuels1 = (id_prof) => {
     axios.get(API_URL + "cours_virtuel/professeur/" + id_prof)
           .then(res => this.setState({
@@ -45,7 +37,6 @@ class MesCours extends Component {
   
   componentDidMount(){
     this.getCoursVirtuels1( this.props.user.id);
-    // console.log(this.props.user);
   }
 
 
@@ -73,7 +64,7 @@ class MesCours extends Component {
                           <img src="http://chaire-eti.org/wp-content/uploads/2018/01/avatar-homme.png" alt="profile-image" class="profile"/>
                           <h5 class="card-title"><CLink to={ "/enseignant/ClasseVirtuelle/detailCours/" + cours.id}>{cours.ec.nom}</CLink></h5>
                           <p class="card-text">{cours.description}</p>
-                          <div class="icon-block float-right"><a href="#"> <i class="fa fa-google-plus"></i></a></div>
+                          <div ><CLink to={ "/enseignant/ClasseVirtuelle/detailCours/" + cours.id} > <i className="far fa-folder float-right"></i></CLink></div>
                       </div>
                   </div>
             </div>
@@ -97,9 +88,6 @@ class MesCours extends Component {
     }
 }
 
-//  const mapStateToProps = (state) => {
-//     user: state.auth
-// }
 
 const mapStateToProps = state => ({
   user:state.auth.user,

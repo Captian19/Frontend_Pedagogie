@@ -2,17 +2,10 @@
         
 import React, {Component} from 'react'
 import {
-  CCard,
-  CCardBody,
-  CCardHeader,
-  CCol,
-  CRow,
   CLink
 } from  '@coreui/react'
-import CIcon from '@coreui/icons-react';
 import "../../../../../../assets/css/cours.css"
-import { cilBold } from '@coreui/icons';
-import {connect} from "react-redux" // add
+import {connect} from "react-redux"
 import { API_URL } from  "../../../../../../constants/pedagogie/index";
 import axios from "axios";
 
@@ -20,13 +13,12 @@ class MesCours extends Component {
   constructor(props){
     super(props)
     this.state={
-      // is_chef_dpt: true,
       liste_cours: [],
       cours_getted: false
     }
   }
 
-
+// Recupérations des cours d'un professeur donné grâce à son département et sa classe
   getCoursVirtuels1 = (dept, classe) => {
     axios.get(API_URL + "cours_virtuel/liste/departement/" + dept + "/classe/" + classe)
           .then(res => this.setState({
@@ -45,7 +37,6 @@ class MesCours extends Component {
   
   componentDidMount(){
     this.getCoursVirtuels1(this.props.role.departement, this.props.role.classe);
-    // console.log(this.props.user);
   }
 
 
@@ -73,7 +64,7 @@ class MesCours extends Component {
                           <img src="http://chaire-eti.org/wp-content/uploads/2018/01/avatar-homme.png" alt="profile-image" class="profile"/>
                           <h5 class="card-title"><CLink to={ "/etudiant/ClasseVirtuelle/detailCours/" + cours.id}>{cours.ec.nom}</CLink></h5>
                           <p class="card-text">{cours.description}</p>
-                          <div class="icon-block"><a href="#"><i class="fa fa-facebook"></i></a><a href="#"> <i class="fa fa-twitter"></i></a><a href="#"> <i class="fa fa-google-plus"></i></a></div>
+                          <div ><CLink to={ "/etudiant/ClasseVirtuelle/detailCours/" + cours.id} > <i className="far fa-folder float-right"></i></CLink></div>
                       </div>
                   </div>
             </div>
@@ -97,9 +88,6 @@ class MesCours extends Component {
     }
 }
 
-//  const mapStateToProps = (state) => {
-//     user: state.auth
-// }
 
 const mapStateToProps = state => ({
   user:state.auth.user,

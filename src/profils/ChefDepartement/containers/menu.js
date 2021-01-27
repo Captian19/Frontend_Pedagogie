@@ -22,16 +22,6 @@ export default [
           to: '/chef-departement/gestionEnseignants',
           icon: 'cil-list',
         },
-        {
-          _tag: 'CSidebarNavItem',
-          name: 'Nouvel Ensignant',
-          to: '/chef-departement/gestionEnseignants',
-          icon: 'cil-people',
-          badge: {
-            color: 'info',
-            text: 'NEW',
-          }
-        }
       ]
     },
     {
@@ -80,13 +70,6 @@ export default [
           }
         }
     ]},
-    {
-      _tag: 'CSidebarNavItem',
-      name: 'Details',
-      // to: '/chef-departement/CoursDetails',
-      icon: 'cil-speedometer',
-      
-    },
     /********************  Pedagogie ******************/
     
 ]

@@ -7,9 +7,6 @@ const Single = React.lazy(() => import("./views/SuiviStage/Stages/singleEntrepri
 
 
 //Pedagogie
-
-// const ListeClasse = React.lazy(() => import('./views/ma_classe/ListeClasse')); // pedagogie = ma_classe
-//const ClasseVirtuelle = React.lazy(() => import('./views/ma_classe/ClasseVirtuelle'));
 const MesCours = React.lazy(() => import('./views/ClasseVirtuelle/Cours/mesCours'));
 const DetailCours = React.lazy(() => import('./views/ClasseVirtuelle/Cours/detailCours'));
 //End Pedagogie
@@ -17,7 +14,7 @@ const DetailCours = React.lazy(() => import('./views/ClasseVirtuelle/Cours/detai
 
 const routes = [
     { path: '/enseignant', exact: true, name: 'Enseignant'},
-    { path: '/enseignant/dashboard', name: 'Dashboard', component: Dashboard },
+    { path: '/enseignant/dashboard', name: 'Dashboard', component: MesCours },
     
     ...planning_notes_routes,
     // { path: '/enseignant/definirplanning', name: 'Definir', component: DefinirPlanning},

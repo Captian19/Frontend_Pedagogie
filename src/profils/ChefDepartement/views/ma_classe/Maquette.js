@@ -1,3 +1,5 @@
+// Ce composant renvoie la maquette globale (des cours) du département de l'utilisateur en cours.
+
 import React, {Component} from "react";
 import {connect} from "react-redux" 
 
@@ -10,9 +12,7 @@ import {
 import ElementMaquette from "./detailmaquette/EnteteMaquette";
 import axios from 'axios';
 import {API_URL_EC, API_URL_UE} from "../../../../constants/pedagogie/index";
-//import NewECForm from "./newECForm";
 
-// import UE from './ec';
 
 
 class Maquette extends Component {
@@ -22,11 +22,11 @@ class Maquette extends Component {
         is_getted: false,
         is_chef_dpt: true
     };
-
+// Obtenir les UE par département
     getMaquetteDept(dept) {
         axios.get(API_URL_UE + "/departement/" + dept).then(res => this.setState({maquette: res.data, is_getted: true}))
     };
-
+// Suppression d'un EC de la maquette
     handleDelete(id){
         axios.delete(API_URL_EC + "/DEL/" + id)
         .then((data) =>{
@@ -37,7 +37,6 @@ class Maquette extends Component {
     }
 
     componentDidMount() {
-        // this.props.user.departement
         if(this.props.role.departement === undefined){
         this.getMaquetteDept(this.props.roles.departement);}
         else{

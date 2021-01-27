@@ -1,3 +1,5 @@
+// Ce composant renvoie la liste de l'ensemble des élèves qui sont de la même classe que le user en cours.
+
 import React,{useState,useEffect} from "react";
 import {
     CCard,
@@ -9,7 +11,6 @@ import {
 } from '@coreui/react'
 
 import {connect} from "react-redux"
-import {useHistory} from "react-router-dom"
 import axios from "axios"  
 import avatar from './../../../../assets/img/avatar.png'
 
@@ -25,7 +26,7 @@ const ListeClasse = (props) => {
             'Authorization': `Token ${props.token}`
         },
     }
-
+// Recupération de la liste des élèves de la même classe ...
     const getListUsers = () => {
         axios.get(`https://users-ent.herokuapp.com/api/auth/ETUDIANT/${props.role.classe}/${props.role.departement}/`,config)
         .then(res =>{

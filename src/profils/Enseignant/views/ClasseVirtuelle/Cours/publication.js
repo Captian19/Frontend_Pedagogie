@@ -21,6 +21,8 @@ const Publication = (props) => {
   const [pub_is_getted, set_pub_bool] = useState(false)
   const [auteur, setAuteur] = useState([])
 
+
+// Recupération d'un cours donné grâce à son identifiant (id)
   const getCours = (id) => {
    axios.get(`http://localhost:8000/cours_virtuel/${id}`)
       .then(res => {
@@ -28,6 +30,8 @@ const Publication = (props) => {
         setIsGetted(true);
       })
 }
+
+// Recupération d'une publication grâce à son identifiant (id)
 const getPub = (id) => {
   axios.get(`http://localhost:8000/Support_cours/publication/${id}`)
   .then(res => {
@@ -39,6 +43,7 @@ const getPub = (id) => {
 
 const [isOK, setIsOK] = useState(false)
 
+// Recupération des prenom et nom de l'auteur d'une publication donnée grâce à son identifiant (id)
 const GetUserInPub = (id) => {
   axios.get(`https://users-ent.herokuapp.com/api/auth/ETUDIANT/${props.role.departement}/`)
       .then((res) => {
@@ -47,7 +52,6 @@ const GetUserInPub = (id) => {
         setIsOK(true)
       })
       .catch(err => console.log(err))
-  // return auteur
 }
 
 useEffect(async () => {
@@ -146,10 +150,6 @@ return (
                       <a href={"http://localhost:8000" + p.fichier } target="_blank">
                       <img src={img} className="img-fluid" alt="fichier"/>
                       </a>
-
-                      {/* <a className="btn btn-info mt-2 text-center" href={"http://localhost:8000" + p.fichier } target="_blank">
-                        <small>Voir fichier</small>
-                      </a> */}
                       </div>
                     </CCol>
                   </CRow>
@@ -187,5 +187,5 @@ const mapStateToProps = state => ({
   token:state.auth.token
 })
 
-// export default Publication ;
+
 export default connect(mapStateToProps,null)(Publication) ;

@@ -1,6 +1,8 @@
+// Ce composant contient le formulaire d'ajout d'un nouveau Cours virtuel par l'assistant de département
+
 import React, { useState, useEffect } from "react"
 
-import {CCard, CCardHeader, CCardBody,CCol, CRow, CFormGroup, CLabel, CTextarea
+import {CCard, CCardHeader, CCardBody,CCol, CTextarea
 } from '@coreui/react'
 
 import {connect} from "react-redux";
@@ -25,13 +27,11 @@ const AddCourse = (props) => {
         })
     }
 
-    // const chefDept = props.roles.map((role) => {
-    //     if(role.role_type == "CHEF_DE_DEPARTEMENT") {
-    //         return role.departement
-    //     }
-    // })
+
     const {register, handleSubmit} = useForm()
 
+
+    // Soumiission de la requete de creation d'un nouveau cours virtuel à l'aide de axios
     const onSubmit = data => {
         console.log(data);
         axios.post(`http://localhost:8000/cours_virtuel/create`,data )
@@ -56,7 +56,7 @@ const AddCourse = (props) => {
         },
     }
 
-    console.log(departement);
+    // Recupération de la liste des EC avec axios
     const getListEC = () => {
         axios.get(`http://localhost:8000/EC`) //departement/`+ `${departement}`)
         .then(res => {
@@ -66,6 +66,7 @@ const AddCourse = (props) => {
         .catch(err => console.log(err));
     }
 
+    // Recupération des différentes classes avec axios "exemple : TC1"
     const getListClasses = () => {
         axios.get("https://users-ent.herokuapp.com/api/classes",config)
         .then(res => {
@@ -74,6 +75,7 @@ const AddCourse = (props) => {
         .catch(err => console.log(err));
     }
 
+    // Recupération de la liste des professeurs
     const getListProfesseurs = () => {
         axios.get("https://users-ent.herokuapp.com/api/auth/ENSEIGNANT/",config)
         .then(res => {
@@ -121,19 +123,12 @@ const AddCourse = (props) => {
                         {classes.map(classe => <option key={classe.id} value={classes.niveau}>{classe.niveau}</option>)}
                     </select>
                 </div>
-                {/* <div class="form-group">
-                    <label for="inputRole">Département</label>
-                    <select id="inputRole" class="form-control" name="departement" ref={register}>
-                        <option selected>Choisir le departement</option>
-                        {departements.map(departement => <option key={departement.id} value={departement.nom_dept}>{departement.nom_dept}</option>)}
-                    </select>
-                </div> */}
                 <div class="form-group">
                     <input type="text" className="form-control" value={departement} name="departement" ref={register}/>
                 </div>
                 <div margin="0">
                     <div for="inputRole">Petite Description du cours</div>
-                    <textarea name="description" value={description} rows="6" cols='95' onChange={(event)=>setDescription(event.target.value)} ref={register({required:true})} ></textarea>
+                    <CTextarea name="description" value={description} rows="6" onChange={(event)=>setDescription(event.target.value)} ref={register({required:true})} ></CTextarea>
                 </div>
                
                 <button type="submit" class="btn btn-primary">Ajouter</button>
