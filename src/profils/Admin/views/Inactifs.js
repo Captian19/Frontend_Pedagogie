@@ -14,17 +14,12 @@ import axios from "axios"
 import {useHistory} from "react-router-dom"
 import {connect} from "react-redux" 
 
-const getBadge = is_active => {
-switch (is_active) {
-    case 'true': return 'success'
-    case 'false': return 'warning'
-    default: return 'danger'
-}
-}
+
 const fields = ['N','Prenom','Nom',,'email', 'role', 'is_active']
 
 const Inactifs = (props) => {
     const [users, setUsers] = useState([]);
+    const [loading, setLoading] = useState(true);
     const history = useHistory();
     const config = {
         headers: {
@@ -38,26 +33,25 @@ const Inactifs = (props) => {
         axios.get('https://users-ent.herokuapp.com/api/auth/users/inactifs/',config)
         .then(res =>{
             setUsers(res.data);
-            
+            setLoading(false);
         })
         .catch(err => console.log(err))
     }
 
-    const activate = (id) => {
-        axios.get(`https://users-ent.herokuapp.com/api/auth/users/activateUser/${id}`,config)
+    const OnOrOff = (id) => {
+        axios.get(`https://users-ent.herokuapp.com/api/auth/users/activer-ou-desactiver/${id}/`,config)
         .then(res => {
-            console.log(res.data);
-            window.location.reload();
+            alert('Utilisateur activé avec succès');
         })
         .catch(err => console.log(err))
     }
 
-    useEffect(() => {getListUsers()},[]);
+    useEffect(() => getListUsers(),[]);
 
     return(
         <CCard>
         <CCardHeader>
-          Les utilisateurs inactifs
+        <h4>Les comptes inactifs</h4>
         </CCardHeader>
         <CCardBody>
         <CRow>
@@ -73,6 +67,10 @@ const Inactifs = (props) => {
                 sorter
                 hover
                 pagination
+                loading={loading}
+                noItemsViewSlot={
+                    'La liste est vide !'
+                }
                 scopedSlots = {{
                     'Option':
                     (item, index) =>{
@@ -82,7 +80,7 @@ const Inactifs = (props) => {
                                 color="success"
                                 variant="outline"
                                 shape="square"
-                                size="sm" onClick={() => activate(item.id)}>Activer</CButton>
+                                size="sm" onClick={() => OnOrOff(item.id)}>Activer</CButton>
                             </td>
                         )
                     },

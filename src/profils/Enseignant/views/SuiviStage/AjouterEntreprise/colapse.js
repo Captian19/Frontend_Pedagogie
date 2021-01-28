@@ -1,32 +1,14 @@
-import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+import React, { useState } from 'react';
 
-import {
-    CCard,
-    CCardBody,
-    CCardFooter,
-    CCardHeader,
-    CDataTable,
-    CCol,
-    CRow,
-    CBadge,
-    CCollapse,
-    CButton,
-    CContainer,
-    CForm,
-    CInput,
-    CFormText,
-    CFormGroup,
-    CLabel,
-} from '@coreui/react';
+import {CCardBody,CCardFooter,CCollapse,CButton,} from '@coreui/react';
 
 
 import AddEntreprise from './formAddEntreprise';
 
-function Colapse(){
+function Colapse(props){
 
     const [collapse, setCollapse] = useState(false);
-    const [collapse2, setCollapse2] = useState(false);
+
 
     const onEntering = () => {};
     const onEntered = () => {};
@@ -38,11 +20,6 @@ function Colapse(){
     e.preventDefault();
     }
 
-    // inner
-    const toggle2 = (e)=>{
-    setCollapse2(!collapse2);
-    e.preventDefault();
-    }
 
     return (
     <div>
@@ -55,7 +32,10 @@ function Colapse(){
         >
         <CCardBody>
             <h3>Ajouter une Entreprise</h3>
-           <AddEntreprise/>
+           <AddEntreprise
+            clickLoad = {props.clickLoad}
+           />
+
         </CCardBody>
         </CCollapse>
         <CCardFooter>

@@ -1,6 +1,6 @@
 import React, { Component } from "react";
-import axios from 'axios';
 import { Link } from 'react-router-dom';
+import avatar from '../../assets/img/avatar.png'
 
 class ProfilDossier extends Component {
     state = { 
@@ -18,7 +18,7 @@ class ProfilDossier extends Component {
                 <div class="testimonial text-center">
 
                     <div class="avatar mx-auto mt-3">
-                        <img src="https://mdbootstrap.com/img/Photos/Avatars/img%20(26).jpg" class="rounded-circle img-fluid mt-3" width="100px"/>
+                        <img src={avatar} class="rounded-circle img-fluid mt-3" width="100px"/>
                     </div>
 
                     <h4 class="font-weight-bold mt-4 text-center">{this.props.etudiant.sexe}</h4>

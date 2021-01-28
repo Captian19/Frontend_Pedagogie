@@ -6,8 +6,7 @@ import {
     CDataTable,
     CCardHeader,
     CCol,
-    CRow,
-    CBadge
+    CRow
 } from '@coreui/react'
 
 import {useForm} from "react-hook-form";
@@ -20,11 +19,12 @@ const fields = ['avatar','Prénom','Nom','Classe','Departement','Année']
 const ListClasse = (props) => {
     const [users, setUsers] = useState([]);
     const [annees, setAnnee] = useState([]);
+    const [loading, setLoading] = useState(true);
 
     const history = useHistory();
     const {register, handleSubmit} = useForm()
 
-    const onSubmit = (data) => {
+    const onSubmit = data => {
         getListByRole(data.role,data.annee);
     }
 
@@ -39,6 +39,7 @@ const ListClasse = (props) => {
         axios.get(`https://users-ent.herokuapp.com/api/auth/${role}/${annee}/`,config)
         .then(res =>{
             setUsers(res.data);
+            setLoading(false);
         })
         .catch(err => console.log(err))
     } 
@@ -61,10 +62,10 @@ const ListClasse = (props) => {
         <CCol lg={12}>
             <CCard>
             <CCardHeader>
-                Liste des utilisateurs
+            <h4>Liste des utilisateurs en fonction du role</h4>
             </CCardHeader>
             <CCardBody>
-                <form className="mb-2" onSubmit={handleSubmit(onSubmit)}>
+                <form className="mb-3 p-2 mx-2 shadow" onSubmit={handleSubmit(onSubmit)}>
                     <div className="row">
                         <div className="col-md-4">
                             <div className="form-group">
@@ -72,6 +73,9 @@ const ListClasse = (props) => {
                             <option value="ETUDIANT">ETUDIANT</option>
                             <option value="ENSEIGNANT">ENSEIGNANT</option>
                             <option value="ADMIN">ADMIN</option>
+                            <option value="MEMBRE_SCOLARITE">SCOLARITE</option>
+                            <option value="MEMBRE_FINANCE">FINANCE</option>
+                            <option value="GERANT_BIBLIOTHEQUE">BIBLIOTHEQUE</option>
                             </select>
                             </div>
                         </div>
@@ -100,6 +104,10 @@ const ListClasse = (props) => {
                     sorter
                     hover
                     pagination
+                    loading={loading}
+                    noItemsViewSlot={
+                        'Choissisez un role'
+                    }
                     scopedSlots = {{
 
                         'Prénom':

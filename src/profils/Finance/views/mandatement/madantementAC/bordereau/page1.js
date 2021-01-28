@@ -1,34 +1,12 @@
 import React from "react";
-import { makeStyles } from '@material-ui/core/styles';
-import Card from '@material-ui/core/Card';
+import "./p1print.css";
 
-const useStyles = makeStyles((theme) => ({
-    root: {
-        maxWidth: 645,
-        maxHeight:550,
-    },
-    media: {
-        height: 0,
-        paddingTop: '56.25%', // 16:9
-    },
-    expand: {
-        transform: 'rotate(0deg)',
-        marginLeft: 'auto',
-        transition: theme.transitions.create('transform', {
-            duration: theme.transitions.duration.shortest,
-        }),
-    },
-    expandOpen: {
-        transform: 'rotate(180deg)',
-    },
-
-}));
 
 const Page1 = () => {
-    const classes = useStyles();
+
     return (
         <div className="container" className="table table-bordered text-center shadow p-3 mb-5 bg-white rounded largeur"
-             style={{width: "1150px",border: "1px solid #0F1019", fontWeight: "bold"}}>
+             style={{width: "1123px",border: "1px solid #0F1019", fontWeight: "bold",height:"1123px"}}>
                     <div className='row '>
                         <div className="col-md-4 text-center">
                             <h2>

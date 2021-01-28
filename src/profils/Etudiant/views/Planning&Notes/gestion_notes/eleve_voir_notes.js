@@ -8,6 +8,8 @@ import ClipLoader from "react-spinners/ClipLoader";
 import { css } from "@emotion/core";
 import NoteEleveViewer from '../../../../../components/Planning&Notes/gestion_notes_components/note_viewer';
 import { loadNotesEleve } from "../../../../../actions/Planning&Notes/gestion_notes_services";
+// Reducer
+import { connect } from "react-redux";
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -40,22 +42,32 @@ const override = css`
 `;
 
 
-export default function AfficherNote() {
+function AfficherNote(props) {
     const classes = useStyles();
-    const [expanded, setExpanded] = React.useState(false);
+
 
     const [notes, setNotesState] = React.useState(() => []);
     const [loading, setLodingState] = React.useState(true);
-
-    const handleExpandClick = () => {
-        setExpanded(!expanded);
-    };
-
-    const { id_eleve } = useParams();
+    
+    const [role] = React.useState(() => {
+        var current = {};
+        props.auth.user.CurrentRoles.map(role => {
+            if (role.role_type == "ETUDIANT") {
+                console.log(role);
+                current["departement"] = role.departement;
+                current["niveau"] = role.classe;
+                current["id"] = role.id;
+                current['annee'] = role.annee;
+            }
+            // if (role.role_type == "RESPONSABLE_CLASSE") {
+            //     current["is_res_classe"] = true;
+            // }
+        });
+        return current;
+    });
 
     React.useEffect(async () => {
-
-        await loadNotesEleve(id_eleve).then(notes => {
+        await loadNotesEleve(role.id).then(notes => {
             setNotesState(notes);
             setLodingState(false)
         });
@@ -73,19 +85,22 @@ export default function AfficherNote() {
             :
             <Grid container spacing={3}>
                 {notes.length == 0 ?
-                
-                <Typography variant="body1" color="textSecondary" component="p">Pas de Notes disponibles.</Typography>
 
-                :
+                    <Typography variant="body1" color="textSecondary" component="p">Pas de Notes disponibles.</Typography>
+
+                    :
                     notes.map((note, index) => {
-                    return (
-                        <NoteEleveViewer note={note} key={index}></NoteEleveViewer>
-
-                    );
-                })}
-
-
+                        return (
+                            <NoteEleveViewer note={note} key={index}></NoteEleveViewer>
+                        );
+                    })}
             </Grid>
 
     );
 }
+
+const mapStateToProps = state => ({
+    auth: state.auth
+})
+
+export default connect(mapStateToProps, null)(AfficherNote)

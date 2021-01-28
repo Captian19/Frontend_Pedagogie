@@ -1,0 +1,80 @@
+#lettre_stage {
+    color: black;
+    /* margin: 90px; */
+    /* padding-right: 1rem; */
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    text-align: justify;
+    font-size: 11pt;
+}
+
+#header {
+    margin-top: 1rem;
+}
+
+#gauche {
+    margin-left: 6.2rem;
+    width: 6em;
+    top: 0.7rem;
+    position: absolute;
+}
+
+#ministere {
+    margin-left: 12.5rem;
+    font-size: 8pt;
+}
+
+#contact {
+    margin-left: 17rem;
+    font-size: 9pt;
+    margin-bottom: 2rem;
+}
+
+#droite {
+    margin-left: 41rem;
+    width: 6em;
+    top: 0.7rem;
+    position: absolute;
+}
+
+#expediteur {
+    margin-top: 2rem;
+    margin-left: 5rem;
+    font-size: 10pt;
+    font-style: italic;
+}
+
+#numero {
+    margin-left: 27rem;
+    margin-bottom: 1em;
+}
+
+#jour {
+    font-size: 10pt;
+    margin-bottom: 1.5rem;
+    margin-left: 32rem;
+}
+
+#destinataire {
+    font-weight: bold;
+    margin-left: 29rem;
+    margin-bottom: 1rem;
+}
+
+#corps {
+    margin: 0.3rem 6rem;
+}
+
+#objet {
+    margin-bottom: 1rem;
+}
+
+#cher {
+    margin-left: 4rem;
+    margin-bottom: 1rem;
+}
+
+#signature {
+    font-family: Arial, Helvetica, sans-serif;
+    margin-top: 5rem;
+    margin-left: 27rem;
+}

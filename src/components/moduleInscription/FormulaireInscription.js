@@ -4,54 +4,115 @@ import { withRouter } from 'react-router-dom';
 
 
 class FormulaireInscription extends Component {
-    
-            state = { 
-                dateNaissance : '',
-                lieuNaissance : '',
-                numeroCarteEtudiant : '',
-                paysOrigine : '',
-                nationalite : '',
-                sexe : 'Masculin',
-                situationMatrimoniale : 'Célibataire',
-                nombreEnfants : 0, 
-                adresseEtudiant : '',
-                adresseVacance : '',
-                emploiRetribue : 'Non',
-                tempsComplet : 'Non',
-                tempsPartiel : 'Non',
-                lequelEmploi : 'Non',
-                lieuEmploi : 'Non',
-                diplomesObtenues : 'S1', 
-                anneeDiplome : '',
-                mentionDiplome : 'BIEN',
-                dernierEtablissementFreq : '',
-                anneeDernierEtablissementFreq : '',
-                inscritAutreEtablissement : 'Non',
-                lequelEtablissement : '',
-                conjointEtudiant : 'Non',
-                professionConjoint : 'Non',
-                lequelProfessionEtudiant : 'Non',
+    constructor(props) {
+        super(props);
+        this.state = { 
+            dateNaissance : "",
+            lieuNaissance : "",
+            numeroCarteEtudiant : "",
+            paysOrigine : "",
+            nationalite : "",
+            sexe : "",
+            situationMatrimoniale : "",
+            nombreEnfants : "", 
+            adresseEtudiant : "",
+            adresseVacance : "",
+            emploiRetribue : "",
+            tempsComplet : "",
+            tempsPartiel : "",
+            lequelEmploi : "",
+            lieuEmploi : "",
+            diplomesObtenues : "", 
+            anneeDiplome : "",
+            mentionDiplome : "",
+            dernierEtablissementFreq : "",
+            anneeDernierEtablissementFreq : "",
+            inscritAutreEtablissement : "",
+            lequelEtablissement : "",
+            conjointEtudiant : "",
+            professionConjoint : "",
+            lequelProfessionEtudiant : "",
+            bourseAnPasse : 'Non',
+            depotDemandeBourse : 'Non',
+            montantBourseParMois : '0',
+            nomTuteur : "",
+            adresseTuteur : "",
+            telephoneTuteur : "",
+            validationComptable : false,
+            validationMedecin : false,
+            exactitudeRenseignements : false
+        };
+      }
+ 
+
+      componentDidMount(){
+
+        let url = `http://127.0.0.1:8000/api/InfoEtudiantByEmail/${this.props.user.email}`;
+        axios.get(url, {
+          headers: {
+            'content-type': 'multipart/form-data'
+          }
+        })
+        .then(response => {
+            this.setState({
+                dateNaissance : response.data[0].dateNaissance,
+                lieuNaissance : response.data[0].lieuNaissance,
+                numeroCarteEtudiant : response.data[0].numeroCarteEtudiant,
+                paysOrigine : response.data[0].paysOrigine,
+                nationalite : response.data[0].nationalite,
+                sexe : response.data[0].sexe,
+                situationMatrimoniale : response.data[0].situationMatrimoniale,
+                nombreEnfants : response.data[0].nombreEnfants, 
+                adresseEtudiant : response.data[0].adresseEtudiant,
+                adresseVacance : response.data[0].adresseVacance,
+                emploiRetribue : response.data[0].emploiRetribue,
+                tempsComplet : response.data[0].tempsComplet,
+                tempsPartiel : response.data[0].tempsPartiel,
+                lequelEmploi : response.data[0].lieuEmploi,
+                lieuEmploi : response.data[0].lieuEmploi,
+                diplomesObtenues : response.data[0].diplomesObtenues, 
+                anneeDiplome : response.data[0].anneeDiplome,
+                mentionDiplome : response.data[0].mentionDiplome,
+                dernierEtablissementFreq : response.data[0].dernierEtablissementFreq,
+                anneeDernierEtablissementFreq : response.data[0].anneeDernierEtablissementFreq,
+                inscritAutreEtablissement : response.data[0].inscritAutreEtablissement,
+                lequelEtablissement : response.data[0].lequelEtablissement,
+                conjointEtudiant : response.data[0].conjointEtudiant,
+                professionConjoint : response.data[0].professionConjoint,
+                lequelProfessionEtudiant : response.data[0].lequelProfessionEtudiant,
                 bourseAnPasse : 'Non',
                 depotDemandeBourse : 'Non',
                 montantBourseParMois : '0',
-                nomTuteur : '',
-                adresseTuteur : '',
-                telephoneTuteur : '',
+                nomTuteur : response.data[0].nomTuteur,
+                adresseTuteur : response.data[0].adresseTuteur,
+                telephoneTuteur : response.data[0].telephoneTuteur,
                 validationComptable : false,
                 validationMedecin : false,
                 exactitudeRenseignements : false
-            };
+            })  
+            })   
+            
+        .catch(e =>{
+            console.log(e)
+        })
 
+
+    }
  
-        handleDateNaissanceChange = (e) => {
-            this.setState({
-                dateNaissance: e.target.value
-            })
-        };
+         
+ 
+ 
 
         handleLieuNaissanceChange = (e) => {
             this.setState({
                 lieuNaissance: e.target.value
+            })
+        };
+
+
+        handleDateNaissanceChange = (e) => {
+            this.setState({
+                dateNaissance: e.target.value
             })
         };
 
@@ -375,6 +436,7 @@ class FormulaireInscription extends Component {
                     }
     
     render() { 
+
         return ( 
 
                 <div>

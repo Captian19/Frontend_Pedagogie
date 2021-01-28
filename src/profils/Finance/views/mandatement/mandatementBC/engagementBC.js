@@ -8,8 +8,7 @@ import Button from '@material-ui/core/Button';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import FactureProformatBC from "./Piece_jointe/FactureProformatBC";
-import BonD_engagementBC from "./bon_de_commandeBC/bonD_engagementBC";
-import BonEngagementUploadBC from "./Piece_jointe/BonEngagementUploadBC";
+import BonD_engagementBC from "../mandatupdate/mandatupdateBC/bon_de_commandeBC/bonD_engagementBC";
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -28,7 +27,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 function getSteps() {
-    return ['Facture ProFormat', "Bon d'engagement"];
+    return ['Facture Proforma', "Bon d'engagement"];
 }
 
 
@@ -39,8 +38,7 @@ function getStepContent(step) {
         case 1:
             return (
                 <>
-                    <BonD_engagementBC/>
-                    <BonEngagementUploadBC/>
+                    < BonD_engagementBC/>
                 </>
             )
         default:
@@ -81,7 +79,7 @@ export default function EngagementBC() {
                                         onClick={handleBack}
                                         className={classes.button}
                                     >
-                                        Back
+                                        Retour
                                     </Button>
                                     <Button
                                         variant="contained"
@@ -89,7 +87,7 @@ export default function EngagementBC() {
                                         onClick={handleNext}
                                         className={classes.button}
                                     >
-                                        {activeStep === steps.length - 1 ? 'Finish' : 'Next'}
+                                        {activeStep === steps.length - 1 ? 'Terminé' : 'Suivant'}
                                     </Button>
                                 </div>
                             </div>
@@ -99,9 +97,9 @@ export default function EngagementBC() {
             </Stepper>
             {activeStep === steps.length && (
                 <Paper square elevation={0} className={classes.resetContainer}>
-                    <Typography>All steps completed - you&apos;re finished</Typography>
+                    <Typography>Toutes les étapes sont terminées</Typography>
                     <Button onClick={handleReset} className={classes.button}>
-                        Reset
+                        Réinitialisé
                     </Button>
                 </Paper>
             )}

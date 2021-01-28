@@ -1,20 +1,28 @@
 import React from "react";
-import Card from "@material-ui/core/Card";
+import '../bordereauBC/style.css';
+
 
 class BonD_engagementBC extends React.Component{
     constructor(props) {
         super(props);
-        this.state = {designation:'', quantite:'',prixUnit:'',montant:'',exercice:'',imputation:'',nomFourn:'',natureComm:''};
+        this.state = {designation_mat_serv:'', quantity:'',prix_unitaire:'',montant:'',exercice:'',imputation:'',nom_fournisseur:'',nature_command:'',liste:[]};
+    }
+
+    componentDidMount(){
+        fetch('http://127.0.0.1:8000/mandatement/last1')
+            .then(res => res.json())
+            .then(data => this.setState({liste: data}))
+            .catch(err => console.error(err));
     }
 
     handleChangeDesignation=(event)=>{
-        this.setState({designation: event.target.value });
+        this.setState({designation_mat_serv: event.target.value });
     }
     handleChangeQuantite=(event)=>{
-        this.setState({quantite: event.target.value });
+        this.setState({quantity: event.target.value });
     }
     handleChangePrixUnit=(event)=>{
-        this.setState({prixUnit: event.target.value });
+        this.setState({prix_unitaire: event.target.value });
     }
 
     handleChangeMontant=(event)=>{
@@ -30,140 +38,187 @@ class BonD_engagementBC extends React.Component{
     }
 
     handleChangeNomFourn=(event)=>{
-        this.setState({nomFourn: event.target.value });
+        this.setState({nom_fournisseur: event.target.value });
     }
 
     handleChangeNatureCom=(event)=>{
-        this.setState({natureCom: event.target.value });
+        this.setState({nature_command: event.target.value });
     }
+
+
+    handleSubmit=(event) =>{
+
+        event.preventDefault();
+        const dataToSend = {designation_mat_serv: this.state.designation_mat_serv, quantity: this.state.quantity, prix_unitaire: this.state.prix_unitaire, montant: this.state.montant, exercice: this.state.exercice, imputation: this.state.imputation, nom_fournisseur:this.state.nom_fournisseur, nature_command:this.state.nature_command, }
+        fetch(`http://127.0.0.1:8000/mandatement/BonEngagementBc/${this.state.liste[7]}/`,{
+            method: 'PUT',
+            headers: {
+                Accept: 'application/json', 'Content-Type': 'application/json'},
+            body: JSON.stringify(dataToSend)
+        }).then(
+            data => console.log(data)
+        )
+        alert('enregistré');
+    }
+
     render() {
 
         return(
-            <>
-            <div className='container' style={{border: "1px solid #0F1019", fontWeight: "bold"}}>
-                <br/><br/><div className="text-center">
+            <form onSubmit={this.handleSubmit}>
+                <div className='container' style={{border: "1px solid #0F1019", fontWeight: "bold" ,width:"793.7007874016px"}}>
+                    <br/><br/><div className="text-center">
                     <h2>
-                        ECOLE POLYTECHNIQUE <br/>DE THIES
+                        <button type="submit"> ECOLE POLYTECHNIQUE </button> <br/>DE THIES
                     </h2>
                 </div>
-                <div className="text-center"><h3>***</h3></div>
-                <br/>
-                <div className='row'>
-                    <div className='col-md-6'>
-                        <h3>Exercice: <span className="spanner"> <input className="input-group-text abc"
-                                                                        name="exercice" autoComplete="off"
-                                                                        onChange={this.handleChangeExercice}
-                                                                        value={this.state.exercice}
-                                                                        type="number"/></span></h3>
+                    <div className="text-center"><h3>***</h3></div>
+                    <br/>
+                    <div className='row'>
+                        <div className='col-md-6'>
+                            <div className="row">
+                                <div className="col-md-5">
+                                    <h3>Exercice: </h3>
+                                </div>
+                                <div className="col-md-5">
+                                    <h5><span className="spanner"> <input className="input-group-text" style={{fontSize:"1em"}}
+                                                                          name="exercice" autoComplete="off"
+                                                                          onChange={this.handleChangeExercice}
+                                                                          value={this.state.exercice} required
+                                                                          type="number"/></span></h5>
+                                </div>
+                                <div className="col-md-2"/>
+                            </div>
+                        </div>
+                        <div className='col-md-6'>
+                            <div className="row">
+                                <div className="col-md-5">
+                                    <h3>Imputation:</h3>
+                                </div>
+                                <div className="col-md-5">
+                                    <h5><span className="spanner"> <input className="input-group-text" style={{fontSize:"1em"}}
+                                                                          name="imputation" autoComplete="off"
+                                                                          onChange={this.handleChangeImputation}
+                                                                          value={this.state.imputation} required
+                                                                          type="text"/></span></h5>
+                                </div>
+                                <div className="col-md-2"/>
+                            </div>
+                        </div>
                     </div>
-                    <div className='col-md-6'>
-                        <h3>Imputation:<span className="spanner"> <input className="input-group-text abc"
-                                                                         name="imputation" autoComplete="off"
-                                                                         onChange={this.handleChangeImputation}
-                                                                         value={this.state.imputation}
-                                                                         type="number"/></span></h3>
+                    <br/>
+                    <div className="text-center">
+                        <h2>
+                            BON D'ENGAGEMENT
+                        </h2>
+                        <h3>
+                            (A JOINDRE A LA FACTURE)
+                        </h3>
                     </div>
-                </div>
-                <br/>
-                <div className="text-center">
-                    <h2>
-                        BON D'ENGAGEMENT
-                    </h2>
-                    <h3>
-                        (A JOINDRE A LA FACTURE)
-                    </h3>
-                </div>
-                <br/>
-                <div>
+                    <br/>
                     <div>
-                        <h3>Nom du Fournisseur : <span className="spanner"> <input className="input-group-text abc"
-                                                                                   name="nomFourn" autoComplete="off"
-                                                                                   onChange={this.handleChangeNomFourn}
-                                                                                   value={this.state.nomFourn}
-                                                                                   type="number"/></span></h3>
-                    </div><br/>
-                    <div>
-                        <h3>Nature de la Commande : <span className="spanner"> <input className="input-group-text abc"
-                                                                                      name="natureCom"
-                                                                                      autoComplete="off"
-                                                                                      onChange={this.handleChangeNatureCom}
-                                                                                      value={this.state.natureCom}
-                                                                                      type="number"/></span></h3>
+                        <div className='row'>
+                            <div className="col-md-5">
+                                <h3>Nom du Fournisseur : </h3>
+                            </div>
+                            <div className="col-md-5">
+                                <h5><span className="spanner"> <input className="input-group-text" style={{fontSize:"1em"}}
+                                                                      name="nomFourn" autoComplete="off"
+                                                                      onChange={this.handleChangeNomFourn}
+                                                                      value={this.state.nom_fournisseur} required
+                                                                      type="text"/></span></h5>
+                            </div>
+                            <div className="col-md-2"/>
+
+                        </div><br/>
+                        <div className='row'>
+                            <div className="col-md-5">
+                                <h3>Nature de la Commande : </h3>
+                            </div>
+                            <div className="col-md-5">
+                                <h5><span className="spanner"> <input className="input-group-text " style={{fontSize:"1em"}}
+                                                                      name="natureCom"
+                                                                      autoComplete="off"
+                                                                      onChange={this.handleChangeNatureCom}
+                                                                      value={this.state.nature_command} required
+                                                                      type="text"/></span></h5>
+                            </div>
+                            <div className="col-md-2"/>
+
+                        </div>
                     </div>
-                </div>
-                <br/>
-                <table className="table table-bordered text-center shadow p-3 mb-5 bg-white rounded largeur" style={{width:"1000px" ,marginLeft:'50px',backgroundColor:'pink'}}>
-                    <thead id="page">
-                    <tr className="centre">
-                        <th scope="col" colSpan="6" className="align-middle text-uppercase"
-                            style={{border: "1px solid #0F1019", fontWeight: "bold"}}>Designation des matieres ou services
-                        </th>
-                        <th scope="col" className="align-middle creancier text-uppercase"
-                            style={{border: "1px solid #0F1019", fontWeight: "bold"}}>quantite
-                        </th>
-                        <th scope="col" className="align-middle mandatee1 text-uppercase"
-                            style={{border: "1px solid #0F1019", fontWeight: "bold"}}>prix unitaire
-                        </th>
+                    <br/>
+                    <table className="table table-bordered text-center shadow p-3 mb-5 bg-white rounded largeur" style={{width:"793.7007874016px" ,marginLeft:'-17px',height:"370px"}}>
+                        <thead id="page">
+                        <tr className="centre">
+                            <th scope="col" colSpan="6" className="align-middle text-uppercase"
+                                style={{border: "1px solid #0F1019", fontWeight: "bold"}}>Designation des matieres ou services
+                            </th>
+                            <th scope="col" className="align-middle creancier text-uppercase"
+                                style={{border: "1px solid #0F1019", fontWeight: "bold"}}>quantite
+                            </th>
+                            <th scope="col" className="align-middle mandatee1 text-uppercase"
+                                style={{border: "1px solid #0F1019", fontWeight: "bold"}}>prix unitaire
+                            </th>
 
-                        <th scope="col" className="align-middle mandatee1 text-uppercase"
-                            style={{border: "1px solid #0F1019", fontWeight: "bold"}}>montant
-                        </th>
-                    </tr>
-                    <tr className="centre" style={{height: '400px', border: "1px solid #0F1019"}}>
-                        <th scope="col" colSpan="6" className="align-middle "
-                            style={{border: "1px solid #0F1019", fontWeight: "bold"}}>
-                                <span className="spanner"> <textarea className="form-control cab"
-                                                                  name="designation" autoComplete="off"
-                                                                  onChange={this.handleChangeDesignation}
-                                                                  value={this.state.designation} rows='4'/></span>
-                        </th>
-                        <th scope="col" className="align-middle creancier"
-                            style={{border: "1px solid #0F1019", fontWeight: "bold"}}>
-                                <span className="spanner"> <textarea className="form-control cab"
-                                                                  name="quantite" autoComplete="off"
-                                                                  onChange={this.handleChangeQuantite}
-                                                                  value={this.state.quantite} rows='4'/></span>
+                            <th scope="col" className="align-middle mandatee1 text-uppercase"
+                                style={{border: "1px solid #0F1019", fontWeight: "bold"}}>montant
+                            </th>
+                        </tr>
+                        <tr className="centre" style={{height: '400px', border: "1px solid #0F1019"}}>
+                            <th scope="col" colSpan="6" className="align-middle "
+                                style={{border: "1px solid #0F1019", fontWeight: "bold"}}>
+                                <span className="spanner"> <textarea className="form-control ad" style={{fontSize:"1em"}}
+                                                                     name="designation" autoComplete="off"
+                                                                     onChange={this.handleChangeDesignation} required
+                                                                     value={this.state.designation_mat_serv} rows='4'/></span>
+                            </th>
+                            <th scope="col" className="align-middle creancier"
+                                style={{border: "1px solid #0F1019", fontWeight: "bold"}}>
+                                <span className="spanner"> <textarea className="form-control ad" style={{fontSize:"1em"}}
+                                                                     name="quantite" autoComplete="off"
+                                                                     onChange={this.handleChangeQuantite} required
+                                                                     value={this.state.quantity} rows='4'/></span>
 
-                        </th>
-                        <th scope="col" className="align-middle mandatee1"
-                            style={{border: "1px solid #0F1019", fontWeight: "bold"}}>
-                                <span className="spanner"> <textarea className="form-control cab"
-                                                                  name="prixUnit" autoComplete="off"
-                                                                  onChange={this.handleChangePrixUnit}
-                                                                  value={this.state.prixUnit} rows='4'/></span>
-                        </th>
+                            </th>
+                            <th scope="col" className="align-middle mandatee1"
+                                style={{border: "1px solid #0F1019", fontWeight: "bold"}}>
+                                <span className="spanner"> <textarea className="form-control ad" style={{fontSize:"1em"}}
+                                                                     name="prixUnit" autoComplete="off"
+                                                                     onChange={this.handleChangePrixUnit} required
+                                                                     value={this.state.prix_unitaire} rows='4'/></span>
+                            </th>
 
-                        <th scope="col" className="align-middle mandatee1"
-                            style={{border: "1px solid #0F1019", fontWeight: "bold"}}>
-                                <span className="spanner"> <textarea className="form-control cab" name="montant"
+                            <th scope="col" className="align-middle mandatee1"
+                                style={{border: "1px solid #0F1019", fontWeight: "bold"}}>
+                                <span className="spanner"> <textarea className="form-control ad" name="montant" style={{fontSize:"1em",border: "none"}}
                                                                      onChange={this.handleChangeMontant}
-                                                                     value={this.state.montant}
-                                                                     style={{border: "none"}} rows="4"/></span>
-                        </th>
-                    </tr>
-                    </thead>
-                </table><br/>
-                <div className='row'>
-                    <div className='col-md-6 text-center'>
-                        <h4 className='text-uppercase'>montant de la depense<br/>Visas de l'ordonnateur</h4>
-                    </div>
-                    <div className='col-md-6'>
+                                                                     value={this.state.montant} required
+                                                                     rows="4"/></span>
+                            </th>
+                        </tr>
+                        </thead>
+                    </table><br/>
+                    <div className='row'>
+                        <div className='col-md-6 text-center'>
+                            <h4 className='text-uppercase'>montant de la depense<br/>Visas de l'ordonnateur</h4>
+                        </div>
+                        <div className='col-md-6'>
 
-                    </div>
-                </div><br/>
-                <div className='row'>
-                    <div className='col-md-6'>
+                        </div>
+                    </div><br/>
+                    <div className='row'>
+                        <div className='col-md-6'>
 
-                    </div>
-                    <div className='col-md-6 text-center'>
-                        <h4>Thies, le ...................................</h4>
-                    </div>
-                </div><br/><br/><br/>
-            </div><br/><br/>
-            </>
+                        </div>
+                        <div className='col-md-6 text-center'>
+                            <h4>Thies, le ...................................</h4>
+                        </div>
+                    </div><br/><br/><br/>
+                </div><br/><br/><br/><br/>
+            </form>
         )
     }
 }
 
 
-export default BonD_engagementBC
+export default  BonD_engagementBC

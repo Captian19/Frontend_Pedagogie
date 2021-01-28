@@ -1,60 +1,54 @@
-import { id_classe, id_eleve } from "../../../../constants/Planning&Notes/constants";
 
 const planning_notes_menu = [
-    {
-        _tag: 'CSidebarNavDropdown',
-        name: 'Planning',
-        icon: 'cil-pencil',
-        _children: [
-          {
-            _tag: 'CSidebarNavItem',
-            name: "Voir Planning",
-            to: '/etudiant/voirplanning/:id_classe',
-            icon: 'cil-speedometer',
-          },
-    
-        ],
+  {
+    _tag: 'CSidebarNavTitle',
+    _children: ['Panning & Notes']
+  },
+  {
+    _tag: 'CSidebarNavItem',
+    name: "Mon Planning",
+    to: '/etudiant/voirplanning',
+    icon: 'cil-calendar',
+  },
+  {
+    _tag: 'CSidebarNavDropdown',
+    name: 'Cahier de Texte',
+    icon: 'cil-book',
+    _children: [
+      {
+        _tag: 'CSidebarNavItem',
+        name: "Voir Progression",
+        to: '/etudiant/voir-progression-cours',
+        icon: 'cil-bar-chart',
       },
       {
-        _tag: 'CSidebarNavDropdown',
-        name: 'Cahier de Texte',
-        icon: 'cil-pencil',
-        _children: [
-          {
-            _tag: 'CSidebarNavItem',
-            name: "Voir Progression",
-            to: '/etudiant/voir-progression-cours/' + id_classe,
-            icon: 'cil-speedometer',
-          },
-          {
-            _tag: 'CSidebarNavItem',
-            name: "Mes absences",
-            to: '/etudiant/voir-absences/' + id_classe + "/" + id_eleve,
-            icon: 'cil-speedometer',
-          },
-    
-        ],
+        _tag: 'CSidebarNavItem',
+        name: "Mes absences",
+        to: '/etudiant/voir-absences',
+        icon: 'cil-user-unfollow',
+      },
+    ],
+  },
+  {
+    _tag: 'CSidebarNavDropdown',
+    name: 'Gestion Notes',
+    icon: 'cil-pencil',
+    _children: [
+      {
+        _tag: 'CSidebarNavItem',
+        name: "Mes Notes",
+        to: '/etudiant/voir-mes-notes',
+        icon: 'cil-notes',
       },
       {
-        _tag: 'CSidebarNavDropdown',
-        name: 'Gestion Notes',
-        icon: 'cil-pencil',
-        _children: [
-          {
-            _tag: 'CSidebarNavItem',
-            name: "Mes Notes",
-            to: '/etudiant/voir-mes-notes/' + id_eleve,
-            icon: 'cil-speedometer',
-          },
-          {
-            _tag: 'CSidebarNavItem',
-            name: "Mes bulletins",
-            to: '/etudiant/voir-mes-bulletins/' + id_eleve,
-            icon: 'cil-speedometer',
-          },
-    
-        ],
+        _tag: 'CSidebarNavItem',
+        name: "Mes bulletins",
+        to: '/etudiant/voir-mes-bulletins',
+        icon: 'cil-copy',
       },
+
+    ],
+  },
 ]
 
 export default planning_notes_menu;

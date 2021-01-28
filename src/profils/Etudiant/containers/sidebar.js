@@ -1,5 +1,5 @@
 import React from 'react'
-import { useSelector, useDispatch } from 'react-redux'
+import { useSelector, useDispatch, connect } from 'react-redux'
 import {
   CCreateElement,
   CSidebar,
@@ -13,15 +13,16 @@ import {
 } from '@coreui/react'
 
 import CIcon from '@coreui/icons-react'
-
 import photo from "./../../../assets/img/ent5.png";
 import photo2 from "./../../../assets/img/ent_mini.png";
 // sidebar nav config
 import navigation from './menu'
 
-const Sidebar = () => {
+import pfe from './pfe';
+
+const Sidebar = (props) => {
   const dispatch = useDispatch()
-  const show = useSelector(state => state.sidebarShow)
+  const show = useSelector(state => state.layout.sidebarShow)
 
   return (
     <CSidebar show={show}
@@ -41,7 +42,17 @@ const Sidebar = () => {
             CSidebarNavTitle
           }}
         />
-
+         {(props.role.find(role => role.classe === "DIC2" )) && (
+          <CCreateElement
+          items={pfe}
+          components={{
+            CSidebarNavDivider,
+            CSidebarNavDropdown,
+            CSidebarNavItem,
+            CSidebarNavTitle
+          }}
+        />
+        )}
           
 
 
@@ -51,4 +62,9 @@ const Sidebar = () => {
   )
 }
 
-export default React.memo(Sidebar)
+//export default React.memo(Sidebar)
+const MapToState = state =>({
+  role: state.auth.user.CurrentRoles
+})
+
+export default connect(MapToState, null)(Sidebar)

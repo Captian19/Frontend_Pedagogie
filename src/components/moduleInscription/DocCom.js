@@ -1,7 +1,6 @@
 import React, { Component } from "react";
-import axios from 'axios';
 import { Link } from 'react-router-dom';
-import repo from '../../assets/moduleInscription/img/dossier.png'
+import carte from '../../assets/moduleInscription/img/ca.png'
 
 class DocCom extends Component {
   
@@ -11,9 +10,11 @@ class DocCom extends Component {
         return ( 
 
             <div className="col-lg-2 mt-3 text-center ">
-                <Link to='/communication/dossier-etudiant-fichiers'>
-                    <img width="100px" src={repo}></img>
-                    <div>Mame Diarra Sow</div>
+                <Link to={`/communication/carte-etudiant/${this.props.etudiant.id}`}>
+                    <img width="100px" src={carte}></img>
+                    <div >{this.props.etudiant.prenom} {this.props.etudiant.nom}</div>
+                    <div >{this.props.etudiant.departement}</div>
+                    <div >{this.props.etudiant.anneeScolaire}</div>
                 </Link>
             </div>
 

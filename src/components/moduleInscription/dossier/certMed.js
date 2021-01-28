@@ -1,9 +1,8 @@
 import React, { Component } from "react";
-import axios from 'axios';
 import moment from 'moment';
 import localization from 'moment/locale/fr';
 
-moment.updateLocale('fr', localization);
+moment.updateLocale('fr', localization);//Pour Formater la date
 
 class CertifMedic extends Component {
     

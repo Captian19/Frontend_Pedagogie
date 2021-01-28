@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import {
-  CBadge,
   CDropdown,
   CDropdownItem,
   CDropdownMenu,
@@ -36,14 +35,14 @@ class TheHeaderDropdown extends Component{
             color="light"
             className="text-center"
           >
-            <strong>Compte</strong>
+            <strong>Mon compte</strong>
           </CDropdownItem>
           <CDropdownItem to="/enseignant/profil">
             <CIcon name="cil-user" className="mfe-2" />Profil
           </CDropdownItem>
-          <CDropdownItem to="/enseignant/historique"> 
+          <CDropdownItem to="/enseignant/changer-de-mot-de-passe"> 
             <CIcon name="cil-settings" className="mfe-2" /> 
-            Historique
+            Changer de mot de passe
           </CDropdownItem>
           <CDropdownItem divider />
           <CDropdownItem onClick={this.props.logout} >

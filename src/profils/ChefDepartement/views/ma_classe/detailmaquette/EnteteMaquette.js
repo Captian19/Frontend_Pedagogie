@@ -9,7 +9,7 @@ import {connect} from 'react-redux' ;
 
 
     return(
-        <thead className="table-primary ml-0 mr-0">
+        <thead className="table-info ml-0 mr-0">
             <tr id="entete">
                 <th colSpan={43} className="py-3"><center><h3>Maquette {props.roles.departement || props.role.departement} </h3> </center></th>
             </tr>

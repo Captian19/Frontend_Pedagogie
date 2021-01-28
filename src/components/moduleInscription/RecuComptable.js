@@ -1,11 +1,7 @@
 import React, {Component} from 'react';
-import html2PDF from 'jspdf-html2canvas';
 import logoEPT from '../../../src/assets/moduleInscription/img/0.png'
-import cachet from '../../../src/assets/moduleInscription/img/2.png'
-import { Link } from 'react-router-dom';
 import axios from 'axios';
 import { withRouter } from 'react-router-dom';
-import $ from 'jquery';
 import localization from 'moment/locale/fr';
 import moment from 'moment';
 
@@ -753,7 +749,7 @@ displayInputProfession = (eta) =>{
               
 
             
-<div id="page" className="container mt-5 d-flex justify-content-center ">
+<div  className="container mt-5 d-flex justify-content-center ">
          
          <div className="col-lg-8 card card-body shadow ">
                          
@@ -828,8 +824,7 @@ displayInputProfession = (eta) =>{
      </div>
               
               <div className="row d-flex mb-5 justify-content-center text-center">
-                  {/* <button   className="btn btn-primary  col-lg-4" onClick={()=> this.print()}  id="btn">Imprimer le Reçu</button>
-                  <div className="col-lg-1 mt-3"></div> */}
+                  
                   <button type="submit" className="btn btn-primary col-lg-4  ">VALIDER LE PAIEMENT</button>
               </div>
               

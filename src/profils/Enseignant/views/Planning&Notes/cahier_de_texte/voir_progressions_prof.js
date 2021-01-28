@@ -3,11 +3,12 @@ import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
 import { makeStyles } from '@material-ui/core/styles';
 import ProgressionBox from '../../../../../components/Planning&Notes/cahier_de_texte_components/progression_box';
-import { loadProgressions, loadProgressionsProf } from "../../../../../actions/Planning&Notes/cahier_de_texte_services";
-import { id_classe } from "../../../../../constants/Planning&Notes/constants";
-import { loadCourses } from "../../../../../actions/Planning&Notes/planning_functions";
+import { loadProgressionsProf } from "../../../../../actions/Planning&Notes/cahier_de_texte_services";
 import ClipLoader from "react-spinners/ClipLoader";
 import { css } from "@emotion/core";
+
+import { connect } from "react-redux";
+import { Typography } from '@material-ui/core';
 
 // Some styling
 const blueColor = "#2699FB";
@@ -47,21 +48,35 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 
-export default function Progressions(props) {
+function Progressions(props) {
     const classes = useStyles();
     const [progressions, setProgressionState] = React.useState([]);
     const [loading, setLoadingState] = React.useState(true);
+    
+    const reloadComponent = () => setLoadingState(true);
+    const [role] = React.useState(() => {
+        var current_role = null;
+        props.auth.user.CurrentRoles.map(role => {
+            // console.log(role)
+            if (role.role_type == "ENSEIGNANT") {
+                return current_role = {
+                    type: role.role_type,
+                    id: role.id,
+                    departement: role.departement,
+                };
+            }
+            
+        })
+        return current_role;
+    })
 
-
-    React.useEffect(() => {
-        loadProgressionsProf(id_classe).then(response => {
+    React.useEffect(async () => {
+        await loadProgressionsProf(role.id).then(response => {
             setProgressionState(response);
             setLoadingState(false);
-
         });
 
-
-    }, []);
+    }, [loading]);
     return (
         <div className={classes.root} style={{ alignContent: "center" }}>
             {loading?
@@ -74,18 +89,23 @@ export default function Progressions(props) {
                     />
                 </div>
                 :
+                progressions.length == 0 ?
+                <Typography variant="body1" color="textSecondary" component="p">Pas de cours.</Typography>
+                :
                 <Grid container spacing={3} style={{margin: 2}}>
                     {progressions.map((progression, index) => 
-                        <Grid item xs={4} key={index}>
-                            <ProgressionBox progression={progression} printProf={false}></ProgressionBox>
+                        <Grid item xs={12} sm={4} key={index}>
+                            <ProgressionBox reloadComponent={reloadComponent} role={role} progression={progression} printProf={false}></ProgressionBox>
                         </Grid>
                        )}
                 </Grid>
             }
-
-
         </div>
     )
-
-
 }
+
+const mapStateToProps = (state) => ({
+    auth: state.auth,
+})
+
+export default connect(mapStateToProps, null)(Progressions)

@@ -8,7 +8,7 @@ import {
   CImg
 } from '@coreui/react'
 import CIcon from '@coreui/icons-react'
-// import avatar from "./../../../assets/img/avatar.png"
+import avatar from "./../../../../assets/img/avatar.png";
 import {connect} from "react-redux"
 import {logout} from "./../../../../actions/auth"
 
@@ -23,7 +23,7 @@ class TheHeaderDropdown extends Component{
         <CDropdownToggle className="c-header-nav-link" caret={false}>
           <div className="c-avatar">
             <CImg
-              src={this.props.user.photo ? this.props.user.photo : ""}
+              src={this.props.user.photo ? this.props.user.photo : avatar}
               className="c-avatar-img"
               alt={this.props.user.email}
             />
@@ -36,24 +36,14 @@ class TheHeaderDropdown extends Component{
             color="light"
             className="text-center"
           >
-            <strong>Settings</strong>
+            <strong>Comptes</strong>
           </CDropdownItem>
-          <CDropdownItem to="/admin/profil">
-            <CIcon name="cil-user" className="mfe-2" />Profile
+          <CDropdownItem to="/directeur-etudes/profil">
+            <CIcon name="cil-user" className="mfe-2" />Profil
           </CDropdownItem>
           <CDropdownItem>
             <CIcon name="cil-settings" className="mfe-2" /> 
             Historique
-          </CDropdownItem>
-          <CDropdownItem>
-            <CIcon name="cil-credit-card" className="mfe-2" /> 
-            Payments
-            <CBadge color="secondary" className="mfs-auto">42</CBadge>
-          </CDropdownItem>
-          <CDropdownItem>
-            <CIcon name="cil-file" className="mfe-2" /> 
-            Projects
-            <CBadge color="primary" className="mfs-auto">42</CBadge>
           </CDropdownItem>
           <CDropdownItem divider />
           <CDropdownItem onClick={this.props.logout} >

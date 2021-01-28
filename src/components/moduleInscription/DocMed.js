@@ -1,9 +1,8 @@
 import React, { Component } from "react";
-import axios from 'axios';
 import { Link } from 'react-router-dom';
-import repo from '../../assets/moduleInscription/img/dossier.png'
+import fiche from '../../assets/moduleInscription/img/fichier.png'
 
-class Doc extends Component {
+class DocMed extends Component {
   
 
 
@@ -11,9 +10,11 @@ class Doc extends Component {
         return ( 
 
             <div className="col-lg-2 mt-3 text-center ">
-                <Link to='/medecin/dossier-etudiant-fichiers'>
-                    <img width="100px" src={repo}></img>
-                    <div >Mame Diarra Sow</div>
+                <Link to={`/medecin/dossier-etudiant-fichiers-certifical-medical/${this.props.etudiant.anneeScolaire}/${this.props.etudiant.email}`}>
+                    <img width="100px" src={fiche}></img>
+                    <div >{this.props.etudiant.prenom} {this.props.etudiant.nom}</div>
+                    <div >{this.props.etudiant.classe}</div>
+                    <div >{this.props.etudiant.anneeScolaire}</div>
                 </Link>
             </div>
 
@@ -21,4 +22,4 @@ class Doc extends Component {
     }
 }
  
-export default Doc;
+export default DocMed;

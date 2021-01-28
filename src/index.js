@@ -7,8 +7,8 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 
 import "@coreui/coreui/scss/coreui.scss";
-import "@coreui/coreui/dist/js/coreui.bundle.min.js"
-import "@coreui/icons/js/svgxuse.min.js"
+import "@coreui/coreui/dist/js/coreui.bundle.min.js";
+import "@coreui/icons/js/svgxuse.min.js";
 
 
 import { icons } from './assets/icons'

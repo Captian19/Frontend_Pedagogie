@@ -7,7 +7,6 @@ import StepContent from '@material-ui/core/StepContent';
 import Button from '@material-ui/core/Button';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
-import Pv from "./pv_de reception/Pv";
 import BordereauLivraison from "./Piece_jointe/BordereauLivraison";
 import FactureDefinitive from "./Piece_jointe/FactureDefinitive";
 import PvReceptionUpload from "./Piece_jointe/PvReceptionUpload";
@@ -42,7 +41,6 @@ function getStepContent(step) {
         case 2:
             return (
                 <>
-                    <Pv/>
                     <PvReceptionUpload/>
                 </>
             )

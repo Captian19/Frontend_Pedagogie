@@ -17,10 +17,29 @@ import { Grid, Paper } from '@material-ui/core';
 import { useParams } from 'react-router-dom';
 import ClipLoader from "react-spinners/ClipLoader";
 import { css } from "@emotion/core";
-import { EditorState, convertToRaw, ContentState, convertFromHTML } from 'draft-js';
-import draftToMarkdown from 'draftjs-to-markdown';
+import Editor from '../../../../../components/Planning&Notes/cahier_de_texte_components/editor';
 import CircularProgress from "../../../../../components/Planning&Notes/cahier_de_texte_components/circular_progress";
 import { loadSeance } from "../../../../../actions/Planning&Notes/planning_functions";
+import { liste_de_classe } from '../../../../../actions/Planning&Notes/cahier_de_texte_services';
+// import { XYPlot, LineSeries } from 'react-vis';
+// import LineChart from "../../../../../components/Planning&Notes/cahier_de_texte_components/line_chart";
+import {
+    CCard,
+    CCardBody,
+    CCardGroup,
+    CCardHeader
+} from '@coreui/react'
+import {
+    CChartBar,
+    CChartLine,
+    CChartDoughnut,
+    CChartRadar,
+    CChartPie,
+    CChartPolarArea
+} from '@coreui/react-chartjs'
+
+// Redux
+import { connect } from "react-redux";
 
 // Some styling
 const blueColor = "#2699FB";
@@ -54,40 +73,49 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-const eleves = [
-    { _id: 1, prenom: 'Alioune', nom: 'Sarr' },
-    { _id: 2, prenom: 'Falilou', nom: 'Fall' },
-    { _id: 3, prenom: 'Mamadou', nom: 'Sow' },
-    { _id: 4, prenom: 'Mame Diarra', nom: 'Sow' },
-    { _id: 5, prenom: 'Ibrahima Birane', nom: 'Faye' },
-    { _id: 6, prenom: 'Kalidou', nom: 'Dia' },
-    { _id: 7, prenom: 'Fallou', nom: 'Diakhaté' },
-    { _id: 8, prenom: 'Khadim', nom: 'Diakhaté' },
-    { _id: 9, prenom: 'Sokhna Cambel', nom: 'Dieng' },
-];
-export default function CahierCours(props) {
+function CahierCours(props) {
     const classes = useStyles();
     const [expanded, setExpanded] = React.useState(false);
 
     const handleExpandClick = () => {
         setExpanded(!expanded);
     };
+
+
     let { id_progression } = useParams();
 
     const [progression, setProgressionState] = React.useState([]);
     const [seances, setSeancesState] = React.useState([]);
     const [loading, setLoadingState] = React.useState(true);
+    const [eleves, setElevesState] = React.useState([])
     const [cours, setCoursState] = React.useState({});
+    const [absences, setAbsencesState] = React.useState([]);
     React.useEffect(async () => {
         await loadSeance(id_progression).then(response => {
             const prog = response.splice(0, 1)[0];
             setProgressionState(prog);
             setSeancesState(response);
+            const i = 0;
+
+            var absences = response.map((seance) => {
+                const absents = seance.cahierSeance.absents.split(",") ?? [];
+                return {
+                    x: `S${i}`,
+                    y: absents.length
+                }
+            });
+            setAbsencesState(absences);
+            console.log(absences);
             return prog;
 
         }).then(progress => {
-                setCoursState(progress.cours);
+            setCoursState(progress.cours);
+            return progress.classe;
+        }).then(async (classe) => {
+            await liste_de_classe(classe.niveau, classe.departement).then(response => {
+                setElevesState(response);
                 setLoadingState(false);
+            });
         });
 
 
@@ -111,24 +139,48 @@ export default function CahierCours(props) {
                     <CardHeader
                         avatar={
                             <Avatar aria-label="recipe" className={classes.avatar}>
-                                {cours.libelle[0].toUpperCase()}
+                                {cours.nom[0].toUpperCase()}
                             </Avatar>
                         }
 
-                        title={cours.libelle}
-                        subheader="Maquette DIC1 GIT / Developpemnt"
+                        title={cours.nom}
+                        subheader={`Maquette ${cours.ue.classe}-${cours.ue.departement} / ${cours.ue.nom}`}
                     />
 
                     <CardContent>
                         <Grid container spacing={4}>
-                            <Grid item sm={8}>
-                                <Typography variant="body2" color="textSecondary" component="p">Nombre d'heures : {cours['chargeHoraire']} heures</Typography>
+                            <Grid item sm={3}>
+                                <Typography variant="body2" color="textSecondary" component="p">Nombre d'heures : {cours.CM + cours.TD_TP} heures</Typography>
                                 <Typography variant="body2" color="textSecondary" component="p">Nombre d'heures exécutées : {progression.nbHeuresExecutees} heures</Typography>
                                 <Typography variant="body2" color="textSecondary" component="p">Date de début du cours : {progression.dateDebut}</Typography>
                                 <Typography variant="body2" color="textSecondary" component="p">Etat : {progression.dateFin == null ? "En cours" : "Fini le " + progression.dateFin}</Typography>
                             </Grid>
-                            <Grid item sm={4}>
-                                <CircularProgress size={80} value= {progression.nbHeuresExecutees * 100 / cours.chargeHoraire} />
+                            <Grid item sm={3}>
+                                <CircularProgress size={80} value={progression.nbHeuresExecutees * 100 / (cours.CM + cours.TD_TP)} />
+                            </Grid>
+                            <Grid item sm={6}>
+                                <CCard>
+                                    <CCardHeader>
+                                        Taux de suivi du cours
+                                    </CCardHeader>
+                                    <CCardBody>
+                                        <CChartLine
+                                            datasets={[
+                                                {
+                                                    label: 'Absences',
+                                                    backgroundColor: 'rgb(0,216,255,0.9)',
+                                                    data: absences.map(absence => absence.y)
+                                                }
+                                            ]}
+                                            options={{
+                                                tooltips: {
+                                                    enabled: true
+                                                }
+                                            }}
+                                            labels="Absences"
+                                        />
+                                    </CCardBody>
+                                </CCard>
                             </Grid>
                         </Grid>
                     </CardContent>
@@ -149,20 +201,21 @@ export default function CahierCours(props) {
                             {seances.map(
                                 (seance, index) => {
                                     const absents = seance.cahierSeance.absents === "" ? [] : seance.cahierSeance.absents.split(",");
-                                    console.log(absents);
                                     return (
                                         <>
                                             <Paper key={index} style={{ backgroundColor: "#2699FB", margin: 20, paddingTop: 20 }}>
                                                 <Typography style={{ color: "white", marginTop: 15, marginLeft: 15 }} variant="body2" color="textSecondary" component="p">Seance du {seance.cahierSeance.dateSeance}</Typography>
-                                                <Typography style={{ color: "white", marginTop: 10, marginLeft: 15 }} variant="body2" color="textSecondary" component="p">{seance.prof}</Typography>
+                                                <Typography style={{ color: "white", marginTop: 10, marginLeft: 15 }} variant="body2" color="textSecondary" component="p">{seance.info_prof}</Typography>
                                                 <Typography style={{ color: "white", marginTop: 10, marginLeft: 15 }} variant="body2" color="textSecondary" component="p">Nombre d'heures : {seance.duree}</Typography>
                                                 <Typography style={{ color: "white", marginTop: 10, marginLeft: 15 }} variant="body2" color="textSecondary" component="p">De {seance.heureDebut} heures à {seance.heureDebut + seance.duree} heures</Typography>
-                                                <Typography style={{ color: "white", marginTop: 10, marginLeft: 15 }} variant="body2" color="textSecondary" component="p">Signé : {seance.isValide ? "Oui" : "Non"}</Typography>
+                                                <Typography style={{ color: "white", marginTop: 10, marginLeft: 15 }} variant="body2" color="textSecondary" component="p">Signé : {seance.cahierSeance.isValide ? "Oui" : "Non"}</Typography>
                                                 <Grid container spacing={4} >
                                                     <Grid item sm={7}>
-                                                        <Typography paragraph style={{ backgroundColor: "white", borderRadius: 5, marginTop: 15, marginLeft: 15, padding: 20 }}>
-                                                            {draftToMarkdown(convertToRaw(EditorState.createWithContent(ContentState.createFromBlockArray(convertFromHTML(seance.cahierSeance.contenu))).getCurrentContent()))}
-                                                        </Typography>
+                                                        <Paper>
+                                                            {/* <div style={{ borderStyle: "solid", borderWidth: 2, borderColor: "gray", backgroundColor: "white", borderRadius: 5, marginTop: 15, marginLeft: 15, padding: 20 }}> */}
+                                                            <Editor readOnly={true} defaultValue={seance.cahierSeance.contenu} />
+                                                            {/* </div> */}
+                                                        </Paper>
                                                     </Grid>
                                                     <Grid item sm={5}>
                                                         <h4 style={{ color: "white" }}>LISTE DES ABSENTS ({absents.length})</h4>
@@ -173,7 +226,8 @@ export default function CahierCours(props) {
                                                             absents.map(
                                                                 (element, index) => {
                                                                     const eleve = getStudentFromId(eleves, parseInt(element));
-                                                                    return <Typography key={index} style={{ color: "white" }} variant="body2" color="textPrimary" component="p">{eleve.prenom + " " + eleve.nom}</Typography>
+                                                                    {/* console.log(eleve); */ }
+                                                                    return <Typography key={index} style={{ color: "white" }} variant="body2" color="textPrimary" component="p">{eleve.user.first_name + " " + eleve.user.last_name}</Typography>
                                                                 }
                                                             )}
                                                     </Grid>
@@ -190,3 +244,8 @@ export default function CahierCours(props) {
         </div>
     );
 }
+const mapStateToProps = (state) => ({
+    auth: state.auth,
+})
+
+export default connect(mapStateToProps, null)(CahierCours)

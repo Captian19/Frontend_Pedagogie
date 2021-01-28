@@ -4,51 +4,45 @@ import '@fortawesome/fontawesome-free/css/all.min.css'; import
 'mdbreact/dist/css/mdb.css';
 
 import {
-  Button,
   Input,
-  Footer,
-  Card,
-  CardBody,
-  CardImage,
-  CardTitle,
-  CardText
 } from "mdbreact";
-
+import {connect} from "react-redux";
 import axios from 'axios';
 import '../../assets/moduleInscription/css/style.css'
-import ProfilS from "./ProfilS";
+import ProfilSR from "./ProfilSR";
 
 
 class Search extends Component {
-  state = {
-    search: "",
-    etudiant : []
-  };
 
-  componentDidMount(){
-     
+    state = {
+      search: "",
+      etudiant : []
+    };
 
-    let url = 'http://127.0.0.1:8000/api/InfoEtudiantList';
-    axios.get(url, {
-      headers: {
-        'content-type': 'multipart/form-data'
-      }
-    })
-    .then(response => {
-        this.setState({
-            etudiant : response.data
-        })
-        // console.log(this.state.b)
-    
-        
-    })
-    .catch(e =>{
-        console.log(e)    
-    
-        console.log("Error")
-    })
- 
-}
+    componentDidMount(){
+      let anneeScolaire = `${(this.props.user.CurrentRoles[0].annee.split("/")[0])}-${(this.props.user.CurrentRoles[0].annee.split("/")[1])}`
+      let url = `http://127.0.0.1:8000/api/InfoEtudiantByAnneeScolaireValide/${anneeScolaire}`;
+  
+      axios.get(url, {
+        headers: {
+          'content-type': 'multipart/form-data'
+        }
+      })
+      .then(response => {
+          this.setState({
+              etudiant : response.data
+          })
+      })
+      .catch(e =>{
+          console.log(e)    
+      
+          console.log("Error")
+      })
+  
+  }
+
+
+
 
   renderEtudiant = etudiant => {
     const search  = this.state.search;
@@ -58,7 +52,7 @@ class Search extends Component {
    
 
     return (
-      <ProfilS etudiant = {etudiant}></ProfilS>
+      <ProfilSR etudiant = {etudiant}></ProfilSR>
     );
   };
 
@@ -66,8 +60,7 @@ class Search extends Component {
   
 
   onchange = e => {
-    this.setState({ search: e.target.value });
-  
+    this.setState({ search: e.target.value });  
   };
 
  
@@ -80,7 +73,7 @@ class Search extends Component {
   
     const  search  = this.state.search.toLowerCase();
     const filteredCountries = this.state.etudiant.filter(etudiant => {
-      if(search.includes(etudiant.nombreEnfants)){
+      if(search.includes(etudiant.email)){
         return etudiant
       }
    
@@ -90,7 +83,7 @@ class Search extends Component {
       <div className="flyout">
 
                 <div className="card container  text-center pt-3  bg-primary white-text">
-                    <h1 style={{color:"white"}}>INSCRIPTION ADMINISTRATIVE</h1>
+                    <h1 style={{color:"white"}}>INSCRIPTION ADMINISTRATIVE DES ETUDIANTS  </h1>
                 </div>
         
         <main style={{ marginTop: "4rem" }}>
@@ -100,7 +93,7 @@ class Search extends Component {
                 <center>
                   <h3>
                    
-                      BARRE DE RECHERCHE
+                      BARRE DE RECHERCHE 
                   </h3>
                 </center>
               </div>
@@ -127,4 +120,9 @@ class Search extends Component {
   }
 }
 
-export default Search;
+
+const mapStateToProps = state => ({
+  user: state.auth.user
+})
+
+export default connect(mapStateToProps,null)(Search);

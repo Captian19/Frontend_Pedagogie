@@ -1,0 +1,7 @@
+input::placeholder {
+    color: green;
+    opacity: 1;
+}
+textarea::-webkit-input-placeholder {
+    color: green !important;
+    }

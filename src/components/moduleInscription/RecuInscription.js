@@ -1,8 +1,6 @@
 import React, {Component} from 'react';
 import html2PDF from 'jspdf-html2canvas';
 import logoEPT from '../../../src/assets/moduleInscription/img/0.png'
-import cachet from '../../../src/assets/moduleInscription/img/2.png'
-import { Link } from 'react-router-dom';
 import moment from 'moment';
 import localization from 'moment/locale/fr';
 import '../../assets/moduleInscription/css/style.css'

@@ -1,16 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 
-import {
-    CCard,
-    CCardBody,
-    CCardFooter,
-    CCardHeader,
-    CDataTable,
-    CCol,
-    CRow,
-    CBadge
-} from '@coreui/react'
+import {CDataTable,CBadge} from '@coreui/react'
 
 
 const getBadge = partenaire => {
@@ -21,7 +12,7 @@ switch (partenaire) {
 } 
 }
 
-const fields = ['nom_entreprise', 'domaine','classe_stage','telephone_entreprise','lien_page','adresse_entreprise','partenaire']
+const fields = ['nom_entreprise','telephone_entreprise','lien_page','adresse_entreprise', 'type_stage','partenaire']
 
 
 

@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
-import { Button } from '@material-ui/core';
-import {Redirect,Link} from 'react-router-dom'
+import {Link} from 'react-router-dom'
 import img from './image.webp'
 
 class File extends Component{

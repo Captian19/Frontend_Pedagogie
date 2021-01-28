@@ -18,13 +18,13 @@ import routes from './../routes'
 
 import { 
   TheHeaderDropdown,
-  TheHeaderDropdownMssg,
-  TheHeaderDropdownNotif,
 }  from './HeaderElements/index'
 
-const Header = () => {
+import {connect} from "react-redux";
+
+const Header = (props) => {
   const dispatch = useDispatch()
-  const sidebarShow = useSelector(state => state.sidebarShow)
+  const sidebarShow = useSelector(state => state.layout.sidebarShow)
 
   const toggleSidebar = () => {
     const val = [true, 'responsive'].includes(sidebarShow) ? false : 'responsive'
@@ -49,44 +49,44 @@ const Header = () => {
         onClick={toggleSidebar}
       />
       <CHeaderBrand className="mx-auto d-lg-none" to="/">
-        <CIcon name="logo" height="48" alt="Logo"/>
+       <h5>Espace Numérique de Travail</h5>
       </CHeaderBrand>
 
       <CHeaderNav className="d-md-down-none mr-auto">
         <CHeaderNavItem className="px-3" >
-        <CHeaderNavLink to="/enseignant"><CIcon name="cil-user"/> Medecin</CHeaderNavLink>
+        <CHeaderNavLink><b><CIcon name="cil-user" height={15}/> Medecin</b></CHeaderNavLink>
         </CHeaderNavItem>
       </CHeaderNav>
 
       <CHeaderNav className="px-3">
-        <TheHeaderDropdownNotif/>
-        <TheHeaderDropdownMssg/>
+      <span className="py-2">{props.user.first_name} {props.user.last_name}</span>
         <TheHeaderDropdown/>
       </CHeaderNav>
-{/* 
+
       <CSubheader className="px-3 justify-content-between">
         <CBreadcrumbRouter 
           className="border-0 c-subheader-nav m-0 px-0 px-md-3" 
           routes={routes} 
         />
           <div className="d-md-down-none mfe-2 c-subheader-nav">
-            <CLink className="c-subheader-nav-link"href="#">
-              <CIcon name="cil-speech" alt="Settings" />
-            </CLink>
             <CLink 
               className="c-subheader-nav-link" 
               aria-current="page" 
-              to="/dashboard"
+              to="/medecin/dashboard"
             >
               <CIcon name="cil-graph" alt="Dashboard" />&nbsp;Dashboard
             </CLink>
-            <CLink className="c-subheader-nav-link" href="#">
-              <CIcon name="cil-settings" alt="Settings" />&nbsp;Settings
+            <CLink className="c-subheader-nav-link" to="/medecin/profil">
+              <CIcon name="cil-user" alt="Settings" />&nbsp;Mon profil
             </CLink>
           </div>
-      </CSubheader> */}
+      </CSubheader>
     </CHeader>
   )
 }
 
-export default Header
+const mapStateTopProps = state => ({
+  user:state.auth.user
+})
+
+export default connect(mapStateTopProps,null)(Header)

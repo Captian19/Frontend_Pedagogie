@@ -3,31 +3,32 @@ import '../../../../assets/moduleInscription/css/VisiteMedicale.scss'
 import m from '../../../../assets/moduleInscription/img/m.svg'
 import axios from 'axios';
 import { withRouter } from 'react-router-dom';
-import { Link, Redirect } from "react-router-dom";
+import { Link} from "react-router-dom";
 import Entete from '../../../../components/moduleInscription/Entete';
 
 import {
     CCard,
     CCardBody,
-    CCardFooter,
-    CCardHeader,
     CCol,
     CRow,
   } from '@coreui/react'
-import CertificatScolarite from "../../../../components/moduleInscription/CertificatScolarite";
+import CertificatMedical from "../../../../components/moduleInscription/CertificatMedical";
 
 class Visite extends Component {
     constructor(props) {
         super(props);
         this.state = { 
-            validationMedecin : false
+            validationMedecin : false,
+            Etudiant : ""
          }
     }
 
     componentDidMount(){
 
-        // const id = this.props.match.params.id;
-        let url = 'http://127.0.0.1:8000/api/InfoEtudiantDetail/1';
+        let anneeScolaire = this.props.anneeScolaire
+        let email = this.props.email
+        let url =`http://127.0.0.1:8000/api/InfoEtudiantByAnneeScolaireEmail/${anneeScolaire}/${email}`
+
         axios.get(url, {
           headers: {
             'content-type': 'multipart/form-data'
@@ -35,7 +36,8 @@ class Visite extends Component {
         })
         .then(response => {
             this.setState({
-                validationMedecin : response.data.validationMedecin   
+                validationMedecin : response.data.validationMedecin  ,
+                Etudiant : response.data
             })
     
             
@@ -59,11 +61,14 @@ class Visite extends Component {
     }
 
 
+  
+
+
 
 
     DisplayVisiteMedicale = (etat) =>{
 
-        if (etat==false) { 
+        if (etat===false) { 
           
             return ( 
                 <div id="file-upload-form" class="uploader mt-5">
@@ -94,7 +99,7 @@ class Visite extends Component {
                                     </svg>
                                 </div>
                                 <h3 className="mt-5"><b>APTE !</b></h3>
-                                <Link to="/scolarite/inscription-administrative-paiement"  className="btn bg-primary white-text">ETAPE SUIVANTE</Link>
+                                <Link to={`/scolarite/inscription-administrative-paiement/${this.state.Etudiant.id}`}  className="btn bg-primary white-text">ETAPE SUIVANTE</Link>
                                 
                         </div>
                     </label>        
@@ -146,7 +151,7 @@ class Visite extends Component {
                                         <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordionExample">
                                         <div class="card-body">
                                             <Entete></Entete>
-                                            <CertificatScolarite></CertificatScolarite>
+                                            <CertificatMedical Etudiant = {this.state.Etudiant}></CertificatMedical>
                                         </div>
                                         </div>
                                     </div>
@@ -169,7 +174,10 @@ class Visite extends Component {
         
                                     <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordionExample">
                                     <div class="card-body">
-                                        Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
+                                    Veuillez vous rendre au niveau de l'infirmerie pour effectuer votre visite médicale.<br></br>
+                                    Ensuite vous pouvez vous reconnecter au niveau de la plateforme pour continuer votre<br></br> 
+                                    inscription administrative.<br></br>
+                                    Merci !
                                     </div>
                                     </div>
                                 </div>

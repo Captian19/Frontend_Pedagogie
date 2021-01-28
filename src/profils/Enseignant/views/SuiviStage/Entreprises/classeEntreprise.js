@@ -1,16 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 
-import {
-    CCard,
-    CCardBody,
-    CCardFooter,
-    CCardHeader,
-    CDataTable,
-    CCol,
-    CRow,
-    CBadge
-} from '@coreui/react'
+import {CDataTable,CBadge} from '@coreui/react'
 
 
 const getBadge = partenaire => {

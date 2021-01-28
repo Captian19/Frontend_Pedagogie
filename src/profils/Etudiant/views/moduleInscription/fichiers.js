@@ -4,8 +4,6 @@ import React, { Component } from "react";
 import {
     CCard,
     CCardBody,
-    CCardFooter,
-    CCardHeader,
     CCol,
     CRow,
   } from '@coreui/react'
@@ -15,10 +13,11 @@ import { connect } from "react-redux";
 class ListeFichiers extends Component {
     state={
         fichiers:[
-            {id:1,nom:"Reçu",redirect:"/etudiant/reçu"},
-            {id:2,nom:"Certificat Aptitude",redirect:"/etudiant/medical"},
-            {id:3,nom:"Certificat Inscription",redirect:"/etudiant/certificat"},
-            {id:4,nom:"Fiche Inscription",redirect:"/etudiant/fiche"},
+            {id:1,nom:"Reçu",redirect:`/etudiant/reçu/${this.props.match.params.anneeScolaire}`},
+            {id:2,nom:"Certificat Aptitude",redirect:`/etudiant/medical/${this.props.match.params.anneeScolaire}`},
+            {id:3,nom:"Certificat Inscription",redirect:`/etudiant/certificat/${this.props.match.params.anneeScolaire}`},
+            {id:4,nom:"Fiche Inscription",redirect:`/etudiant/fiche/${this.props.match.params.anneeScolaire}`},
+            {id:4,nom:"Carte Etudiant",redirect:`/etudiant/carte/${this.props.match.params.anneeScolaire}`},
             
         ]
     }

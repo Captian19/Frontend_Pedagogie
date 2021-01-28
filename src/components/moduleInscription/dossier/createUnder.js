@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
 import { Redirect } from 'react-router-dom';
-import axios from 'axios';
 import doc from '../../../assets/moduleInscription/img/doc.svg'
 class UnderCreate extends Component{ 
     state ={

@@ -64,11 +64,6 @@ class Page2 extends React.Component {
         .then(res => res.json())
         .then(data => this.setState({liste: data}))
         .catch(err => console.error(err));
-  
-        fetch('http://127.0.0.1:8000/mandatement/lastmandatAc')
-        .then(res => res.json())
-        .then(data => this.setState({mandat: data}))
-        .catch(err => console.error(err))
        }
 
     handleSubmit=(event) =>{
@@ -92,12 +87,12 @@ class Page2 extends React.Component {
 
     render(){
         return (
+
             <>
-            {this.state.mandat.map((i) => (
             <form onSubmit={this.handleSubmit}>
-                <div className="container">
+                <div className="container" style={{width: "1123px",border: "1px solid #0F1019", fontWeight: "bold",height:"1123px"}}>
                     <table className="table table-bordered text-center shadow p-3 mb-5 bg-white rounded largeur"
-                           style={{width: "1150px",border: "1px solid #0F1019", fontWeight: "bold"}}>
+                           style={{width: "1123px",border: "1px solid #0F1019", fontWeight: "bold",height:"1123px",marginLeft:"-17px",fontSize:"1.1em"}}>
                         <thead  id="page">
                             <tr className="centre">
                                 <th scope="col" colSpan='8' className="lefta"
@@ -111,35 +106,35 @@ class Page2 extends React.Component {
                             </tr>
                             <tr className="centre">
                                 <th scope="col" rowSpan="2" className="align-middle creancier"
-                                    style={{border: "1px solid #0F1019", fontWeight: "bold", fontSize:"1.2em"}}>Nom et adresse du
+                                    style={{border: "1px solid #0F1019", fontWeight: "bold", fontSize:"1.1em"}}>Nom et adresse du
                                     Creancier <br/> Compte à crediter
                                 </th>
                                 <th scope="col" rowSpan="2" className="align-middle mandatee1"
-                                    style={{border: "1px solid #0F1019", fontWeight: "bold", fontSize:"1.2em"}}>Somme Nette <br/> Revenant
+                                    style={{border: "1px solid #0F1019", fontWeight: "bold", fontSize:"1.1em"}}>Somme Nette <br/> Revenant
                                     au creancier
                                 </th>
                                 <th scope="col" colSpan="6" className="align-middle reference1"
-                                    style={{border: "1px solid #0F1019", fontWeight: "bold", fontSize:"1.2em"}}>Reference de Mandatement -
+                                    style={{border: "1px solid #0F1019", fontWeight: "bold", fontSize:"1.1em"}}>Reference de Mandatement -
                                     Objet de la dépense - pieces justificatives
                                 </th>
                             </tr>
                             <tr className="centre">
-                                <th scope="col" style={{border: "1px solid #0F1019", fontWeight: "bold", fontSize:"1.2em", width:"12%"}}
+                                <th scope="col" style={{border: "1px solid #0F1019", fontWeight: "bold", fontSize:"1.1em", width:"12%"}}
                                     className="bord">Année d'origine
                                 </th>
-                                <th scope="col" style={{border: "1px solid #0F1019", fontWeight: "bold", width: "11%", fontSize:"1.2em"}}
+                                <th scope="col" style={{border: "1px solid #0F1019", fontWeight: "bold", width: "11%", fontSize:"1.1em"}}
                                     className="align-middle">date
                                 </th>
-                                <th scope="col" style={{border: "1px solid #0F1019", fontWeight: "bold", fontSize:"1.2em"}}
+                                <th scope="col" style={{border: "1px solid #0F1019", fontWeight: "bold", fontSize:"1.1em"}}
                                     className="bord">N° bordereau
                                 </th>
-                                <th scope="col" style={{border: "1px solid #0F1019", fontWeight: "bold", fontSize:"1.2em"}}
+                                <th scope="col" style={{border: "1px solid #0F1019", fontWeight: "bold", fontSize:"1.1em"}}
                                     className="align-middle bord">N° mandat
                                 </th>
-                                <th scope="col" style={{border: "1px solid #0F1019", fontWeight: "bold", fontSize:"1.2em"}}
+                                <th scope="col" style={{border: "1px solid #0F1019", fontWeight: "bold", fontSize:"1.1em"}}
                                     className="bord">N° du chapitre
                                 </th>
-                                <th scope="col" style={{border: "1px solid #0F1019", fontWeight: "bold", fontSize:"1.2em"}}
+                                <th scope="col" style={{border: "1px solid #0F1019", fontWeight: "bold", fontSize:"1.1em"}}
                                     className="align-middle bord">Imputation
                                 </th>
                             </tr>
@@ -148,10 +143,11 @@ class Page2 extends React.Component {
                                     className=" align-top"><span className="spanner"><textarea
                                     className="form-control ad" name="nomCreancier"
                                     onChange={this.handleChangeNomCreancier} value={this.state.nomCreancier} rows="4"
-                                    style={{border: "none", LineWeight: "20px;"}} required></textarea></span></th>
+                                    style={{border: "none", LineWeight: "20px", fontSize:"1em"}} required></textarea></span></th>
 
                                 <th scope="col" style={{border: "1px solid #0F1019", fontWeight: "bold"}} rowSpan="2"
                                     className=" align-top" ><span className="spanner"><input className="input-group-text ad"
+                                                                                             style={{ fontSize:"1em"}}
                                                                                  name="sommeNette1" autoComplete="off"
                                                                                  onChange={this.handleChangeSommeNette}
                                                                                  value={this.state.sommeNette}
@@ -159,35 +155,36 @@ class Page2 extends React.Component {
                                 <th scope="col" style={{border: "1px solid #0F1019", fontWeight: "bold"}}
                                     className=" align-top" rowSpan="4"><span className="spanner"> <input type="text"
                                                                                 className="input-group-text ad"
+                                                                                                         style={{ fontSize:"1em"}}
                                                                                 name="anneeOrigine"
                                                                                 disabled
                                                                                 autoComplete="off"
                                                                                 onChange={this.handleChangeAnneeOrigine}
-                                                                                value={this.state.anneeOrigine = i.anneeOrigine}
+                                                                                value={this.state.anneeOrigine = this.state.liste[13]}
                                                                                 type="number"/> </span>
                                 </th>
                                 <th scope="col" style={{border: "1px solid #0F1019", fontWeight: "bold"}}
                                     className=" align-top neuf" rowSpan="4"><span className="spanner"> <input
-                                    className="input-group-text ad" name="date" autoComplete="off"
+                                    className="input-group-text ad"  style={{ fontSize:"1em"}} name="date" autoComplete="off"
                                     onChange={this.handleChangeDate} value={this.state.date} type="date" required/></span></th>
                                 <th scope="col" style={{border: "1px solid #0F1019", fontWeight: "bold"}}
                                     className=" align-top neuf" rowSpan="4"><span className="spanner"> <input
-                                    className="input-group-text ad" name="nBordereau" autoComplete="off" 
+                                    className="input-group-text ad"  style={{ fontSize:"1em"}} name="nBordereau" autoComplete="off"
                                     onChange={this.handleChangeNBordereau} value={this.state.nBordereau=this.state.liste[6]} disabled type="number"/></span>
                                 </th>
                                 <th scope="col" style={{border: "1px solid #0F1019", fontWeight: "bold"}}
                                     className=" align-top neuf" rowSpan="4"><span className="spanner"> <input
-                                    className="input-group-text ad" name="nMandat" autoComplete="off"
+                                    className="input-group-text ad"  style={{ fontSize:"1em"}} name="nMandat" autoComplete="off"
                                     onChange={this.handleChangeNMandat} value={this.state.nMandat=this.state.liste[0]}
                                     type="number" disabled/></span></th>
                                 <th scope="col" style={{border: "1px solid #0F1019", fontWeight: "bold"}}
                                     className=" align-top neuf" rowSpan="4"><span className="spanner"> <input
-                                    className="input-group-text ad" name="nChapitre" autoComplete="off"
+                                    className="input-group-text ad"  style={{ fontSize:"1em"}} name="nChapitre" autoComplete="off"
                                     onChange={this.handleChangeNChapitre} value={this.state.nChapitre}
                                     type="text" required/> </span></th>
                                 <th scope="col" style={{border: "1px solid #0F1019", fontWeight: "bold"}}
-                                    className=" align-top " rowSpan="4"><span className="spanner"> <input
-                                    className="input-group-text ad" name="imputation" autoComplete="off"
+                                    className=" align-top "   rowSpan="4"><span className="spanner"> <input
+                                    className="input-group-text ad" style={{ fontSize:"1em"}}   name="imputation" autoComplete="off"
                                     onChange={this.handleChangeImputation} value={this.state.imputation} required type="text"/> </span>
                                 </th>
                             </tr>
@@ -230,13 +227,13 @@ class Page2 extends React.Component {
                                         </span></div>
                                         </div>
                                         <div className='col-md-3'><br/><br/>
-                                            ..................
-                                            ..................
-                                            ..................
-                                            ..................
-                                            ..................
-                                            ..................
-                                            ..................
+                                            .............
+                                            .............
+                                            .............
+                                            .............
+                                            .............
+                                            .............
+                                            .............
                                         </div>
                                     </div><br/>
                                     <div>
@@ -250,7 +247,7 @@ class Page2 extends React.Component {
                     </table>
                 </div>
             </form>
-            ))}
+           
             </>
         );
     }

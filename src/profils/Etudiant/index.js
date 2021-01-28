@@ -23,9 +23,6 @@ class Etudiant extends Component {
     }
 }
 
-// const mapStateToProps = state => ({
-//     user: state.auth.user
-// })
 
 
 export default Etudiant

@@ -4,12 +4,22 @@ import {connect} from "react-redux";
 import {useHistory} from "react-router-dom"
 import axios from "axios";
 import RoleItem from "./RoleItem"
-// import avatar from "./../../../assets/img/avatar.png"
-//import 'font-awesome/css/font-awesome.min.css';
+import avatar from './../../../assets/img/avatar.png'
+import 'font-awesome/css/font-awesome.min.css';
+import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 
 const User = (props) => {
     const [user, setUser] = useState({});
     const history = useHistory();
+    const {
+        buttonLabel,
+        className
+    } = props;
+    
+    const [roles, setRoles] = useState([]);
+    const [modal, setModal] = useState(false);
+
+    const toggle = () => setModal(!modal);
 
     const config = {
         headers: {
@@ -28,8 +38,28 @@ const User = (props) => {
         .catch(err => console.log(err));
     }
 
+    const OnOrOff = (id) => {
+        axios.get(`https://users-ent.herokuapp.com/api/auth/users/activateUser/${id}`,config)
+        .then(res => {
+            console.log(res.data);
+            window.location.reload();
+        })
+        .catch(err => console.log(err))
+    }
+
+    const getListRoles = () => {
+        axios.get("https://users-ent.herokuapp.com/api/roles",config)
+        .then(res => {
+            setRoles(res.data);
+        })
+        .catch(err => console.log(err));
+    }
+
     useEffect(
-        () => {callApi()}
+        () => {
+            callApi();
+            getListRoles();
+        }
     ,[]);
 
     return(
@@ -66,9 +96,9 @@ const User = (props) => {
                         <hr />
                         <div class="resume-intro py-3">
                             <div class="media flex-column flex-md-row align-items-center">
-                                <img class="mb-3 mb-md-0 mr-md-5 ml-md-0 rounded-circle mx-auto" src={user.photo ? user.photo : ""} alt="image" width="150" />
+                                <img class="mb-3 mb-md-0 mr-md-5 ml-md-0 rounded-circle mx-auto" src={user.photo ? user.photo : avatar} alt="image" width="150" />
                                 <div class="media-body text-left">
-                                    <p class="mb-0">Text ici</p>
+                                    <p class="mb-0">Bio ici</p>
                                 </div>
                             </div>
                         </div>
@@ -77,11 +107,11 @@ const User = (props) => {
                         <div class="row">
                             <div class="resume-main col-12 col-lg-8 col-xl-9 pr-0 pr-lg-5">
                                 <section class="work-section py-3">
-                                    <h3 class="text-uppercase resume-section-heading mb-4">Roles Actuels</h3>
+                                    <h3 class="resume-section-heading mb-4">Roles Actuels</h3>
                                     {user.CurrentRoles ? user.CurrentRoles.map(role => <RoleItem role_type={role.role_type} date_debut={role.date_debut} date_fin={role.date_fin ? role.date_fin : "Présent"} classe={role.classe ? role.classe: "-"} departement={role.departement ? role.departement:"-"} />) : "Aucun role"}
                                 </section>
                                 <section class="work-section py-3">
-                                    <h3 class="text-uppercase resume-section-heading mb-4">Tous les roles</h3>
+                                    <h3 class="resume-section-heading mb-4">Tous les roles</h3>
                                     {user.AllRoles ? user.AllRoles.map(role => <RoleItem role_type={role.role_type} date_debut={role.date_debut} date_fin={role.date_fin ? role.date_fin : "Présent" } classe={role.classe ? role.classe: "-"} departement={role.departement ? role.departement:"-"} />) : "Aucun role"}
                                 </section>
                                 
@@ -91,10 +121,35 @@ const User = (props) => {
                                     <h3 class="text-uppercase resume-section-heading mb-4">Options</h3>
                                     <ul class="list-unstyled resume-education-list">
                                         <li class="mb-3">
-                                            <button class="btn btn-success"><i class="fa fa-plus"></i> Ajouter un role</button>
+                                        <div>
+                                            <Button color="success" onClick={toggle}>Ajouter un role {buttonLabel}</Button>
+                                            <Modal isOpen={modal} toggle={toggle} className={className}>
+                                                <ModalHeader toggle={toggle}>Ajouter un role</ModalHeader>
+                                                <ModalBody>
+                                                <form>
+                                                    <div className="form-group">
+                                                        <input type="text" className="form-control" defaultValue={user.first_name} disabled />
+                                                    </div>
+                                                    <div class="form-group">
+                                                    <label for="inputRole">Role</label>
+                                                    <select id="inputRole" class="form-control" name="id">
+                                                        <option selected>Choisir un role</option>
+                                                        {roles.filter(role => role.role_type.includes('MEMBRE_') || role.role_type.includes('ADMIN')).map(roleFilter => <option key={roleFilter.id} value={roleFilter.id}>{roleFilter.role_type} {roleFilter.classe} {roleFilter.departement}</option>)}
+                                                    </select>
+                                                    </div>
+                                                    <button className="float-right btn btn-success" type="submit">
+                                                        Ajouter
+                                                    </button>
+                                                </form>
+                                                </ModalBody>
+                                                <ModalFooter>
+                                                <Button color="danger" onClick={toggle}>Annuler</Button>{' '}
+                                                </ModalFooter>
+                                            </Modal>
+                                            </div>
                                         </li>
                                         <li>
-                                            
+                                            {user.is_active ? <button className="btn btn-danger" onClick={() => OnOrOff()}>Désactiver compte</button> : <button className="btn btn-success" onClick={() => OnOrOff()}>Activer compte</button>}
                                         </li>
                                     </ul>
                                 </section>

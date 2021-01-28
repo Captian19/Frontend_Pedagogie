@@ -25,13 +25,13 @@ const ColorlibConnector = withStyles({
     active: {
         '& $line': {
             backgroundImage:
-                'linear-gradient( 95deg,rgb(242,113,33) 0%,rgb(233,64,87) 50%,rgb(138,35,135) 100%)',
+                'linear-gradient( 95deg,rgb(73, 156, 84) 0%,rgb(73, 156, 84) 50%,rgb(73, 156, 84) 100%)',
         },
     },
     completed: {
         '& $line': {
             backgroundImage:
-                'linear-gradient( 95deg,rgb(242,113,33) 0%,rgb(233,64,87) 50%,rgb(138,35,135) 100%)',
+                'linear-gradient( 95deg,rgb(73, 156, 84) 0%,rgb(73, 156, 84) 50%,rgb(73, 156, 84) 100%)',
         },
     },
     line: {
@@ -61,9 +61,10 @@ const useColorlibStepIconStyles = makeStyles({
     },
     completed: {
         backgroundImage:
-            'linear-gradient( 136deg, rgb(242,113,33) 0%, rgb(233,64,87) 50%, rgb(138,35,135) 100%)',
+            'linear-gradient( 95deg,rgb(73, 156, 84) 0%,rgb(73, 156, 84) 50%,rgb(73, 156, 84) 100%)',
     },
 });
+
 
 function ColorlibStepIcon(props) {
     const classes = useColorlibStepIconStyles();
@@ -132,9 +133,9 @@ function getStepContent(step) {
     }
 }
 
-export default function MandatementBC() {
+export default function MandatementBC(props) {
     const classes = useStyles();
-    const [activeStep, setActiveStep] = React.useState(1);
+    const [activeStep, setActiveStep] = React.useState(0);
     const steps = getSteps();
 
     const handleNext = () => {
@@ -154,8 +155,6 @@ export default function MandatementBC() {
             <div className='content'>
                 <Row>
                     <Col xs={12}>
-
-
                                 <div className={classes.root}> <Card>
                                     <CardBody>
                                     <Stepper alternativeLabel activeStep={activeStep} connector={<ColorlibConnector />}>
@@ -171,10 +170,10 @@ export default function MandatementBC() {
                                         {activeStep === steps.length ? (
                                             <div>
                                                 <Typography className={classes.instructions}>
-                                                    All steps completed - you&apos;re finished
+                                                    Toutes les étapes sont terminées
                                                 </Typography>
                                                 <Button onClick={handleReset} className={classes.button}>
-                                                    Reset
+                                                    Réinitialisé
                                                 </Button>
                                             </div>
                                         ) : (
@@ -182,7 +181,7 @@ export default function MandatementBC() {
                                                 <Typography className={classes.instructions}>{getStepContent(activeStep)}</Typography>
                                                 <div>
                                                     <Button disabled={activeStep === 0} onClick={handleBack} className={classes.button}>
-                                                        Back
+                                                        Retour
                                                     </Button>
                                                     <Button
                                                         variant="contained"
@@ -190,7 +189,7 @@ export default function MandatementBC() {
                                                         onClick={handleNext}
                                                         className={classes.button}
                                                     >
-                                                        {activeStep === steps.length - 1 ? 'Finish' : 'Next'}
+                                                        {activeStep === steps.length - 1 ? 'Terminé' : 'Suivant'}
                                                     </Button>
                                                 </div>
                                             </div>

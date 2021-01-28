@@ -41,9 +41,9 @@ class TheHeaderDropdown extends Component{
           <CDropdownItem to="/admin/profil">
             <CIcon name="cil-user" className="mfe-2" />Profil
           </CDropdownItem>
-          <CDropdownItem>
+          <CDropdownItem to="/scolarite/changer-de-mot-de-passe">
             <CIcon name="cil-settings" className="mfe-2" /> 
-            Historique
+            Changer de mot de passe
           </CDropdownItem>
           <CDropdownItem divider />
           <CDropdownItem onClick={this.props.logout} >

@@ -3,6 +3,7 @@ import { MDBBtn, MDBCard, MDBCardBody, MDBCardImage, MDBCardTitle, MDBCardText, 
         'mdbreact';
 import doc from "./doc.png"
 import pv from "./pv.png"
+import {Link} from "react-router-dom";
 
 class PvView extends React.Component {
     render() {
@@ -10,26 +11,22 @@ class PvView extends React.Component {
             <MDBCol style={{ maxWidth: "22rem" }}>
                 <MDBCard>
                     <div className='row' style={{Padding:'10px'}}>
+                        <div className="col-md-3"/>
                         <div className="col-md-6">
-                            <MDBCardImage className="img-fluid" src={pv} style={{width:'125px',height:'125px'}}
+                            <MDBCardImage className="img-fluid " src={pv} style={{width:'125px',height:'125px'}}
                                           waves />
                         </div>
-                        <div className="col-md-6">
-                            <MDBCardImage className="img-fluid" src={doc}
-                                          waves />
-                        </div>
+
+                        <div className="col-md-3"/>
                     </div>
                     <br/>
                     <MDBCardBody>
                         <MDBCardTitle className="text-center">Pv de Reception</MDBCardTitle>
                         <br/>
-                        <div className='row'>
-                            <div className='col-md-6'>
+                        <div className='text-center'>
+                            <Link to={`/finance/pvpdf/${this.props.idPV}`}>
                                 <MDBBtn href="#">Apercu</MDBBtn>
-                            </div>
-                            <div className='col-md-6'>
-                                <MDBBtn href="#">Editer</MDBBtn>
-                            </div>
+                            </Link>
                         </div>
 
                     </MDBCardBody>

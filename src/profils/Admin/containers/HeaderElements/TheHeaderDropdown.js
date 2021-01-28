@@ -36,14 +36,13 @@ class TheHeaderDropdown extends Component{
             color="light"
             className="text-center"
           >
-            <strong>Settings</strong>
+            <strong>Mon compte</strong>
           </CDropdownItem>
           <CDropdownItem to="/admin/profil">
             <CIcon name="cil-user" className="mfe-2" to="/admin/profil" />Profil
           </CDropdownItem>
-          <CDropdownItem>
-            <CIcon name="cil-settings" className="mfe-2" /> 
-            Historique
+          <CDropdownItem to="/admin/changer-de-mot-de-passe">
+            <CIcon name="cil-user" className="mfe-2" to="/admin/changer-de-mot-de-passe" />Changer Mot de passe
           </CDropdownItem>
           <CDropdownItem divider />
           <CDropdownItem onClick={this.props.logout} >

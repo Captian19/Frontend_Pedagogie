@@ -1,52 +1,20 @@
 import React, { Component } from "react";
-import { DataGrid } from '@material-ui/data-grid';
-import Recherche from './Recherche'
+import repo from '../../../assets/moduleInscription/img/image.png';
+import { Link } from 'react-router-dom';
 
 
 import {
     CCard,
     CCardBody,
-    CCardFooter,
-    CCardHeader,
     CCol,
     CRow,
   } from '@coreui/react'
+import Recherche from "./Recherche";
 
-
-
-
-  const columns = [
-    { field: 'firstName', headerName: 'Nom', width: 300},
-    { field: 'lastName', headerName: 'Prénom', width: 300 },
-    {
-      field: 'Email',
-      headerName: 'Email',
-      type: 'text',
-      width: 300,
-    },
-    {
-      field: 'Classe',
-      headerName: 'Classe',
-      type : 'text',
-      width: 160,
-    },
-  ];
-
-
-const rows = [
-    { id: 1, lastName: 'Snow', firstName: 'Jon', Email: 35 , Classe : 'DIC1'},
-    { id: 2, lastName: 'Lannister', firstName: 'Cersei', Email: 42, Classe : 'DIC1' },
-    { id: 3, lastName: 'Lannister', firstName: 'Jaime', Email: 45 },
-    { id: 4, lastName: 'Stark', firstName: 'Arya', age: 16 },
-    { id: 5, lastName: 'Targaryen', firstName: 'Daenerys', age: null },
-    { id: 6, lastName: 'Melisandre', firstName: null, age: 150 },
-    { id: 7, lastName: 'Clifford', firstName: 'Ferrara', age: 44 },
-    { id: 8, lastName: 'Frances', firstName: 'Rossini', age: 36 },
-    { id: 9, lastName: 'Roxie', firstName: 'Harvey', age: 65 },
-  ];
 
 
 class Com extends Component {
+
     render(){
         return(
             <CCard>
@@ -54,12 +22,94 @@ class Com extends Component {
             <CRow>
                 <CCol sm="12">
                     <Recherche></Recherche>
-                    <div className="col-lg-12  text-center">
-                          <h3 >LISTE DES ETUDIANTS</h3>
-                      </div>
-                    <div class="container mt-5 mb-5 " style={{ height: '1000px', width: '100%' }}>
-                          <DataGrid  rows={rows} columns={columns} pageSize={10} checkboxSelection />
-                  </div>
+                    <div className="row">
+                        <div className="col-lg-2 m-5 text-center ">
+                            <Link to='/communication/liste-des-etudiants/TC1 TC'>
+                                <img width="200px" src={repo}></img>
+                                <div className="justify-content-center">TC1</div>
+                            </Link>
+                        </div>
+                        <div className="col-lg-2 m-5 text-center ">
+                            <Link to='/communication/liste-des-etudiants/TC2 TC'>
+                                <img width="200px" src={repo}></img>
+                                <div>TC2</div>
+                            </Link>
+                        </div>
+                        <div className="col-lg-2 m-5 text-center ">
+                            <Link to='/communication/liste-des-etudiants/DIC1 GIT'>
+                                <img width="200px" src={repo}></img>
+                                <div>DIC1 GIT</div>
+                            </Link>
+                        </div>
+                        <div className="col-lg-2 m-5 text-center ">
+                            <Link to='/communication/liste-des-etudiants/DIC1 GEM'>
+                                <img width="200px" src={repo}></img>
+                                <div>DIC1 GEM</div>
+                            </Link>
+                        </div>
+                        <div className="col-lg-2 m-5 text-center ">
+                            <Link to='/communication/liste-des-etudiants/DIC1 AERO'>
+                                <img width="200px" src={repo}></img>
+                                <div>DIC1 AERO</div>
+                            </Link>
+                        </div>
+                        <div className="col-lg-2 m-5 text-center ">
+                            <Link to='/communication/liste-des-etudiants/DIC1 GC'>
+                                <img width="200px" src={repo}></img>
+                                <div>DIC1 GC</div>
+                            </Link>
+                        </div>
+                        <div className="col-lg-2 m-5 text-center ">
+                            <Link to='/communication/liste-des-etudiants/DIC2 GIT'>
+                                <img width="200px" src={repo}></img>
+                                <div>DIC2 GIT</div>
+                            </Link>
+                        </div>
+                        <div className="col-lg-2 m-5 text-center ">
+                            <Link to='/communication/liste-des-etudiants/DIC2 GEM'>
+                                <img width="200px" src={repo}></img>
+                                <div>DIC2 GEM</div>
+                            </Link>
+                        </div>
+                        <div className="col-lg-2 m-5 text-center ">
+                            <Link to='/communication/liste-des-etudiants/DIC2 AERO'>
+                                <img width="200px" src={repo}></img>
+                                <div>DIC2 AERO</div>
+                            </Link>
+                        </div>
+                        <div className="col-lg-2 m-5 text-center ">
+                            <Link to='/communication/liste-des-etudiants/DIC2 GC'>
+                                <img width="200px" src={repo}></img>
+                                <div>DIC2 GC</div>
+                            </Link>
+                        </div>
+                        <div className="col-lg-2 m-5 text-center ">
+                            <Link to='/communication/liste-des-etudiants/DIC3 GIT'>
+                                <img width="200px" src={repo}></img>
+                                <div>DIC3 GIT</div>
+                            </Link>
+                        </div>
+                        <div className="col-lg-2 m-5 text-center ">
+                            <Link to='/communication/liste-des-etudiants/DIC3 GEM'>
+                                <img width="200px" src={repo}></img>
+                                <div>DIC3 GEM</div>
+                            </Link>
+                        </div>
+                        <div className="col-lg-2 m-5 text-center ">
+                            <Link to='/communication/liste-des-etudiants/DIC3 AERO'>
+                                <img width="200px" src={repo}></img>
+                                <div>DIC3 AERO</div>
+                            </Link>
+                        </div>
+                        <div className="col-lg-2 m-5 text-center ">
+                            <Link to='/communication/liste-des-etudiants/DIC3 GC'>
+                                <img width="200px" src={repo}></img>
+                                <div>DIC3 GC</div>
+                            </Link>
+                        </div>
+                      
+                    </div>
+                    
                 </CCol>
             </CRow>
             </CCardBody>
@@ -68,4 +118,4 @@ class Com extends Component {
     }
 }
 
-export default Com
+export default  Com

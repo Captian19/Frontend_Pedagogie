@@ -7,7 +7,7 @@ class FactureDefinitiveBC extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            document : null,
+            document : [],
             liste: []
         }
     }

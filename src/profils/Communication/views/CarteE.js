@@ -4,8 +4,7 @@ import Carte from '../../../components/moduleInscription/Carte'
 import {
     CCard,
     CCardBody,
-    CCardFooter,
-    CCardHeader,
+
     CCol,
     CRow,
   } from '@coreui/react'

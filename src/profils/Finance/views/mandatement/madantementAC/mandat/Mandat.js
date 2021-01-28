@@ -1,6 +1,8 @@
 import React from 'react';
 import './forms.css';
 import './pv.css';
+import "./print.css"
+import ReactToPrint from "react-to-print";
 
 
 class Mandat extends React.Component {
@@ -83,10 +85,10 @@ class Mandat extends React.Component {
 
       render(){
     return (  
-      
+      // style={{width:"793.7007874016px",fontSize:"1em",height:"559.3700787402px",backgroundColor:"#76C4C7"}}
       <form onSubmit={this.handleSubmit}>
-        <div className="container" style={{borderRight:"13px solid rgb(255,255,255)", borderTop:"8px solid rgb(255,255,255)",width:"1175px"}}>
-            <table id="page" className="table table-bordered text-center shadow p-3 mb-5 bg-white rounded largeur"style={{width:"1145px", fontSize:"1em"}} >
+        <div className="container" >
+            <table id="page" className="table table-bordered text-center shadow p-3 mb-5 bg-white rounded largeur" style={{borderRight:"13px solid rgb(255,255,255)", borderTop:"8px solid rgb(255,255,255)",width:"1123px",fontSize:"1em",height:"559.3700787402px",backgroundColor:"#76C4C7"}} >
                 <thead className="alice">
                     <tr className="centre">
                         <th scope="col" colspan="2" class="lefta" style={{border:"1px solid #dee2e6",fontWeight:"bold"}}>
@@ -152,4 +154,22 @@ class Mandat extends React.Component {
     }
 }
 
-export default Mandat;
+class MandatPrint extends React.PureComponent {
+    render() {
+        return (
+            <div>
+                <Mandat ref={el => (this.componentRef = el)} />
+                <ReactToPrint
+                    trigger={() => {
+                        // NOTE: could just as easily return <SomeComponent />. Do NOT pass an `onClick` prop
+                        // to the root node of the returned component as it will be overwritten.
+                        return <button className="btn btn--radius-2 btn--blue" >Imprimer</button>;
+                    }}
+                    content={() => this.componentRef}
+                />
+
+            </div>
+        );
+    }
+}
+export default MandatPrint;

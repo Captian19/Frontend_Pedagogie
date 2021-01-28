@@ -19,12 +19,12 @@ export default function DatesGrid(props) {
 
   return (
     <div className={classes.root} style={{margin: 30}}>
-      <Grid container spacing={5}>
-        <Grid item xs={6}>
-          <Paper className={classes.paper}>Date de début : <b>{props.dateDebut}</b></Paper>
+      <Grid container spacing={2}>
+        <Grid item xs={12} sm={6}>
+          <Paper className={classes.paper}>Début : <b>{props.dateDebut}</b></Paper>
         </Grid>
-        <Grid item xs={6}>
-          <Paper className={classes.paper}>Date de fin : <b>{props.dateFin}</b></Paper>
+        <Grid item xs={12} sm={6}>
+          <Paper className={classes.paper}>Fin : <b>{props.dateFin}</b></Paper>
         </Grid>
       </Grid>
     </div>

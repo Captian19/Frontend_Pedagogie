@@ -12,7 +12,7 @@ import { Description, InsertDriveFile, Receipt} from "@material-ui/icons";
 import Engagement from "./engagement";
 import Liquidation from "./liquidation";
 import Ordonnancement from "./ordonnancement";
-import {Card, CardBody, CardHeader, CardTitle, Col, Row} from "reactstrap";
+import {Card, CardBody, CardHeader, Col, Row} from "reactstrap";
 
 // style definition
 
@@ -24,13 +24,13 @@ const ColorlibConnector = withStyles({
     active: {
         '& $line': {
             backgroundImage:
-                'linear-gradient( 95deg,rgb(242,113,33) 0%,rgb(233,64,87) 50%,rgb(138,35,135) 100%)',
+                'linear-gradient( 95deg,rgb(73, 156, 84) 0%,rgb(73, 156, 84) 50%,rgb(73, 156, 84) 100%)',
         },
     },
     completed: {
         '& $line': {
             backgroundImage:
-                'linear-gradient( 95deg,rgb(242,113,33) 0%,rgb(233,64,87) 50%,rgb(138,35,135) 100%)',
+                'linear-gradient( 95deg,rgb(73, 156, 84) 0%,rgb(73, 156, 84) 50%,rgb(73, 156, 84) 100%)',
         },
     },
     line: {
@@ -56,13 +56,15 @@ const useColorlibStepIconStyles = makeStyles({
     active: {
         backgroundImage:
             'linear-gradient( 136deg, rgb(242,113,33) 0%, rgb(233,64,87) 50%, rgb(138,35,135) 100%)',
-        boxShadow: '0 4px 10px 0 rgba(0,0,0,.25)',
+        boxShadow: '0 4px 10px 0 rgb(73, 156, 84)',
     },
     completed: {
         backgroundImage:
-            'linear-gradient( 136deg, rgb(242,113,33) 0%, rgb(233,64,87) 50%, rgb(138,35,135) 100%)',
+            'linear-gradient( 95deg,rgb(73, 156, 84) 0%,rgb(73, 156, 84) 50%,rgb(73, 156, 84) 100%)',
     },
 });
+
+
 
 function ColorlibStepIcon(props) {
     const classes = useColorlibStepIconStyles();
@@ -133,7 +135,7 @@ function getStepContent(step) {
 
 export default function MandatementAC() {
     const classes = useStyles();
-    const [activeStep, setActiveStep] = React.useState(1);
+    const [activeStep, setActiveStep] = React.useState(0);
     const steps = getSteps();
 
     const handleNext = () => {
@@ -169,10 +171,10 @@ export default function MandatementAC() {
                                         {activeStep === steps.length ? (
                                             <div>
                                                 <Typography className={classes.instructions}>
-                                                    All steps completed - you&apos;re finished
+                                                    Toutes les étapes sont terminées
                                                 </Typography>
                                                 <Button onClick={handleReset} className={classes.button}>
-                                                    Reset
+                                                    Réinitialisé
                                                 </Button>
                                             </div>
                                         ) : (
@@ -180,7 +182,7 @@ export default function MandatementAC() {
                                                 <Typography className={classes.instructions}>{getStepContent(activeStep)}</Typography>
                                                 <div>
                                                     <Button disabled={activeStep === 0} onClick={handleBack} className={classes.button}>
-                                                        Back
+                                                        Retour
                                                     </Button>
                                                     <Button
                                                         variant="contained"
@@ -188,7 +190,7 @@ export default function MandatementAC() {
                                                         onClick={handleNext}
                                                         className={classes.button}
                                                     >
-                                                        {activeStep === steps.length - 1 ? 'Finish' : 'Next'}
+                                                        {activeStep === steps.length - 1 ? 'Terminé' : 'Suivant'}
                                                     </Button>
                                                 </div>
                                             </div>

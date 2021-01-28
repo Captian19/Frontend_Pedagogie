@@ -1,5 +1,4 @@
 import planning_notes_menu from "../views/Planning&Notes/menu";
-import { id_etudiant } from "../../../constants/SuiviStage/constant";
 
 export default [
     // {
@@ -40,10 +39,23 @@ export default [
       icon: 'cil-task',
     },
     {
-      _tag: 'CSidebarNavItem',
-      name: 'Maquette',
-      to: '/etudiant/classe/maquette',
+      _tag: 'CSidebarNavDropdown',
+      name: 'Maquettes',
       icon: 'cil-list',
+      _children: [
+        {
+          _tag: 'CSidebarNavItem',
+          name: 'Maquette de ma classe',
+          to: '/etudiant/classe/maquette',
+          icon: 'cil-list',
+        },
+        {
+          _tag: 'CSidebarNavItem',
+          name: "Maquette Vue d'ensemble",
+          to: '/etudiant/classe/maquetteVueDensemble',
+          icon: 'cil-list',
+        },
+      ]
     },
     {
       _tag: 'CSidebarNavItem',
@@ -76,22 +88,29 @@ export default [
     
     ...planning_notes_menu,
     
-    {
+     //Suivi de Stage
+     {
+    
+  
+      _tag: 'CSidebarNavTitle',
+      _children: ['Suivi de Stage']
+  },
+     {
       _tag: 'CSidebarNavDropdown',
       name: 'Stages',
-      icon: 'cil-pencil',
+      icon: 'cilList-rich',
       _children: [
         {
           _tag: 'CSidebarNavItem',
           name: "Offre de Stages",
-          to: '/etudiant/stage/'+ id_etudiant+'/offres',
-          icon: 'cil-speedometer',
+          to: '/etudiant/stage/offres',
+          icon: 'cil-star',
         },
 
         {
           _tag: 'CSidebarNavItem',
           name: "Mes Stages",
-          to: '/etudiant/stage/'+ id_etudiant+'/mes_stages',
+          to: '/etudiant/stage/mes_stages',
           icon: '',
         },
   
@@ -108,20 +127,6 @@ export default [
           _tag: 'CSidebarNavItem',
           name: "Emprunt",
           to: '/etudiant/bibliotheque/home/',
-          icon: 'cil-speedometer',
-    
-        },
-        {
-          _tag: 'CSidebarNavItem',
-          name: "Reçu",
-          to: '/etudiant/bibliotheque/recu/',
-          icon: 'cil-speedometer',
-    
-        },
-        {
-          _tag: 'CSidebarNavItem',
-          name: "Quitance",
-          to: '/etudiant/bibliotheque/quittance/',
           icon: 'cil-speedometer',
     
         },

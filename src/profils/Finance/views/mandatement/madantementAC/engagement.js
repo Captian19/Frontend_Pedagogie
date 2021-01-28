@@ -7,10 +7,9 @@ import StepContent from '@material-ui/core/StepContent';
 import Button from '@material-ui/core/Button';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
-
 import FactureProformat from "./Piece_jointe/FactureProformat";
-import BonD_engagement from "./bon_de_commande/bonD_engagement";
-import BonEngagementUpload from "./Piece_jointe/BonEngagementUpload";
+import BonD_engagementPrint from "./bon_de_commande/bonD_engagement";
+
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -29,7 +28,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 function getSteps() {
-    return ['Facture ProFormat', "Bon d'engagement"];
+    return ['Facture Proforma', "Bon d'engagement"];
 }
 
 
@@ -40,8 +39,7 @@ function getStepContent(step) {
         case 1:
             return (
                 <>
-                    <BonD_engagement/>
-                    <BonEngagementUpload/>
+                    <BonD_engagementPrint/>
                 </>
             )
         default:

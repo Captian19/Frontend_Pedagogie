@@ -4,8 +4,6 @@ import React, { Component } from "react";
 import {
     CCard,
     CCardBody,
-    CCardFooter,
-    CCardHeader,
     CCol,
     CRow,
   } from '@coreui/react'

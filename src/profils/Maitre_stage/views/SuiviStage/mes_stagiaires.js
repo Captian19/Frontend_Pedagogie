@@ -1,6 +1,7 @@
 import React, { useState,useEffect } from "react";
 import axios from 'axios';
-import { useParams } from 'react-router-dom';
+
+import { connect } from 'react-redux'
 
 
 import {
@@ -25,17 +26,19 @@ const convertDate = (str) => {
 
 
 
-function Offres() {
-    const {id} = useParams()
+function Offres(props) {
 
     useEffect(() =>{
         refreshLists();
+        get_liste_stagiaire();
+
+        console.log(props.role)
     },[]);
 
 
     const [stagiaires, setStagiaires] = useState({mes_stages:[]});
     const refreshLists =  () => {
-        axios.get(`http://localhost:8000/api/stage/entreprises/stage/maitre_stage/${id}/`)
+        axios.get(`http://localhost:8000/api/stage/entreprises/stage/maitre_stage/${props.role.id}/`)
         .then(res => {
             setStagiaires(res.data);
             console.log(res.data);
@@ -43,6 +46,21 @@ function Offres() {
         .catch(err =>console.log(err));
     }
 
+
+    const [isOk, setIsOk] = useState(false)
+    const [listeStagiaire, setListeStagiaire]= useState([])
+    const get_liste_stagiaire = () =>{
+        axios.get(`http://users-ent.herokuapp.com/api/auth/ETUDIANT/GIT/`)
+        .then((res)=>{
+            console.log(res.data)
+            setListeStagiaire(res.data)
+            setIsOk(true)
+        })
+        .catch(e=> console.log(e))
+    }  
+
+
+    
 
 
   
@@ -55,19 +73,26 @@ function Offres() {
                         <h1 className="text-center">Mes Stagiaires</h1>
 
                         <>
-                        {stagiaires['mes_stages'].length>0 ? 
+                        {(isOk && stagiaires.length>0) ? 
                         
-                        stagiaires.mes_stages.map((single)=>{
-                            return <div key= {single.id}>
+                        stagiaires.map((single)=>{
+                            let eleve = listeStagiaire.filter(element=>(element.id == single.stagiaire)) [0];
+                            console.log(eleve)
+
+                            return <div>
+
+                                
                             <Stagiaire
-                                    logo = {single.stagiaire.etudiant.username[0]}
-                                    nom_stagiaire={single.stagiaire.etudiant.username}
+                                    logo = {eleve.user.first_name[0]}
+                                    prenom_stagiaire={eleve.user.first_name}
+                                    nom_stagiaire={eleve.user.last_name}
                                     debut = {convertDate(single.date_debut_stage)}
-                                    classe= {single.stagiaire.classe}
-                                    genie= {single.stagiaire.genie}
+                                    classe= {eleve.classe}
+                                    genie= {eleve.departement}
                                     appreciations = {single.appreciations}
                                     lien = {single.id}
                                     />
+                                    <div style={{border:'solid #CA95AC 1pt', marginTop:'10px', boxShadow: 'inset 0px 0px 40px 40px #DBA632'}}>  </div>
                                 </div>
                         })
                         
@@ -83,4 +108,13 @@ function Offres() {
     );
 }
 
-export default Offres;
+
+
+
+const MapToState = state =>({
+    role: state.auth.user.CurrentRoles[0],
+    all_role: state.auth.user.CurrentRoles
+})
+
+
+export default connect(MapToState, null)(Offres);

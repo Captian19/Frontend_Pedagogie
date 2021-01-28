@@ -1,0 +1,119 @@
+
+
+  
+  .divSize{
+    height: 100px;
+    overflow: hidden;
+  }
+  
+  .TextSize{
+    font-size: 5px;
+  }
+  .TextSize2{
+    font-size: 3px;
+  }
+  .TextSize3{
+    font-size: 13px;
+  }
+  
+  .TextSize4{
+    font-size: 13px;
+  }
+  
+  .TextSize5{
+    font-size: 15px;
+  }
+  
+  .TextSize6{
+    font-size: 10px;
+  }
+  
+  .pfeDivTextSize{
+    height: 70px;
+    overflow: hidden;
+  }
+  
+  .pfeDivTextSize2{
+    height: 80px;
+    overflow: hidden;
+  }
+  
+  @media (max-width: 768px){
+    .cardImgTop{
+      width: 100%;
+      height: 50vw;
+      object-fit: cover;
+  }
+  }
+  
+  @media (min-width: 768px)  {
+    .card-img-top {
+      width: 100%;
+      height: 20vw;
+      object-fit: cover;
+    }
+  
+    .cardImgTop{
+      width: 100%;
+      height: 22vw;
+      object-fit: cover;
+    }
+  
+  
+   
+    .zoom{
+      transition: transform .2s;
+    }
+    .zoom:hover{
+      transform: scale(1.09);
+    }
+  
+  
+  
+  
+    .zoomDiv {
+      
+      transition: transform .2s; /* Animation */
+    }
+    
+    .zoomDiv:hover {
+      transform: scale(1.09); /* (150% zoom - Note: if the zoom is too large, it will go outside of the viewport) */
+    }
+  }
+  
+  .pd-mag{
+    padding: 0;
+    margin: 0;
+  }
+  
+  .ImageSize{
+    width:3vw;
+  }
+  
+  .SenagalSize{
+    width: 2vw;
+  }
+  
+  .livreSize{
+    width: 7vw;
+  }
+  
+  
+  .inner{
+    overflow: hidden;
+  }
+  
+  .inner img{
+    transition: all 1.5s ease ;
+  }
+  
+  .inner:hover img {
+    transform: scale(1.5);
+  }
+  
+  .cardSize{
+    width: 13rem;
+  
+  }
+  
+ 

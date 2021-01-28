@@ -54,7 +54,7 @@ class BonCaisse extends React.Component {
       handleSubmit=(event)=> {
         
         event.preventDefault();
-        const dataToSend = {exercice: this.state.exercice, gestion: this.state.gestion, sommeMandate:this.state.sommeMandate, nomCreancier:this.state.nomCreancier, sommeNette:this.state.sommeNette, anneeOrigine:this.state.anneeOrigine, date:this.state.date, nBordereau:this.state.nBordereau, nMandat:this.state.nMandat, imputation:this.state.imputation, justification:this.state.justification, id_mandat:this.state.liste[0]}
+        const dataToSend = {exercice: this.state.exercice, gestion: this.state.gestion, sommeMandate:this.state.sommeMandate, nomCreancier:this.state.nomCreancier, sommeNette:this.state.sommeNette, anneeOrigine:this.state.anneeOrigine, date:this.state.date, nBordereau:this.state.nBordereau, nMandat:this.state.nMandat, imputation:this.state.imputation, justification:this.state.justification, id_mandat:this.state.liste[1]}
         fetch('http://127.0.0.1:8000/mandatement/bonCaisse/',{
             method: 'POST',
             headers: {
@@ -71,7 +71,7 @@ class BonCaisse extends React.Component {
             <div class="container">
                 <form onSubmit={this.handleSubmit}>
             <div>
-                <table class="table table-bordered text-center shadow-lg p-3 mb-5 bg-white rounded largeur" style={{width:"1100px",fontSize:"1em"}}>
+                <table class="table table-bordered text-center shadow-lg p-3 mb-5 bg-white rounded largeur" style={{width:"1123px",fontSize:"1em",height:"559.3700787402px",backgroundColor:"#F7DC6F"}}>
                     <thead class="jaune">
                         <tr class="centre">
                             <th scope="col" colspan="2" class="lefta" style={{border:"1px solid #dee2e6",fontWeight:"bold"}}>
@@ -144,4 +144,4 @@ class BonCaisse extends React.Component {
 
 }
 
-export default BonCaisse;
+export default BonCaisse

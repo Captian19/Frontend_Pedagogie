@@ -202,4 +202,4 @@ const mapStateToProps = state => ({
   user: state.auth.user
 })
 
-export default connect(mapStateToProps)(Profile)
+export default connect(mapStateToProps,{modifyProfil})(Profile)

@@ -23,8 +23,11 @@ const getBadge = (is_active) => {
 
 const fields = ['avatar','first_name','last_name','email','telephone','adresse','active','roles']
 
+
+
 const Users = (props) => {
     const [users, setUsers] = useState([]);
+    const [loading, setLoading] = useState(true);
     const history = useHistory();
     
     const config = {
@@ -39,6 +42,7 @@ const Users = (props) => {
         .then(res =>{
             const users = res.data;
             setUsers(users);
+            setLoading(false);
         })
         .catch(err => console.log(err))
     }
@@ -48,7 +52,7 @@ const Users = (props) => {
     return(
         <CCard>
         <CCardHeader>
-          Tous les utilisateurs
+        <h4>Tous les utilisateurs</h4>
         </CCardHeader>
         <CCardBody>
         <CRow>
@@ -60,13 +64,18 @@ const Users = (props) => {
                 tableFilter
                 paginationfooter
                 itemsPerPageSelect
-                itemsPerPage={15}
+                itemsPerPage={20}
                 clickableRows
+                loading={loading}
                 onRowClick={(item) => history.push(`/admin/users/${item.id}`)}
                 hover
                 sorter
+                responsive={true}
                 hover
                 pagination
+                noItemsViewSlot={
+                    'Loading'
+                }
                 scopedSlots = {{
                     'active':
                     (item,index)=>{

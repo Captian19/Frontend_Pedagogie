@@ -19,7 +19,7 @@ import navigation from './menu'
 
 const Sidebar = () => {
   const dispatch = useDispatch()
-  const show = useSelector(state => state.sidebarShow)
+  const show = useSelector(state => state.layout.sidebarShow)
 
   return (
     <CSidebar show={show}

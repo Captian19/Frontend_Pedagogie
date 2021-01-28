@@ -19,6 +19,25 @@ export default [
       icon: 'cil-list',
     
     },
+    {
+      icon: 'cil-list',
+      _tag: 'CSidebarNavTitle',
+      _children: ['Gestion des mandatements']
+  },
+    {
+      _tag: 'CSidebarNavItem',
+      name: "Mandatement AC en cours",
+      to: '/comptable/MandatEnCours',
+      icon: 'cil-list',
+    
+    },
+    {
+      _tag: 'CSidebarNavItem',
+      name: "Mandatement BC en cours",
+      to: '/comptable/MandatEnCoursBc',
+      icon: 'cil-list',
+    
+    },
 
     
 ]

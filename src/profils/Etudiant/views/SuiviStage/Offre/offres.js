@@ -1,17 +1,13 @@
-import React, { Component } from "react";
+import React from "react";
 
 import {
     CCard,
     CCardBody,
-    CCardFooter,
-    CCardHeader,
     CCol,
-    CRow,
-    CBadge,
-    CCollapse
-  } from '@coreui/react'
+    CRow  } from '@coreui/react'
 
-import Tableau from './tableau'
+
+import Stages from './stages';
 
 
 
@@ -22,7 +18,7 @@ function Offres() {
                 <CRow>
                     <CCol sm="12">
                         
-                        <Tableau/>
+                        <Stages/>
                         
                     </CCol>
                 </CRow>

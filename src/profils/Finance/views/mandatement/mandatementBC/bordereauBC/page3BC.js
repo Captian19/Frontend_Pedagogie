@@ -63,11 +63,6 @@ class Page3BC extends React.Component {
         .then(res => res.json())
         .then(data => this.setState({liste: data}))
         .catch(err => console.error(err));
-  
-        fetch(`http://127.0.0.1:8000/mandatement/lastmandatBc`)
-        .then(res => res.json())
-        .then(data => this.setState({mandat: data}))
-        .catch(err => console.error(err))
 
         fetch(`http://127.0.0.1:8000/mandatement/lastBordereauBc`)
         .then(res => res.json())
@@ -96,10 +91,10 @@ class Page3BC extends React.Component {
     render(){
         return (
             <>
-            {this.state.mandat.map((i) => (
+   
                 <form onSubmit={this.handleSubmit}>
-                <div className="container">
-                    <table className="table table-bordered text-center shadow p-3 mb-5 bg-white rounded largeur" style={{width:"1150px"}}>
+                <div className="container" style={{width: "1123px",border: "1px solid #0F1019", fontWeight: "bold",height:"1123px"}}>
+                    <table className="table table-bordered text-center shadow p-3 mb-5 bg-white rounded largeur"  style={{width:"1123px",height:"1123px",marginLeft:"-17px"}}>
                         <thead id="page">
                         <tr className="centre">
                             <th scope="col" colSpan='2' className="lefta" style={{border: "1px solid #0F1019", fontWeight: "bold"}}>
@@ -131,15 +126,15 @@ class Page3BC extends React.Component {
                                                                                    disabled
                                                                                    autoComplete="off"
                                                                                    onChange={this.handleChangeExercice}
-                                                                                   value={this.state.exercice=i.exercice}
+                                                                                   value={this.state.exercice=this.state.liste[13]}
                                                                                    style={{width: "70px"}}/></span>
                                     </span>
                                     <span style={{fontSize:"0.8em"}}>
                                         Gestion: <span className="spanner"><input type="number" className="bas ad siz"
                                                                                   name="gestion" autoComplete="off"
                                                                                   onChange={this.handleChangeGestion}
-                                                                                  disabled
-                                                                                  value={this.state.gestion=i.exercice}
+                                                                                  required
+                                                                                  value={this.state.gestion}
                                                                                   style={{width: "70px"}}/> </span>
                                     </span>
                                 </div>
@@ -170,14 +165,14 @@ class Page3BC extends React.Component {
                             </th>
                         </tr>
                         <tr class="centre">
-                            <th scope="col"  class="align-middle creancier" style={{border:"1px solid #0F1019",fontWeight:"bold", fontSize:"1.2em"}}>somme<br/>mandatee<br/>CFA</th>
-                            <th scope="col"  class="align-middle mandatee1" style={{border:"1px solid #0F1019",fontWeight:"bold", fontSize:"1.2em"}}>total <br/>par <br/>chapitre</th>
-                            <th scope="col" colspan="6" class="align-middle " style={{border:"1px solid #0F1019",fontWeight:"bold", fontSize:"1.2em"}}>Total par Article</th>
-                            <th scope="col" class="align-middle mandatee1" style={{border:"1px solid #0F1019",fontWeight:"bold", fontSize:"1.2em"}}>reserve au comptable<br/>Assignataire</th>
+                            <th scope="col"  class="align-middle creancier" style={{border:"1px solid #0F1019",fontWeight:"bold", fontSize:"1.1em"}}>somme<br/>mandatee<br/>CFA</th>
+                            <th scope="col"  class="align-middle mandatee1" style={{border:"1px solid #0F1019",fontWeight:"bold", fontSize:"1.1em"}}>total <br/>par <br/>chapitre</th>
+                            <th scope="col" colspan="6" class="align-middle " style={{border:"1px solid #0F1019",fontWeight:"bold", fontSize:"1.1em"}}>Total par Article</th>
+                            <th scope="col" class="align-middle mandatee1" style={{border:"1px solid #0F1019",fontWeight:"bold", fontSize:"1.1em"}}>reserve au comptable<br/>Assignataire</th>
                         </tr>
                         <tr className="centre" style={{height:'300px',border: "1px solid #0F1019"}}>
                             <th scope="col" className="align-middle creancier" style={{border: "1px solid #0F1019", fontWeight: "bold"}}>
-                                <span className="spanner"> <input type="text" className="input-group-text ad"
+                                <span className="spanner"> <input type="text" className="input-group-text ad" style={{ fontSize:"1em"}}
                                                                   name="anneeOrigine" autoComplete="off"
                                                                   required
                                                                   onChange={this.handleChangeSommeMandate}
@@ -186,17 +181,17 @@ class Page3BC extends React.Component {
                             </th>
                             <th scope="col" className="align-middle mandatee1"
                                 style={{border: "1px solid #0F1019", fontWeight: "bold"}}>
-                                <span className="spanner"> <input type="text" className="input-group-text ad"
+                                <span className="spanner"> <input type="number" className="input-group-text ad" style={{ fontSize:"1em"}}
                                                                   name="anneeOrigine" autoComplete="off"
                                                                   onChange={this.handleChangeTotalChap}
                                                                   value={this.state.totalChap} type="number"/></span>
                             </th>
                             <th scope="col" colSpan="6" className="align-middle "
                                 style={{border: "1px solid #0F1019", fontWeight: "bold"}}>
-                                <span className="spanner"> <textarea type="text" className="input-group-text ad"
+                                <span className="spanner"> <input type="number" className="input-group-text ad" style={{ fontSize:"1em"}}
                                                                   name="anneeOrigine" autoComplete="off"
                                                                   onChange={this.handleChangeTotalArticle}
-                                                                  value={this.state.totalArticle} type="number"></textarea></span>
+                                                                  value={this.state.totalArticle} type="number"/></span>
                             </th>
                             <th scope="col" className="align-middle mandatee1"
                                 style={{border: "1px solid #0F1019", fontWeight: "bold"}}>
@@ -240,7 +235,7 @@ class Page3BC extends React.Component {
                     </table>
                 </div>
             </form>
-            ))}
+   
             </>
         );
     }

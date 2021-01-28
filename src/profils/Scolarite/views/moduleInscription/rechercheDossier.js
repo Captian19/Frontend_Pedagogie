@@ -1,130 +1,152 @@
 import React, { Component } from "react";
-import '@fortawesome/fontawesome-free/css/all.min.css'; import
-'bootstrap-css-only/css/bootstrap.min.css'; import
-'mdbreact/dist/css/mdb.css';
+import RechercheS from '../../../../components/moduleInscription/RechercheS';
+import axios from 'axios';
+import repo from '../../../../assets/moduleInscription/img/image.png';
+import { Link } from 'react-router-dom';
+
 
 import {
-  Button,
-  Input,
-  Footer,
-  Card,
-  CardBody,
-  CardImage,
-  CardTitle,
-  CardText
-} from "mdbreact";
-
-import axios from 'axios';
-import "../../../../assets/moduleInscription/css/style.css"
-import ProfilDossier from "../../../../components/moduleInscription/profilDossier";
+    CCard,
+    CCardBody,
+    CCol,
+    CRow,
+  } from '@coreui/react'
 
 
-class SearchDossier extends Component {
+
+class Recherche extends Component {
+
+
   state = {
-    search: "",
-    etudiant : []
+    etudiants : []
   };
+   
+ 
 
-  componentDidMount(){
-     
 
-    let url = 'http://127.0.0.1:8000/api/InfoEtudiantList';
-    axios.get(url, {
-      headers: {
-        'content-type': 'multipart/form-data'
-      }
-    })
-    .then(response => {
-        this.setState({
-            etudiant : response.data
+    componentDidMount(){
+        let url = 'http://127.0.0.1:8000/api/InfoEtudiantList';
+
+        axios.get(url, {
+          headers: {
+            'content-type': 'multipart/form-data'
+          }
         })
-        // console.log(this.state.b)
-    
+        .then(response => {
+            this.setState({
+                etudiants : response.data
+            })
+        })
+        .catch(e =>{
+            console.log(e)    
         
-    })
-    .catch(e =>{
-        console.log(e)    
+            console.log("Error")
+        })
     
-        console.log("Error")
-    })
- 
+    }
+
+
+    render(){
+        return(
+            <CCard>
+            <CCardBody>
+            <CRow>
+                <CCol sm="12">
+                    <RechercheS></RechercheS>
+                    <div className="row">
+                        <div className="col-lg-2 m-5 text-center ">
+                            <Link to='/scolarite/LesDosssiers/classe/TC1 TC'>
+                                <img width="200px" src={repo} alt="classe"  ></img>
+                                <div className="justify-content-center">TC1</div>
+                            </Link>
+                        </div>
+                        <div className="col-lg-2 m-5 text-center ">
+                            <Link to='/scolarite/LesDosssiers/classe/TC2 TC'>
+                                <img width="200px" src={repo} alt="classe"></img>
+                                <div>TC2</div>
+                            </Link>
+                        </div>
+                        <div className="col-lg-2 m-5 text-center ">
+                            <Link to='/scolarite/LesDosssiers/classe/DIC1 GIT'>
+                                <img width="200px" src={repo} alt="classe"></img>
+                                <div>DIC1 GIT</div>
+                            </Link>
+                        </div>
+                        <div className="col-lg-2 m-5 text-center ">
+                            <Link to='/scolarite/LesDosssiers/classe/DIC1 GEM'>
+                                <img width="200px" src={repo} alt="classe"></img>
+                                <div>DIC1 GEM</div>
+                            </Link>
+                        </div>
+                        <div className="col-lg-2 m-5 text-center ">
+                            <Link to='/scolarite/LesDosssiers/classe/DIC1 AERO'>
+                                <img width="200px" src={repo} alt="classe"></img>
+                                <div>DIC1 AERO</div>
+                            </Link>
+                        </div>
+                        <div className="col-lg-2 m-5 text-center ">
+                            <Link to='/scolarite/LesDosssiers/classe/DIC1 GC'>
+                                <img width="200px" src={repo} alt="classe"></img>
+                                <div>DIC1 GC</div>
+                            </Link>
+                        </div>
+                        <div className="col-lg-2 m-5 text-center ">
+                            <Link to='/scolarite/LesDosssiers/classe/DIC2 GIT'>
+                                <img width="200px" src={repo} alt="classe"></img>
+                                <div>DIC2 GIT</div>
+                            </Link>
+                        </div>
+                        <div className="col-lg-2 m-5 text-center ">
+                            <Link to='/scolarite/LesDosssiers/classe/DIC2 GEM'>
+                                <img width="200px" src={repo} alt="classe"></img>
+                                <div>DIC2 GEM</div>
+                            </Link>
+                        </div>
+                        <div className="col-lg-2 m-5 text-center ">
+                            <Link to='/scolarite/LesDosssiers/classe/DIC2 AERO'>
+                                <img width="200px" src={repo} alt="classe"></img>
+                                <div>DIC2 AERO</div>
+                            </Link>
+                        </div>
+                        <div className="col-lg-2 m-5 text-center ">
+                            <Link to='/scolarite/LesDosssiers/classe/DIC2 GC'>
+                                <img width="200px" src={repo} alt="classe"></img>
+                                <div>DIC2 GC</div>
+                            </Link>
+                        </div>
+                        <div className="col-lg-2 m-5 text-center ">
+                            <Link to='/scolarite/LesDosssiers/classe/DIC3 GIT'>
+                                <img width="200px" src={repo} alt="classe"></img>
+                                <div>DIC3 GIT</div>
+                            </Link>
+                        </div>
+                        <div className="col-lg-2 m-5 text-center ">
+                            <Link to='/scolarite/LesDosssiers/classe/DIC3 GEM'>
+                                <img width="200px" src={repo} alt="classe"></img>
+                                <div>DIC3 GEM</div>
+                            </Link>
+                        </div>
+                        <div className="col-lg-2 m-5 text-center ">
+                            <Link to='/scolarite/LesDosssiers/classe/DIC3 AERO'>
+                                <img width="200px" src={repo} alt="classe"></img>
+                                <div>DIC3 AERO</div>
+                            </Link>
+                        </div>
+                        <div className="col-lg-2 m-5 text-center ">
+                            <Link to='/scolarite/LesDosssiers/classe/DIC3 GC'>
+                                <img width="200px" src={repo} alt="classe"></img>
+                                <div>DIC3 GC</div>
+                            </Link>
+                        </div>
+                      
+                    </div>
+                    
+                </CCol>
+            </CRow>
+            </CCardBody>
+            </CCard>
+        )
+    }
 }
 
-  renderEtudiant = etudiant => {
-    const search  = this.state.search;
-    
-    var code = etudiant.pk;
-    
-   
-
-    return (
-      <ProfilDossier etudiant = {etudiant}></ProfilDossier>
-    );
-  };
-
-
-  
-
-  onchange = e => {
-    this.setState({ search: e.target.value });
-  
-  };
-
- 
-    
- 
-
-  
-
-  render() {
-  
-    const  search  = this.state.search.toLowerCase();
-    const filteredCountries = this.state.etudiant.filter(etudiant => {
-      if(search.includes(etudiant.nombreEnfants)){
-        return etudiant
-      }
-   
-    });
-
-    return (
-      <div className="flyout">
-
-                <div className="card container  text-center pt-3  bg-primary white-text">
-                    <h1 style={{color:"white"}}>DOSSIERS DES ETUDIANTS</h1>
-                </div>
-        
-        <main style={{ marginTop: "4rem" }}>
-          <div className="container border p-3 mb-5">
-            <div className="row text-center">
-              <div className="col-lg-12">
-                <center>
-                  <h3>
-                   
-                      BARRE DE RECHERCHE
-                  </h3>
-                </center>
-              </div>
-              <div className="col-lg-11 justify-content-center ml-3 mr-3  card  mt-3 mb-3  text-center">
-                <Input
-                  label="Rechercher un Etudiant par son adresse email EPT"
-                  icon="search"
-                  onChange={this.onchange}
-                />
-              </div>
-              <div className="col" />
-            </div>
-            <div className="row">
-              
-              {filteredCountries.map(etudiant => {
-                return this.renderEtudiant(etudiant);
-              })}
-            </div>
-           
-          </div>
-        </main>
-      </div>
-    );
-  }
-}
-
-export default SearchDossier;
+export default Recherche

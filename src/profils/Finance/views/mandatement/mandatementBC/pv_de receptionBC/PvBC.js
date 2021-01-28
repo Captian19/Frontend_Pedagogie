@@ -14,7 +14,7 @@ class PvBC extends React.Component{
       }
 
       componentDidMount(){
-        fetch('http://127.0.0.1:8000/mandatement/last')
+        fetch('http://127.0.0.1:8000/mandatement/last1')
         .then(res => res.json())
         .then(data => this.setState({liste: data}))
         .catch(err => console.error(err));
@@ -54,7 +54,7 @@ class PvBC extends React.Component{
         
         event.preventDefault();
         const dataToSend = {chapitre: this.state.chapitre, date: this.state.date, designation_four:this.state.designation_four, num_nomenclature:this.state.num_nomenclature, designation_mat:this.state.designation_mat, unite:this.state.unite, quantite_mat:this.state.quantite_mat, decisions:this.state.decisions, membres:this.state.membres, date_arrete:this.state.date_arrete}
-        fetch(`http://127.0.0.1:8000/mandatement/pv/${this.state.liste[2]}/`,{
+        fetch(`http://127.0.0.1:8000/mandatement/pvBc/${this.state.liste[2]}/`,{
             method: 'PUT',
             headers: {
               Accept: 'application/json', 'Content-Type': 'application/json'},

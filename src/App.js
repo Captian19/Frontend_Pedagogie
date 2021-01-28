@@ -15,12 +15,13 @@ import MaitreStage from "./profils/Maitre_stage/index"
 import DirecteurEcole from "./profils/DirecteurEcole/index"
 import DirecteurEtudes from "./profils/DirecteurEtudes/index"
 import ChefDepartement from "./profils/ChefDepartement/index";
+import Page404 from "./components/auth/404";
 
-import Login from "./auth/login"
-import { Provider } from 'react-redux'
-import store from './store'
-import PrivateRoute from "./auth/PrivateRoute"
-
+import Login from "./auth/login";
+import { Provider } from 'react-redux';
+import store from './store';
+import PrivateRoute from "./auth/PrivateRoute";
+import Guide from "./components/auth/Guide";
 import {loadUser} from "./actions/auth";
 
 const loading = (
@@ -41,25 +42,10 @@ class App extends Component{
       <BrowserRouter>
           <React.Suspense fallback={loading}>
             <Switch>
-            <Route exact path="/" component={Login} />
-
-      {/*
-            <Route path="/etudiant" component={Etudiant} />
-            <Route path="/scolarite" component={Scolarite} />
-            <Route path="/bibliotheque" component={Bibliotheque} />
-            <Route path="/finance" component={Finance} />
-            <Route path="/medecin" component={Medecin} />
-            <Route path="/communication" component={Communication} />
-            <Route path="/comptable" component={Comptable} />
-            <Route path="/admin" component={Admin} />
-            <Route path="/enseignant" component={Enseignant} />
-            <Route path="/departement" component={AssistantDpt} />
-            <Route path="/maitre_stage" component={MaitreStage} /> */}
-      
-      
+            <Route exact path="/" component={Login} />      
             <PrivateRoute path="/etudiant" component={Etudiant} pass="ETUDIANT" />
             <PrivateRoute path="/scolarite" component={Scolarite} pass="MEMBRE_SCOLARITE" />
-            <PrivateRoute path="/bibliotheque" component={Bibliotheque} pass="MEMBRE_BIBLIOTHEQUE" />
+            <PrivateRoute path="/bibliotheque" component={Bibliotheque} pass="GERANT_BIBLIOTHEQUE" />
             <PrivateRoute path="/finance" component={Finance} pass="MEMBRE_FINANCE" />
             <PrivateRoute path="/medecin" component={Medecin} pass="MEDECIN" />
             <PrivateRoute path="/admin" component={Admin} pass="ADMIN" />
@@ -71,8 +57,9 @@ class App extends Component{
             <PrivateRoute path="/directeur-etudes" component={DirecteurEtudes} pass="DIRECTEUR_DES_ETUDES" />
             <PrivateRoute path="/communication" component={Communication} pass="COMMUNICATION" />
             <PrivateRoute path="/maitre_stage" component={MaitreStage} pass="MAITRE_STAGE" />
-      
-
+            <PrivateRoute path="/assistant-departement" component={AssistantDpt} pass="ASSISTANT_CHEF_DEPARTEMENT" />
+            <Route path="/guide" component={Guide} />
+            <Route path='*' component={Page404} />
             </Switch>
           </React.Suspense>
       </BrowserRouter>

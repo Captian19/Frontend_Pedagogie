@@ -9,6 +9,12 @@ export default [
         text: 'NEW',
       }
     },
+    {
+      _tag: 'CSidebarNavItem',
+      name: 'Liste des vacataires',
+      to: '/directeur-etudes/Vacataires',
+      icon: 'cil-people',
+    }
     
 ]
 

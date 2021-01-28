@@ -16,7 +16,7 @@ class Dashboard extends Component {
             <CCardBody>
             <CRow>
                 <CCol sm="12">
-                    <h1>Hello World ASSISTANT Dept</h1>
+                    <h1>Hello World Dept</h1>
                 </CCol>
             </CRow>
             </CCardBody>

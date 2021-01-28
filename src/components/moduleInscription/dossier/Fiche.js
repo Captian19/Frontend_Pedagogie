@@ -1,8 +1,5 @@
 import React, { Component } from 'react';
-import {html2canvas} from 'html2canvas';
-import jsPDF from 'jspdf';
 import html2PDF from 'jspdf-html2canvas';
-import { element } from 'prop-types';
 import Entete from '../Entete';
 
 

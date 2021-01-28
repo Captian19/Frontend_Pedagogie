@@ -15,6 +15,7 @@ const PrivateRoute = ({component: Component, auth,pass,...rest}) => (
         return <Redirect to="/" />;
       }
       else if (auth.user.CurrentRoles.find(role => (role.role_type === pass))) {
+      
         return <Component {...props} />;
       } 
       else {

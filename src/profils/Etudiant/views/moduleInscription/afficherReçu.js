@@ -5,8 +5,6 @@ import axios from 'axios';
 import {
     CCard,
     CCardBody,
-    CCardFooter,
-    CCardHeader,
     CCol,
     CRow,
   } from '@coreui/react'
@@ -16,10 +14,10 @@ import { connect } from "react-redux";
 
 class AfficheReçu extends Component {
     state = {
-        Etudiant : {},
+        etudiant : {},
     }
     componentDidMount(){
-        let anneeScolaire = `${this.props.user.CurrentRoles[0].date_debut.split("-")[0]}-${this.props.user.CurrentRoles[0].date_fin.split("-")[0]}`
+        let anneeScolaire = `${this.props.match.params.anneeScolaire}`
         let email = this.props.user.email
         let url =`http://127.0.0.1:8000/api/InfoEtudiantByAnneeScolaireEmail/${anneeScolaire}/${email}`
         axios.get(url, {
@@ -29,7 +27,7 @@ class AfficheReçu extends Component {
         })
         .then(response => {
             this.setState({
-                Etudiant : response.data
+                etudiant : response.data
             })
             console.log(this.state.Etudiant)
         
@@ -47,10 +45,10 @@ class AfficheReçu extends Component {
             <CRow>
                 <CCol sm="12">
                     <div className="card container mb-5  text-center pt-3  bg-primary white-text">
-                        <h1 style={{color:"white"}}>REÇU {this.state.Etudiant.prenom} {this.state.Etudiant.nom}</h1>
+                        <h1 style={{color:"white"}}>REÇU {this.state.etudiant.prenom} {this.state.etudiant.nom}</h1>
                     </div>
                     <div className=" mt-5 text-center">
-                    <Reçu Etudiant = {this.state.Etudiant}></Reçu>
+                    <Reçu Etudiant = {this.state.etudiant}></Reçu>
                     </div>
                 </CCol>
             </CRow>

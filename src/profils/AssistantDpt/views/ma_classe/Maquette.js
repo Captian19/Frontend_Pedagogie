@@ -22,7 +22,7 @@ class Maquette extends Component {
         is_getted: false,
         is_chef_dpt: true
     };
-// Obtenir les UE par département 
+// Obtenir les UE par département
     getMaquetteDept(dept) {
         axios.get(API_URL_UE + "/departement/" + dept).then(res => this.setState({maquette: res.data, is_getted: true}))
     };

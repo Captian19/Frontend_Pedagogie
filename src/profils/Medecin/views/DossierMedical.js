@@ -5,7 +5,7 @@ import '@fortawesome/fontawesome-free/css/all.min.css'; import
 'bootstrap-css-only/css/bootstrap.min.css'; 
 import 'mdbreact/dist/css/mdb.css';
 import DocMed from '../../../components/moduleInscription/DocMed'
-import repo from '../../../assets/moduleInscription/img/dossier.png'
+import repo from '../../../assets/moduleInscription/img/image.png'
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 
@@ -14,15 +14,14 @@ import { Link } from 'react-router-dom';
 class DossierMedical extends Component {
 
     state = {
-        search: "",
+        search : "",
         etudiant : []
       };
     
       componentDidMount(){
          
     
-        // let url = 'http://127.0.0.1:8000/api/InfoEtudiantList';
-        let url = 'https://users-ent.herokuapp.com/api/auth/ETUDIANT/3/';
+        let url = 'http://127.0.0.1:8000/api/InfoEtudiantListValide';
         axios.get(url, {
           headers: {
             'content-type': 'multipart/form-data'
@@ -32,7 +31,7 @@ class DossierMedical extends Component {
             this.setState({
                 etudiant : response.data
             })
-            console.log(this.state.etudiant)
+            // console.log(this.state.b)
         
             
         })
@@ -68,7 +67,7 @@ class DossierMedical extends Component {
 
         const  search  = this.state.search.toLowerCase();
         const filteredEtudiant = this.state.etudiant.filter(etudiant => {
-          if(search.includes(etudiant.nombreEnfants)){
+          if(search.includes(etudiant.email)){
             return etudiant
           }
        
@@ -117,14 +116,92 @@ class DossierMedical extends Component {
                     </div>
 
          
-
-                    <div className="row mt-3">
-                        <div className="col-lg-2 mt-3 text-center ">
-                            <Link to='/medecin/dossier-etudiant-fichiers'>
-                                <img width="100px" src={repo}></img>
-                                <div>Mame Diarra Sow</div>
+                    <div className="row">
+                        <div className="col-lg-2 m-5 text-center ">
+                            <Link to='/medecin/liste-des-etudiants/TC1 TC'>
+                                <img width="200px" src={repo} alt="classe" ></img>
+                                <div className="justify-content-center">TC1</div>
                             </Link>
                         </div>
+                        <div className="col-lg-2 m-5 text-center ">
+                            <Link to='/medecin/liste-des-etudiants/TC2 TC'>
+                                <img width="200px" src={repo} alt="classe"></img>
+                                <div>TC2</div>
+                            </Link>
+                        </div>
+                        <div className="col-lg-2 m-5 text-center ">
+                            <Link to='/medecin/liste-des-etudiants/DIC1 GIT'>
+                                <img width="200px" src={repo} alt="classe"></img>
+                                <div>DIC1 GIT</div>
+                            </Link>
+                        </div>
+                        <div className="col-lg-2 m-5 text-center ">
+                            <Link to='/medecin/liste-des-etudiants/DIC1 GEM'>
+                                <img width="200px" src={repo} alt="classe"></img>
+                                <div>DIC1 GEM</div>
+                            </Link>
+                        </div>
+                        <div className="col-lg-2 m-5 text-center ">
+                            <Link to='/medecin/liste-des-etudiants/DIC1 AERO'>
+                                <img width="200px" src={repo} alt="classe"></img>
+                                <div>DIC1 AERO</div>
+                            </Link>
+                        </div>
+                        <div className="col-lg-2 m-5 text-center ">
+                            <Link to='/medecin/liste-des-etudiants/DIC1 GC'>
+                                <img width="200px" src={repo} alt="classe"></img>
+                                <div>DIC1 GC</div>
+                            </Link>
+                        </div>
+                        <div className="col-lg-2 m-5 text-center ">
+                            <Link to='/medecin/liste-des-etudiants/DIC2 GIT'>
+                                <img width="200px" src={repo} alt="classe"></img>
+                                <div>DIC2 GIT</div>
+                            </Link>
+                        </div>
+                        <div className="col-lg-2 m-5 text-center ">
+                            <Link to='/medecin/liste-des-etudiants/DIC2 GEM'>
+                                <img width="200px" src={repo} alt="classe"></img>
+                                <div>DIC2 GEM</div>
+                            </Link>
+                        </div>
+                        <div className="col-lg-2 m-5 text-center ">
+                            <Link to='/medecin/liste-des-etudiants/DIC2 AERO'>
+                                <img width="200px" src={repo} alt="classe"></img>
+                                <div>DIC2 AERO</div>
+                            </Link>
+                        </div>
+                        <div className="col-lg-2 m-5 text-center ">
+                            <Link to='/medecin/liste-des-etudiants/DIC2 GC'>
+                                <img width="200px" src={repo} alt="classe"></img>
+                                <div>DIC2 GC</div>
+                            </Link>
+                        </div>
+                        <div className="col-lg-2 m-5 text-center ">
+                            <Link to='/medecin/liste-des-etudiants/DIC3 GIT'>
+                                <img width="200px" src={repo} alt="classe"></img>
+                                <div>DIC3 GIT</div>
+                            </Link>
+                        </div>
+                        <div className="col-lg-2 m-5 text-center ">
+                            <Link to='/medecin/liste-des-etudiants/DIC3 GEM'>
+                                <img width="200px" src={repo} alt="classe"></img>
+                                <div>DIC3 GEM</div>
+                            </Link>
+                        </div>
+                        <div className="col-lg-2 m-5 text-center ">
+                            <Link to='/medecin/liste-des-etudiants/DIC3 AERO'>
+                                <img width="200px" src={repo} alt="classe"></img>
+                                <div>DIC3 AERO</div>
+                            </Link>
+                        </div>
+                        <div className="col-lg-2 m-5 text-center ">
+                            <Link to='/medecin/liste-des-etudiants/DIC3 GC'>
+                                <img width="200px" src={repo} alt="classe"></img>
+                                <div>DIC3 GC</div>
+                            </Link>
+                        </div>
+                      
                     </div>
                 
               

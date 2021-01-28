@@ -11,12 +11,7 @@ import IconButton from "@material-ui/core/IconButton";
 import CloseIcon from "@material-ui/icons/Close";
 import Typography from "@material-ui/core/Typography";
 
-import {
-    CCol,
-    CForm,
-    CFormGroup,
-    CLabel,
-    CSelect} from '@coreui/react'
+import {CCol,CForm,CFormGroup,CLabel,CSelect} from '@coreui/react'
 
 const styles = (theme) => ({
   root: {
@@ -81,7 +76,7 @@ function Formulaire(props) {
 
   return (
     <div>
-      <Button variant="outlined" color="secondary" onClick={handleClickOpen}  style={{right:'10px', bottom:'10px', position:'absolute'}}>
+       <Button variant="outlined" color="secondary" onClick={handleClickOpen}  style={{float:'right'}}>
        + Stagiaire
       </Button>
      
@@ -101,6 +96,7 @@ function Formulaire(props) {
               genie={props.genie}
               classe={props.classe}
               slug={props.slug}
+              clickLoad = {props.clickLoad}
           />
         </CCol>
 
@@ -110,7 +106,7 @@ function Formulaire(props) {
 
         </DialogContent>
         <DialogActions>
-         ® Copyright EPT
+         ®  Ecole Polytechnique de Thies
         </DialogActions>
       </Dialog>
     </div>
@@ -120,44 +116,70 @@ function Formulaire(props) {
 
 
 //composant qui remplit les options dans Select
-function ChoisirStagiaire({classe, genie,slug}){
-    const {register, handleSubmit} = useForm({})
+function ChoisirStagiaire({slug, clickLoad}){
+    const {register, handleSubmit, formState} = useForm({})
+    const {isSubmitting} = formState
+
+    const[genie, setGenie] = useState([])
+    const getListGenie = () =>{
+      axios.get(`https://users-ent.herokuapp.com/api/departements`)
+      .then((res)=>{
+          setGenie(res.data);
+      })
+      .catch(e => console.log(e))
+    }
+
+
+    const[classe, setClasse] = useState([])
+    const getListClasse = () =>{
+      axios.get(`https://users-ent.herokuapp.com/api/classes`)
+      .then((res)=>{
+        setClasse(res.data);
+      })
+      .catch(e => console.log(e))
+    }
 
     useEffect(()=>{
-        getEtudiants();
-        
+      getListGenie();
+      getListClasse();
     },[])
 
 
-    const onSubmit = (data) => {
+    const onSubmit1 = (data) => {
         refresh(data);
-        console.log('data', data);
         cancelCourse();
     }
 
     const cancelCourse = () => { 
         document.getElementById("create-stage-form").reset();
-        refreshPage();
     }
 
-    function refreshPage() {
-        window.location.reload(false);
+    
+    const onSubmit = (data) => {
+      getEtudiants(data.classe,data.departement);
     }
 
     // pour obtenir la liste des etudiants pouvant postuler aux stages de l'entreprise
     const [etudiants,setEtudiants] = useState([])
-    const getEtudiants = () =>{
-        axios.get(`http://localhost:8000/api/stage/entreprises/etudiants/${classe}/${genie}`)
-        .then(res => setEtudiants(res.data))
+    const getEtudiants = (clas, dept) =>{
+        axios.get(`http://users-ent.herokuapp.com/api/auth/ETUDIANT/${clas}/${dept}/`)
+        .then(res => {
+          setEtudiants(res.data);
+        })
         .catch(e => console.log(e))
     }
 
+
+
     const refresh = async (data) =>{
+        const today = new Date().getFullYear().toString()
+        data['annee_stage'] = today;
         data['stagiaire'] = parseInt(data['stagiaire']);
         data['entreprise'] = slug;
+        data['stage_git'] = false;
         await axios.post(`http://localhost:8000/api/stage/entreprises/${slug}/stages/`, data)
-        .then((res) => {
-            console.log('res.data',res.data);
+        .then(() => {
+          clickLoad()
         })
         .catch(err => console.log(err));
     }
@@ -165,15 +187,43 @@ function ChoisirStagiaire({classe, genie,slug}){
 
     return(
         <>
-        <p>Il y a {etudiants.length} etudiants de la classe {classe}-{genie}</p>
+
+            <form className="mb-2" onSubmit={handleSubmit(onSubmit)}>
+                    <div className="row">
+                    <div className="col-md-4">
+                            <div className="form-group">
+                            <select className="form-control" name="classe" ref={register}>
+                            {classe.map(cla => <option value={cla['niveau']} key ={cla['id']}>{cla['niveau']}</option>)}
+                            </select>
+                            </div>
+                        </div>
+
+                        <div className="col-md-4">
+                            <div className="form-group">
+                            <select className="form-control" name="departement" ref={register}>
+                            {genie.map(departement => <option value={departement['nom_dept']} key={departement['id']}>{departement['nom_dept']}</option>)}
+                            </select>
+                            </div>
+                        </div>
+                       
+                        <div className="col-md-3">
+                            <button type="submit" className="btn btn-primary">Rechercher</button>
+                        </div>
+                    </div>
+                </form>
+
+
+        
 
 
 
-            <CForm method="POST"  id="create-stage-form"  encType="application/json" onSubmit={handleSubmit(onSubmit)}>
-                <CFormGroup>
-                    <CLabel htmlFor="stagiaire">Stagiaire</CLabel>
-                    {etudiants.length > 0 ?
+            <CForm method="POST"  id="create-stage-form"  encType="application/json" onSubmit={handleSubmit(onSubmit1)}>
+            {etudiants.length > 0 ?
+                    
                     <>
+                <CFormGroup>
+                    <CLabel htmlFor="stagiaire">Effectif : {etudiants.length}</CLabel>
+                   
                         <CSelect
                           type="text"
                             id="stagiaire"
@@ -181,34 +231,28 @@ function ChoisirStagiaire({classe, genie,slug}){
                             innerRef={register({required: true})}
                             >
                         
-                                <option value="3">selectionner</option>
                                 {etudiants.map((eleve) =>{
-                                    if(eleve.etudiant){
-                                      return <option value={eleve.etudiant && eleve.etudiant_id} key={eleve.etudiant && eleve.etudiant.id}>{eleve.etudiant && eleve.etudiant.username}</option>
-                                    }
-                                        
+                                    if(eleve){
+                                      return <option value={eleve.id} key={eleve.id}>{eleve.user.first_name}  {eleve.user.last_name}</option>
+                                    }     
                                 })}
-                            
-                            
                         </CSelect>
-                        
-                        
-                    </>
-                    : <h6>aucun etudiant</h6>
-                    }  
                    
-            </CFormGroup>
+                   
+                </CFormGroup>
             
-            <CFormGroup>
+                <CFormGroup>
                     <div >
-                        <button type='submit' className='btn btn-pill-success' >valider</button>
+                        <button type='submit' className='btn btn-pill-success' disabled={isSubmitting} onClick={clickLoad}>valider</button>
                     </div>
-            </CFormGroup>
-                       
+                </CFormGroup>  
+           
+            </>
+
+                    : <h2>Aucun etudiant</h2>
+            }                       
         </CForm>
 
-
-        
         </>
     )
 }

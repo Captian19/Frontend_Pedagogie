@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-
+import View_Session from "./moduleConcours/view_session";
 import {
     CCard,
     CCardBody,
@@ -12,15 +12,7 @@ import {
 class Dashboard extends Component {
     render(){
         return(
-            <CCard>
-            <CCardBody>
-            <CRow>
-                <CCol sm="12">
-                    <h1>Hello World Scolarite</h1>
-                </CCol>
-            </CRow>
-            </CCardBody>
-            </CCard>
+            <View_Session/>
         )
     }
 }

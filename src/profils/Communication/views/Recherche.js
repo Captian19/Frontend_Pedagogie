@@ -17,6 +17,7 @@ import {
 import axios from 'axios';
 import '../../../assets/moduleInscription/css/style.css'
 import ProfilCom from "../../../components/moduleInscription/ProfilCom";
+import {connect} from "react-redux";
 
 
 class Recherche extends Component {
@@ -27,8 +28,8 @@ class Recherche extends Component {
 
   componentDidMount(){
      
-
-    let url = 'http://127.0.0.1:8000/api/InfoEtudiantList';
+    let anneeScolaire = `${(this.props.user.CurrentRoles[0].annee.split("/")[0])}-${(this.props.user.CurrentRoles[0].annee.split("/")[1])}`
+    let url = `http://127.0.0.1:8000/api/InfoEtudiantByAnneeScolaireValide/${anneeScolaire}`;
     axios.get(url, {
       headers: {
         'content-type': 'multipart/form-data'
@@ -79,7 +80,7 @@ class Recherche extends Component {
   
     const  search  = this.state.search.toLowerCase();
     const filteredEtudiant = this.state.etudiant.filter(etudiant => {
-      if(search.includes(etudiant.nombreEnfants)){
+      if(search.includes(etudiant.email)){
         return etudiant
       }
    
@@ -125,5 +126,7 @@ class Recherche extends Component {
     );
   }
 }
-
-export default Recherche;
+const mapStateToProps = state => ({
+  user: state.auth.user
+})
+export default connect(mapStateToProps,null)(Recherche)

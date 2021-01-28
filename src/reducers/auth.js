@@ -24,8 +24,11 @@ export default function(state=initialState, action) {
 
         case 'LOGOUT_SUCCESSFUL':
             localStorage.removeItem("token");
-            return {...state, token: null, user: null,isAuthenticated: false, isLoading: false};
-
+            return {...state, token: null, user: null,isAuthenticated: false, isLoading: false}; 
+        case 'MODIF_SUCCESS':
+            return {...state,...action.payload,errors:null}
+        case 'MODIF_FAIL':
+            return {...state,errors:action.payload}
         default:
             return state
     }

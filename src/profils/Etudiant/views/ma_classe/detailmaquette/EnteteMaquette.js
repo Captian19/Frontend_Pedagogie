@@ -9,7 +9,7 @@ import axios from 'axios';
 
 
     return(
-        <thead className="table-primary">
+        <thead className="table-info">
             <tr id="entete">
                 <th colSpan={41} className="py-3"><center><h3>Maquette {props.role.classe} {props.role.departement} </h3> </center></th>
             </tr>

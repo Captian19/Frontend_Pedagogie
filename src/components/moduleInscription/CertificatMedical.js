@@ -36,9 +36,9 @@ class CertificatMedical extends Component {
 
         return ( 
 
-                <div>
+                <div className="pb-5">
                     
-                    <div className="col-lg-12 border mt-3  text-center">
+                    <div className="col-lg-12 border   text-center">
                         <h1>CERTIFICAT D'APTITUDE</h1>
                     </div>
 
@@ -60,7 +60,7 @@ class CertificatMedical extends Component {
                     </div>
 
                     <div className="row mt-3 container">
-                        <p style={{fontSize:'15px'}}> Fait à Thiès le,   : <b>{moment(this.props.Etudiant.date).format('Do MMMM YYYY')}</b></p>
+                        <p style={{fontSize:'15px'}}> Fait à Thiès le,    <b>{moment(this.props.Etudiant.date).format('Do MMMM YYYY')}</b></p>
                     </div>
 
                     <div className="col-lg-12 text-right mt-5 container">

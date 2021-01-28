@@ -1,13 +1,26 @@
 import React, { Component } from "react";
-import axios from 'axios';
 import { Link } from 'react-router-dom';
+import avatar from '../../assets/img/avatar.png'
 
 class ProfilCom extends Component {
-    state = { 
-
-    };
-
-
+   
+    link = ()=>{
+        if(this.props.liste){
+            return(
+                <Link to={`/communication/dossier-etudiant-fichiers/${this.props.etudiant.email}`}
+                className="btn btn-primary">Dossier
+                </Link>
+            )
+        }
+        else{
+            return(
+                <Link to={`/communication/carte-etudiant/${this.props.etudiant.id}`}
+                className="btn btn-primary">Générer la carte
+                </Link>
+            )
+        }
+   
+    }
 
     render() { 
         return ( 
@@ -18,13 +31,12 @@ class ProfilCom extends Component {
                 <div class="testimonial text-center">
 
                     <div class="avatar mx-auto mt-3">
-                        <img src="https://mdbootstrap.com/img/Photos/Avatars/img%20(26).jpg" class="rounded-circle img-fluid mt-3" width="100px"/>
+                        <img src={avatar} class="rounded-circle img-fluid mt-3" width="100px"/>
                     </div>
-
-                    <h4 class="font-weight-bold mt-4 text-center">{this.props.etudiant.sexe}</h4>
-                    <h6 class="blue-text font-weight-bold my-3 text-center">DIC1 GIT</h6>
-                    <Link to='/communication/carte-etudiant' type="submit" class="btn btn-primary justify-content-center">Générer la carte Etudiant</Link>
-
+                    <h4 class="font-weight-bold  mt-4 text-center">{this.props.etudiant.prenom} {this.props.etudiant.nom.toUpperCase()}</h4>
+                    <h4 class="font-weight-bold my-3 text-center">{this.props.etudiant.classe} {this.props.etudiant.departement}</h4>
+                    <h4 class="font-weight-bold my-3 text-center">{this.props.etudiant.email}</h4>
+                    {this.link()}
                 </div>
 
             </div>             
@@ -36,3 +48,5 @@ class ProfilCom extends Component {
 }
  
 export default ProfilCom;
+
+

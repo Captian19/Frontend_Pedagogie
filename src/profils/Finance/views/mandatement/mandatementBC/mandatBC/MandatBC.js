@@ -56,7 +56,7 @@ class MandatBC extends React.Component {
      
 
       componentDidMount(){
-        fetch('http://127.0.0.1:8000/mandatement/last')
+        fetch('http://127.0.0.1:8000/mandatement/last1')
         .then(res => res.json())
         .then(data => this.setState({liste: data}))
         .catch(err => console.error(err));
@@ -67,7 +67,7 @@ class MandatBC extends React.Component {
         event.preventDefault();
         const dataToSend = {exercice: this.state.exercice, gestion: this.state.gestion, sommeMandate:this.state.sommeMandate, nomCreancier:this.state.nomCreancier, sommeNette1:this.state.sommeNette1, sommeNette2:this.state.sommeNette2, anneeOrigine:this.state.anneeOrigine, date:this.state.date, nBordereau:this.state.nBordereau, nMandat:this.state.nMandat, nCheque:this.state.nCheque, imputation:this.state.imputation, justification:this.state.justification}
         
-        fetch(`http://127.0.0.1:8000/mandatement/mandatAc/${this.state.liste[0]}/`,{
+        fetch(`http://127.0.0.1:8000/mandatement/mandatBc/${this.state.liste[0]}/`,{
           method: 'PUT',
           headers: {
             Accept: 'application/json', 'Content-Type': 'application/json'},
@@ -83,8 +83,8 @@ class MandatBC extends React.Component {
     return (  
       
       <form onSubmit={this.handleSubmit}>
-        <div className="container" style={{borderRight:"13px solid rgb(255,255,255)", borderTop:"8px solid rgb(255,255,255)",width:"1175px"}}>
-            <table id="page" className="table table-bordered text-center shadow p-3 mb-5 bg-white rounded largeur"style={{width:"1145px", fontSize:"1em"}} >
+        <div className="container" >
+            <table id="page" className="table table-bordered text-center shadow p-3 mb-5 bg-white rounded largeur" style={{borderRight:"13px solid rgb(255,255,255)", borderTop:"8px solid rgb(255,255,255)",width:"1123px",fontSize:"1em",height:"559.3700787402px",backgroundColor:"#76C4C7"}} >
                 <thead className="alice">
                     <tr className="centre">
                         <th scope="col" colspan="2" class="lefta" style={{border:"1px solid #dee2e6",fontWeight:"bold"}}>
@@ -116,7 +116,7 @@ class MandatBC extends React.Component {
                         <tr class="centre">
                             <th scope="col" style={{border:"1px solid #dee2e6"}} rowspan="2" class=" align-top"> <span className="spanner"><textarea class="form-control abcde" required name="nomCreancier" onChange={this.handleChangeNomCreancier} value={this.state.nomCreancier} rows={4} style={{border:"none", height:"120px", lineHeight:"20px"}}></textarea></span></th>
                             <th scope="col" ><span class="spanner"><input class="input-group-text abcd" required  name="sommeNette1" autoComplete="off" onChange={this.handleChangeSommeNette1} value={this.state.sommeNette1} type="number"/></span></th>
-                            <th scope="col" style={{border:"1px solid #dee2e6"}} class=" align-top" rowspan="2" ><span class="spanner"> <input type="text" required class="input-group-text abcd" name="anneeOrigine" autoComplete="off" onChange={this.handleChangeAnneeOrigine} value={this.state.anneeOrigine} type="number"/> </span></th>
+                            <th scope="col" style={{border:"1px solid #dee2e6"}} class=" align-top" rowspan="2" ><span class="spanner"> <input type="text" required class="input-group-text abcd" disabled name="anneeOrigine" autoComplete="off" onChange={this.handleChangeAnneeOrigine} value={this.state.anneeOrigine=this.state.liste[13]} type="number"/> </span></th>
                             <th scope="col" style={{border:"1px solid #dee2e6"}} class=" align-top" rowspan="2" ><span class="spanner"> <input class="input-group-text abcd" required name="date" autoComplete="off" onChange={this.handleChangeDate} value={this.state.date} type="date" /></span></th>
                             <th scope="col" style={{border:"1px solid #dee2e6"}} class=" align-top" rowspan="2" ><span class="spanner"> <input class="input-group-text abcd" disabled name="nBordereau" autoComplete="off" onChange={this.handleChangeNBordereau} value={this.state.nBordereau=this.state.liste[6]} type="number"/></span></th>
                             <th scope="col" style={{border:"1px solid #dee2e6"}} class=" align-top" rowspan="2" ><span class="spanner"> <input class="input-group-text abcd" disabled name="nMandat" autoComplete="off" onChange={this.handleChangeNMandat} value={this.state.nMandat=this.state.liste[0]} type="number"/></span></th>
@@ -150,4 +150,4 @@ class MandatBC extends React.Component {
     }
 }
 
-export default MandatBC;
+export default MandatBC

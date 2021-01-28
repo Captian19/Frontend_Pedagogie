@@ -4,7 +4,7 @@ import Header from "./containers/header";
 import Footer from "./../../components/Footer/index"
 import Content from "./containers/content"
 
-class AssistantDpt extends Component {
+class Communication extends Component {
     render(){
         return(
             <div className="c-app c-default-layout">
@@ -21,4 +21,4 @@ class AssistantDpt extends Component {
     }
 }
 
-export default AssistantDpt
+export default Communication

@@ -1,6 +1,8 @@
 import React from 'react';
 import '../mandat/forms.css';
 import '../mandat/pv.css';
+import "./print.css"
+import ReactToPrint from "react-to-print";
 
 
 class AvisCredit extends React.Component {
@@ -86,6 +88,7 @@ class AvisCredit extends React.Component {
       render(){
     return (  
       <>
+      
       <form onSubmit={this.handleSubmit}>
         <div className="container">
             <table className="table table-bordered text-center shadow p-3 mb-5 bg-white rounded largeur" style={{width:"1150px",fontSize:"1em"}}>
@@ -100,7 +103,7 @@ class AvisCredit extends React.Component {
                         </th>
                         <th scope="col" colspan="4" class="align-middle taille"><button class="sub" variant="contained" type="submit">AVIS DE CREDIT</button></th>
                         <th scope="col" colspan="5" class="align-middle" style={{border:"1px solid #dee2e6",fontWeight:"bold"}}>  Budget / ept <br/><br/> Exercice: <span class="spanner"><input type="number" class="bas abc" required name="exercice" autoComplete="off" onChange={this.handleChangeExercice} value={this.state.exercice=this.state.liste[13]} style={{width: "50px"}} /> </span>
-                            Gestion: <span class="spanner"><input type="number" class="bas abc" name="gestion" required autoComplete="off" onChange={this.handleChangeGestion} value={this.state.gestion} style={{width: "50px"}} /> </span></th>
+                            Gestion: <span class="spanner"><input type="number" class="bas abc" name="gestion" required autoComplete="off" onChange={this.handleChangeGestion} value={this.state.gestion} style={{width: "50px",fontSize:"1em"}} /> </span></th>
                     </tr>
                     <tr class="centre">
                             <th scope="col" rowspan="2" class="align-middle creancier" style={{border:"1px solid #dee2e6",fontWeight:"bold"}}>Nom et adresse du Creancier <br/> Compte à crediter</th>
@@ -115,25 +118,25 @@ class AvisCredit extends React.Component {
                             <th scope="col" style={{border:"1px solid #dee2e6",fontWeight:"bold"}} class="align-middle bord" >N° mandat</th>
                             <th scope="col" style={{border:"1px solid #dee2e6",fontWeight:"bold"}} class="bord">N° du cheque</th>
                             <th scope="col" style={{border:"1px solid #dee2e6",fontWeight:"bold"}} class="align-middle bord">Imputation</th>
-                            <th scope="col" style={{border:"1px solid #dee2e6",fontWeight:"bold"}} class="align-down somme" rowspan="5"> <span class="spanner"><input class="input-group-text abc" name="sommeMandate" autoComplete="off" onChange={this.handleChangeSommeMandate} value={this.state.sommeMandate} type="number"/></span> </th>
+                            <th scope="col" style={{border:"1px solid #dee2e6",fontWeight:"bold"}} class="align-down somme" rowspan="5"> <span class="spanner"><input class="input-group-text abc" name="sommeMandate" autoComplete="off" onChange={this.handleChangeSommeMandate} value={this.state.sommeMandate} type="number" style={{fontSize:"0.8em"}}/></span> </th>
                         </tr>
                         <tr class="centre">
-                            <th scope="col" style={{border:"1px solid #dee2e6",fontWeight:"bold"}} rowspan="2" class=" align-top"> <span className="spanner"><textarea class="form-control cab" name="nomCreancier" required onChange={this.handleChangeNomCreancier} value={this.state.nomCreancier} rows="4" style={{border:"none", LineWeight:"20px;"}}></textarea></span></th>
-                            <th scope="col" ><span class="spanner"><input class="input-group-text abc"  name="sommeNette1" required autoComplete="off" onChange={this.handleChangeSommeNette1} value={this.state.sommeNette1} type="number"/></span></th>
-                            <th scope="col" style={{border:"1px solid #dee2e6",fontWeight:"bold"}} class=" align-top" rowspan="2" ><span class="spanner"> <input type="text" class="input-group-text abc" name="anneeOrigine" disabled autoComplete="off" onChange={this.handleChangeAnneeOrigine} value={this.state.anneeOrigine=this.state.liste[13]} type="number"/> </span></th>
-                            <th scope="col" style={{border:"1px solid #dee2e6",fontWeight:"bold"}} class=" align-top" rowspan="2" ><span class="spanner"> <input class="input-group-text abc" name="date" required autoComplete="off" onChange={this.handleChangeDate} value={this.state.date} type="date"/></span></th>
-                            <th scope="col" style={{border:"1px solid #dee2e6",fontWeight:"bold"}} class=" align-top" rowspan="2" ><span class="spanner"> <input class="input-group-text abc" name="nBordereau" disabled autoComplete="off" onChange={this.handleChangeNBordereau} value={this.state.nBordereau=this.state.liste[6]} type="number"/></span></th>
-                            <th scope="col" style={{border:"1px solid #dee2e6",fontWeight:"bold"}} class=" align-top" rowspan="2" ><span class="spanner"> <input class="input-group-text abc" name="nMandat" disabled autoComplete="off" onChange={this.handleChangeNMandat} value={this.state.nMandat=this.state.liste[0]} type="number"/></span></th>
-                            <th scope="col" style={{border:"1px solid #dee2e6",fontWeight:"bold"}} class=" align-top" rowspan="4" ><span class="spanner"> <input class="input-group-text abc" name="nCheque" required autoComplete="off" onChange={this.handleChangeNCheque} value={this.state.nCheque} type="number"/> </span></th>
-                            <th scope="col" style={{border:"1px solid #dee2e6",fontWeight:"bold"}} class=" align-top" rowspan="4" ><span class="spanner"> <input class="input-group-text abc" name="imputation" required autoComplete="off" onChange={this.handleChangeImputation} value={this.state.imputation} type="text"/> </span></th>
+                            <th scope="col" style={{border:"1px solid #dee2e6",fontWeight:"bold"}} rowspan="2" class=" align-top"> <span className="spanner"><textarea class="form-control cab" name="nomCreancier" required onChange={this.handleChangeNomCreancier} value={this.state.nomCreancier} rows="4" style={{border:"none", LineWeight:"20px;",fontSize:"0.8em"}}></textarea></span></th>
+                            <th scope="col" ><span class="spanner"><input class="input-group-text abc"  name="sommeNette1" required autoComplete="off" onChange={this.handleChangeSommeNette1} value={this.state.sommeNette1} type="number" style={{fontSize:"0.8em"}}/></span></th>
+                            <th scope="col" style={{border:"1px solid #dee2e6",fontWeight:"bold"}} class=" align-top" rowspan="2" ><span class="spanner"> <input type="text" class="input-group-text abc" name="anneeOrigine" disabled autoComplete="off" onChange={this.handleChangeAnneeOrigine} value={this.state.anneeOrigine=this.state.liste[13]} type="number" style={{fontSize:"0.8em"}}/> </span></th>
+                            <th scope="col" style={{border:"1px solid #dee2e6",fontWeight:"bold"}} class=" align-top" rowspan="2" ><span class="spanner"> <input class="input-group-text abc" name="date" required autoComplete="off" onChange={this.handleChangeDate} value={this.state.date} type="date" style={{fontSize:"0.8em"}}/></span></th>
+                            <th scope="col" style={{border:"1px solid #dee2e6",fontWeight:"bold"}} class=" align-top" rowspan="2" ><span class="spanner"> <input class="input-group-text abc" name="nBordereau" disabled autoComplete="off" onChange={this.handleChangeNBordereau} value={this.state.nBordereau=this.state.liste[6]} type="number" style={{fontSize:"0.8em"}}/></span></th>
+                            <th scope="col" style={{border:"1px solid #dee2e6",fontWeight:"bold"}} class=" align-top" rowspan="2" ><span class="spanner"> <input class="input-group-text abc" name="nMandat" disabled autoComplete="off" onChange={this.handleChangeNMandat} value={this.state.nMandat=this.state.liste[0]} type="number" style={{fontSize:"0.8em"}}/></span></th>
+                            <th scope="col" style={{border:"1px solid #dee2e6",fontWeight:"bold"}} class=" align-top" rowspan="4" ><span class="spanner"> <input class="input-group-text abc" name="nCheque" required autoComplete="off" onChange={this.handleChangeNCheque} value={this.state.nCheque} type="number" style={{fontSize:"0.8em"}}/> </span></th>
+                            <th scope="col" style={{border:"1px solid #dee2e6",fontWeight:"bold"}} class=" align-top" rowspan="4" ><span class="spanner"> <input class="input-group-text abc" name="imputation" required autoComplete="off" onChange={this.handleChangeImputation} value={this.state.imputation} type="text" style={{fontSize:"0.8em"}}/> </span></th>
                         </tr>
                         <tr class="centre">
-                            <th scope="col" style={{border:"1px solid #dee2e6",fontWeight:"bold"}}><span class="spanner"> <input  class="input-group-text abc" name="sommeNette2" required autoComplete="off" onChange={this.handleChangeSommeNette2} value={this.state.sommeNette2} type="number"/> </span></th>
+                            <th scope="col" style={{border:"1px solid #dee2e6",fontWeight:"bold"}}><span class="spanner"> <input  class="input-group-text abc" name="sommeNette2" required autoComplete="off" onChange={this.handleChangeSommeNette2} value={this.state.sommeNette2} type="number" style={{fontSize:"0.8em"}}/> </span></th>
                         </tr>
                         <tr class="centre">
                             <th scope="col" style={{border:"1px solid #dee2e6",fontWeight:"bold"}} rowspan="1" class=" align-middle comptables">(RESERVE AU COMPTABLE)</th>
                             <th scope="col" style={{border:"1px solid #dee2e6",fontWeight:"bold"}} rowspan="1"></th>
-                            <th scope="col" style={{border:"1px solid #dee2e6",fontWeight:"bold"}} rowspan="2" colspan="4"><span class="spanner">  <textarea class="form-control cab" name="justification" required onChange={this.handleChangeJustification} value={this.state.justification} style={{border:"none"}} rows="4"></textarea></span></th>
+                            <th scope="col" style={{border:"1px solid #dee2e6",fontWeight:"bold"}} rowspan="2" colspan="4"><span class="spanner">  <textarea class="form-control cab" name="justification" required onChange={this.handleChangeJustification} value={this.state.justification} rows="4" style={{fontSize:"0.8em",border:"none"}}></textarea></span></th>
                         </tr>
                         <tr class="centre">
                             <th scope="col" style={{border:"1px solid #dee2e6",fontWeight:"bold"}}>Net à payer ou A virer</th>
@@ -156,4 +159,23 @@ class AvisCredit extends React.Component {
     }
 }
 
-export default AvisCredit;
+class AvisCreditPrint extends React.PureComponent {
+    render() {
+        return (
+            <div>
+                <AvisCredit ref={el => (this.componentRef = el)} />
+                <ReactToPrint
+                    trigger={() => {
+                        // NOTE: could just as easily return <SomeComponent />. Do NOT pass an `onClick` prop
+                        // to the root node of the returned component as it will be overwritten.
+                        return <button className="btn btn--radius-2 btn--blue" >Imprimer</button>;
+                    }}
+                    content={() => this.componentRef}
+                />
+
+            </div>
+        );
+    }
+}
+
+export default AvisCreditPrint;

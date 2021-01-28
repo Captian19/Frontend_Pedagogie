@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Component } from "react";
 import { makeStyles } from '@material-ui/core/styles';
 import Stepper from '@material-ui/core/Stepper';
 import Step from '@material-ui/core/Step';
@@ -8,6 +8,9 @@ import Typography from '@material-ui/core/Typography';
 import Page1 from "./page1";
 import Page2 from "./page2";
 import Page3 from "./page3";
+
+
+
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -39,7 +42,7 @@ function getStepContent(stepIndex) {
     }
 }
 
-export default function HorizontalLabelPositionBelowStepper() {
+export default function Bordereau() {
     const classes = useStyles();
     const [activeStep, setActiveStep] = React.useState(0);
     const steps = getSteps();
@@ -92,3 +95,5 @@ export default function HorizontalLabelPositionBelowStepper() {
         </div>
     );
 }
+
+

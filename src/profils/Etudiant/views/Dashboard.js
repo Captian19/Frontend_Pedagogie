@@ -5,24 +5,38 @@ import {
     CCardBody,
     CCol,
     CRow,
-  } from '@coreui/react'
+} from '@coreui/react'
 
-import {connect} from "react-redux"
+import VoirPlanning from './Planning&Notes/planning/voir_planning';
+
+import { connect } from "react-redux"
 
 class Dashboard extends Component {
-    render(){
-        return(
-            <CCard>
-            <CCardBody>
-            <CRow>
-                <CCol sm="12">
-                    {this.props.user.CurrentRoles[0].classe}
-                    {this.props.user.CurrentRoles[0].departement}
-                    <h5>Ops, Votre Emploi du temps n'est pas encore disponible</h5>
-                </CCol>
-            </CRow>
-            </CCardBody>
-            </CCard>
+    render() {
+        return (
+            <React.Fragment>
+                <CCard>
+                    <CCardBody>
+                        <CRow>
+                            <CCol sm="12">
+                                <h1>Hello World Etudiant</h1>
+                                {this.props.user.CurrentRoles[0].classe}
+                                {this.props.user.CurrentRoles[0].departement}
+                            </CCol>
+                        </CRow>
+                    </CCardBody>
+                </CCard>
+                <CCard>
+                    <CCardBody>
+                        <CRow>
+                            <CCol sm="12">
+                                {/* <h3>Planning de la {this.props.user.CurrentRoles[0].classe}-{this.props.user.CurrentRoles[0].departement}</h3> */}
+                                <VoirPlanning />
+                            </CCol>
+                        </CRow>
+                    </CCardBody>
+                </CCard>
+            </React.Fragment>
         )
     }
 }
@@ -32,4 +46,4 @@ const mapStateTopProps = state => ({
     user: state.auth.user
 })
 
-export default connect(mapStateTopProps,null)(Dashboard)
+export default connect(mapStateTopProps, null)(Dashboard)

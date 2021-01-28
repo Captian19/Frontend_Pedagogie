@@ -1,12 +1,6 @@
-import planning_notes_menu from "../views/Planning&Notes/menu";
+import {enseignant_planning_notes_menu} from "../views/Planning&Notes/menu";
 
 export default [
-  {
-    _tag: 'CSidebarNavItem',
-    name: 'Mes Cours Virtuels',
-    to: '/enseignant/ClasseVirtuelle/mesCours',
-    icon: 'cil-task',
-  },
   {
     _tag: 'CSidebarNavItem',
     name: 'Dashboard',
@@ -17,21 +11,14 @@ export default [
       text: 'NEW',
     }
   },
-  
-  ...planning_notes_menu,
-
   {
-    _tag: 'CSidebarNavDropdown',
-    name: 'Stages',
-    icon: 'cilStar',
-    _children: [
-      {
-        _tag: 'CSidebarNavItem',
-        name: 'Entreprises',
-        to: '/enseignant/entreprises',
-        icon: 'cilDollar',
-      }
-    ]
+    _tag: 'CSidebarNavItem',
+    name: 'Mes Cours Virtuels',
+    to: '/enseignant/ClasseVirtuelle/mesCours',
+    icon: 'cil-task',
   },
+  
+  ...enseignant_planning_notes_menu,
+
 
 ];

@@ -7,12 +7,11 @@ import StepContent from '@material-ui/core/StepContent';
 import Button from '@material-ui/core/Button';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
-import Mandat from "./mandat/Mandat";
-import AvisCredit from "./avis_de_credit/AvisCredit";
+import MandatPrint from "./mandat/Mandat";
+import AvisCreditPrint from "./avis_de_credit/AvisCredit";
 import Bordereau from "./bordereau/bordereau";
-import MandatUpload from "./Piece_jointe/MandatUpload";
-import AvisCreditUpload from "./Piece_jointe/AvisCreditUpload";
-import BordereauUpload from "./Piece_jointe/BordereauUpload";
+
+
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -39,22 +38,19 @@ function getStepContent(step) {
         case 0:
             return (
                 <>
-                    <Mandat/>
-                    <MandatUpload/>
+                    <MandatPrint/>
                 </>
             )
         case 1:
             return (
                 <>
-                    <AvisCredit/>
-                    <AvisCreditUpload/>
+                    <AvisCreditPrint/>
                 </>
             )
         case 2:
             return (
                 <>
                     <Bordereau/>
-                    <BordereauUpload/>
                 </>
             )
         default:

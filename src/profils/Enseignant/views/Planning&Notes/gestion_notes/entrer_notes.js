@@ -11,27 +11,19 @@ import TableRow from '@material-ui/core/TableRow';
 import TextField from '@material-ui/core/TextField';
 import { Button, Grid } from '@material-ui/core';
 import Typography from '@material-ui/core/Typography';
-import Axios from 'axios';
 import NoteRow from '../../../../../components/Planning&Notes/gestion_notes_components/note_row';
-import { id_progression } from '../../../../../constants/Planning&Notes/constants';
-
+import { useHistory, useParams } from "react-router-dom";
+import { loadNoteCours, saveNotes } from '../../../../../actions/Planning&Notes/gestion_notes_services';
+import { liste_de_classe } from '../../../../../actions/Planning&Notes/cahier_de_texte_services';
+import { loadProgression } from '../../../../../actions/Planning&Notes/planning_services';
+import LoadingSpinner from '../../../../../components/Planning&Notes/loading_spinner';
 
 function createData(prenom, nom, evaluation_1, examen_final) {
     const density = evaluation_1 / examen_final;
     return { prenom, nom, evaluation_1, examen_final, density };
 }
 
-const eleves = [
-    { _id: 1, prenom: 'Alioune', nom: 'Sarr' },
-    // { _id: 2, prenom: 'Falilou', nom: 'Fall' },
-    // { _id: 3, prenom: 'Mamadou', nom: 'Sow' },
-    // { _id: 4, prenom: 'Mame Diarra', nom: 'Sow' },
-    // { _id: 5, prenom: 'Ibrahima Birane', nom: 'Faye' },
-    // { _id: 6, prenom: 'Kalidou', nom: 'Dia' },
-    // { _id: 7, prenom: 'Fallou', nom: 'Diakhaté' },
-    // { _id: 8, prenom: 'Khadim', nom: 'Diakhaté' },
-    // { _id: 9, prenom: 'Sokhna Cambel', nom: 'Dieng' },
-];
+
 
 
 const useStyles = makeStyles((theme) => ({
@@ -59,17 +51,24 @@ export default function TableOfNote() {
     const classes = useStyles();
     const [page, setPage] = React.useState(0);
     const [rowsPerPage, setRowsPerPage] = React.useState(10);
+    const [eleves, setElevesState] = React.useState([])
+    const [loading, setLoadingState] = React.useState(true);
+    const [notes_eleves, setNotesEleveState] = React.useState([]);
+    const [ponderations, setPonderationsState] = React.useState({});
+    const [progression, setProgressionState] = React.useState({});
+    const { id_progression } = useParams();
+    const history = useHistory();
 
     const [columns, setColumnsState] = React.useState(
         [
             { id: 'prenom', label: 'Prénom', minWidth: 170 },
             { id: 'nom', label: 'Nom', minWidth: 100 },
-            {
-                id: 'evaluation_1',
-                label: 'Evaluation\u00a01',
-                minWidth: 170,
-                align: 'right',
-            },
+            // {
+            //     id: 'evaluation_1',
+            //     label: 'Evaluation\u00a01',
+            //     minWidth: 170,
+            //     align: 'right',
+            // },
             {
                 id: 'examen_final',
                 label: 'Examen\u00a0Final',
@@ -79,6 +78,37 @@ export default function TableOfNote() {
 
         ]
     );
+
+    // var ponderations = {};
+    // var notes_eleves = []
+
+    /**
+     * If the notes for this progression has al ready been defined, we will directly see the defined notes
+     */
+    React.useEffect(async () => {
+        await loadNoteCours(id_progression).then(data => {
+            if (data.length > 0) {
+                alert("Vous avez déjà entré des notes pour ce cours!");
+                history.replace("/enseignant/voir-notes/" + id_progression)
+            }
+        }).then(async () =>
+            await loadProgression(id_progression).then(response => {
+                setProgressionState(response);
+                return response.classe;
+            }).then(async (classe) => {
+                await liste_de_classe(classe.niveau, classe.departement).then(response => {
+                    setNotesEleveState(response.map(eleve => {
+                        return { "_id": eleve.id, "examen_final": "" };
+                    }))
+
+                    setElevesState(response);
+                    setLoadingState(false);
+                })
+            })
+        )
+
+    }, [])
+
     const handleChangePage = (event, newPage) => {
         setPage(newPage);
     };
@@ -87,6 +117,9 @@ export default function TableOfNote() {
         setRowsPerPage(+event.target.value);
         setPage(0);
     };
+
+
+
     const add_new_column = (nom) => {
         const id_column = 'evaluation_' + (columns.length - 2);
         const column = {
@@ -105,33 +138,46 @@ export default function TableOfNote() {
         });
 
         notes_eleves.map(note_eleve => note_eleve[id_column] = "");
-        console.log(notes_eleves);
+        ponderations[id_column] = "";
 
         setColumnsState([...columns]);
     }
-    const on_ponderation_change = (id_column, value) => {
-        for (let index = 0; index < columns.length; index++) {
-            if (columns[index].id == id_column) {
-                columns[index]['ponderation'] = parseFloat(value);
-                console.log(columns[index]['ponderation'])
-                return;
-            }
 
+    /**
+     * For getting the ponderations entered by the prof
+     * @param {string} id_column 
+     * @param {Float32} value 
+     */
+    const on_ponderation_change = (id_column, value) => {
+        if (!Number.isNaN(parseFloat(value))) {
+            setPonderationsState(prevponderations => {
+                prevponderations[id_column] = parseFloat(value);
+                return prevponderations;
+            })
         }
+        else alert("Veuillez entrer une ponderation valide.")
     }
-    function save_notes() {
+
+    async function save_notes() {
         for (let index = 0; index < notes_eleves.length; index++) {
 
-            for (let column = 0; column < columns.length; column++) {
-                console.log(notes_eleves[index][columns[column].id])
+            for (let column = 2; column < columns.length; column++) {
                 if (notes_eleves[index][columns[column].id] == "" || Number.isNaN(notes_eleves[index][columns[column].id])) {
-                    console.log(notes_eleves[index][columns[column].id]);
-                    alert("Veuillez saisir une note correcte de " + eleves[index].prenom + " " + eleves[index].nom + " en " + columns[column].label);
+                    alert("Veuillez saisir une note correcte de " + eleves[index].user.first_name + " " + eleves[index].user.last_name + " en " + columns[column].label);
                     return;
                 }
             }
         }
-        Axios.post("/api/notes/add/" + id_progression + "/", { 'notes_eleves': notes_eleves }).then(response => console.log(response.data));
+        const values = Object.values(ponderations);
+        const sum = values.reduce((accumulator, currentValue) => accumulator + currentValue);
+        if (sum >= 99 && sum < 101) {
+            await saveNotes(id_progression, notes_eleves, ponderations).then(response => {
+                if (response < 400) history.push("/enseignant/voir-notes/" + id_progression);
+                else alert("Problème lors de l'enregistrement des notes.")
+            })
+        }
+
+        else alert("La somme de toutes les pondérations doit être égale à 100.");
 
     }
 
@@ -143,9 +189,13 @@ export default function TableOfNote() {
      * @param {*} note 
      */
     function add_note(id_eleve, evaluation, note) {
-        notes_eleves.map((note_eleve) => {
-            note_eleve._id == id_eleve ? note_eleve[evaluation] = parseFloat(note) : console.log("");
+        setNotesEleveState(prev_notes => {
+            prev_notes.map((note_eleve) => {
+                if (note_eleve._id == id_eleve) note_eleve[evaluation] = parseFloat(note);
+            })
+            return prev_notes;
         })
+
     }
 
     function get_note(id_eleve, evaluation) {
@@ -156,68 +206,70 @@ export default function TableOfNote() {
 
     }
     return (
-        <div>
-            <center>
-                <Button variant="contained" color="primary" onClick={() => add_new_column()}>Ajouter une NOTE</Button>
-            </center>
-            <Paper className={classes.root}>
-                <TableContainer className={classes.container}>
-                    <Table stickyHeader aria-label="sticky table" size="small">
-                        <TableHead>
-                            <TableRow>
-                                {columns.map((column) => (
-                                    <TableCell
-                                        key={column.id}
-                                        align={column.align}
-                                        style={{ minWidth: column.minWidth }}
-                                    >
-                                        {column.label}
-                                    </TableCell>
-                                ))}
-                            </TableRow>
-                        </TableHead>
-                        <TableBody>
-                            {eleves.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row) => {
+        loading ?
+            <LoadingSpinner loading={loading} />
+            :
+            <div>
+                <Typography variant="body1" color="textSecondary" component="p">Cours de {progression.cours.nom}</Typography><br></br>
+                <center>
+                    <Button variant="contained" color="primary" onClick={() => add_new_column()}>Ajouter une NOTE</Button>
+                </center>
+                <Paper className={classes.root}>
+                    <TableContainer className={classes.container}>
+                        <Table stickyHeader aria-label="sticky table" size="small">
+                            <TableHead>
+                                <TableRow>
+                                    {columns.map((column) => (
+                                        <TableCell
+                                            key={column.id}
+                                            align={column.align}
+                                            style={{ minWidth: column.minWidth }}
+                                        >
+                                            {column.label}
+                                        </TableCell>
+                                    ))}
+                                </TableRow>
+                            </TableHead>
+                            <TableBody>
+                                {eleves.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row) => {
+                                    return (
+                                        <NoteRow row={row} columns={columns} get_note={get_note} add_note={add_note}></NoteRow>
+                                    );
+                                })}
+                            </TableBody>
+                        </Table>
+                    </TableContainer>
+                    <TablePagination
+                        rowsPerPageOptions={[100, 50, 10]}
+                        component="div"
+                        count={eleves.length}
+                        rowsPerPage={rowsPerPage}
+                        page={page}
+                        onChangePage={handleChangePage}
+                        onChangeRowsPerPage={handleChangeRowsPerPage}
+                    />
+
+                </Paper>
+                <Paper className={classes.root} style={{ padding: 10 }}>
+                    <Typography variant="body1" color="textSecondary" component="p">Veuillez définir les pondérations (en pourcentages)</Typography><br></br>
+                    <Grid container spacing={4} alignContent="flex-start" >
+                        {columns.map((column) => {
+                            const column_id = column.id;
+                            const label = column.label;
+                            if (column_id != "prenom" && column_id != "nom")
                                 return (
-                                    <NoteRow row={row} columns={columns} get_note={get_note} add_note={add_note}></NoteRow>
+                                    <Grid item xm={6}>
+                                        <TextField id="outlined-basic" label={label} variant="outlined" onChange={(event) => on_ponderation_change(column_id, event.target.value)} />
+                                    </Grid>
                                 );
-                            })}
-                        </TableBody>
-                    </Table>
-                </TableContainer>
-                <TablePagination
-                    rowsPerPageOptions={[100, 50, 10]}
-                    component="div"
-                    count={eleves.length}
-                    rowsPerPage={rowsPerPage}
-                    page={page}
-                    onChangePage={handleChangePage}
-                    onChangeRowsPerPage={handleChangeRowsPerPage}
-                />
+                        })}
+                    </Grid>
 
-            </Paper>
-            <Paper className={classes.root}>
-                <Typography variant="body1" color="textSecondary" component="p">Veuillez définir les pondérations (en pourcentages)</Typography><br></br>
-                <Grid container spacing={4} alignContent="flex-start" >
-                    {columns.map((column) => {
-                        const column_id = column.id;
-                        const label = column.label;
-                        if (column_id != "prenom" && column_id != "nom")
-                            return (
-                                <Grid item xm={6}>
-                                    <TextField id="outlined-basic" label={label} variant="outlined" onChange={(event) => on_ponderation_change(column_id, event.target.value)} />
-                                </Grid>
-                            );
-                    })}
-                </Grid>
+                </Paper>
+                <Button style={{ margin: 40 }} variant="contained" color="primary" onClick={() => save_notes()}>Sauvegarder</Button>
 
-            </Paper>
-            <Button style={{ margin: 40 }} variant="contained" color="primary" onClick={() => save_notes()}>Sauvegarder</Button>
-
-        </div>
+            </div>
     );
 }
-
-const notes_eleves = eleves.map(eleve => { return { "_id": eleve._id, "evaluation_1": "", "examen_final": "" } });
 
 

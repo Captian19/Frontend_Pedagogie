@@ -12,15 +12,20 @@ import {
   CSidebarNavItem,
 } from '@coreui/react'
 
+import { connect } from "react-redux";
+
 import CIcon from '@coreui/icons-react'
-import photo from "./../../../assets/img/ent5.png";
-import photo2 from "./../../../assets/img/ent_mini.png";
+
 // sidebar nav config
 import navigation from './menu'
+import photo from "./../../../assets/img/ent5.png";
+import photo2 from "./../../../assets/img/ent_mini.png";
 
-const Sidebar = () => {
+import immersion from '../../Enseignant/containers/immersion'
+
+const Sidebar = (props) => {
   const dispatch = useDispatch()
-  const show = useSelector(state => state.sidebarShow)
+  const show = useSelector(state => state.layout.sidebarShow)
 
   return (
     <CSidebar show={show}
@@ -40,10 +45,31 @@ const Sidebar = () => {
             CSidebarNavTitle
           }}
         />
+         {props.role.find(
+          (role) =>
+            (role.role_type === "CHEF_DE_DEPARTEMENT" || role.role_type === "ASSISTANT_CHEF_DEPARTEMENT") &&
+            role.departement == "GIT"
+        ) && (
+          <CCreateElement
+            items={immersion}
+            components={{
+              CSidebarNavDivider,
+              CSidebarNavDropdown,
+              CSidebarNavItem,
+              CSidebarNavTitle,
+            }}
+          />
+        )}
       </CSidebarNav>
       <CSidebarMinimizer className="c-d-md-down-none"/>
     </CSidebar>
   )
 }
 
-export default React.memo(Sidebar)
+// export default React.memo(Sidebar)
+const MapToState = (state) => ({
+  role: state.auth.user.CurrentRoles,
+  user: state.auth.user
+});
+
+export default connect(MapToState, null)(Sidebar);

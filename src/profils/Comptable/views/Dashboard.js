@@ -1,53 +1,14 @@
 import React, { Component } from "react";
-import { DataGrid } from '@material-ui/data-grid';
 import {
     CCard,
     CCardBody,
-    CCardFooter,
-    CCardHeader,
     CCol,
     CRow,
   } from '@coreui/react'
 import Search from "./Paiment";
 import axios from 'axios';
-
-
-const columns = [
-    { field: 'nom', headerName: 'Nom', width: 250},
-    { field: 'prenom', headerName: 'Prénom', width: 250 },
-    {
-      field: 'classe',
-      headerName: 'Classe',
-      type : 'text',
-      width: 100,
-    },
-        {
-      field: 'departement',
-      headerName: 'Département',
-      type : 'text',
-      width: 120,
-    },
-    {
-      field: 'email',
-      headerName: 'Email',
-      type: 'text',
-      width: 150,
-    },
-        {
-      field: 'numeroCarteEtudiant',
-      headerName: 'Carte Etudiant',
-      type : 'text',
-      width: 120,
-    },
-
-        {
-      field: 'anneeScolaire',
-      headerName: 'Année Scolaire',
-      type : 'text',
-      width: 120,
-    },
-  ];
-
+import { Link } from 'react-router-dom';
+import {connect} from "react-redux";
 
 
 
@@ -62,7 +23,8 @@ class Dashboard extends Component {
 
 
     componentDidMount(){
-        let url = 'http://127.0.0.1:8000/api/InfoEtudiantList';
+        let anneeScolaire = `${(this.props.user.CurrentRoles[0].annee.split("/")[0])}-${(this.props.user.CurrentRoles[0].annee.split("/")[1])}`
+        let url = `http://127.0.0.1:8000/api/InfoEtudiantByValidationComptable/${anneeScolaire}`;
 
         axios.get(url, {
           headers: {
@@ -76,9 +38,7 @@ class Dashboard extends Component {
         })
         .catch(e =>{
             console.log(e)    
-        
-            console.log("Error")
-        })
+                })
     
     }
 
@@ -92,12 +52,40 @@ class Dashboard extends Component {
             <CRow>
                 <CCol sm="12">
                   <Search></Search>
-                    <div className="col-lg-12  text-center">
+                    <div className="col-lg-12 mb-5  text-center">
                         <h3 >LISTE DES ETUDIANTS</h3>
                     </div>
-                  <div class="container mt-5 mb-5 " style={{ height: '1000px', width: '100%' }}>
-                        <DataGrid  rows={this.state.etudiants} columns={columns} pageSize={10} checkboxSelection />
-                 </div>
+                    <div className="border table-responsive mb-5">
+                        <table class="table table-striped shadow">
+                          <thead>
+                            <tr>
+                              <th scope="col">ID</th>
+                              <th scope="col">Nom</th>
+                              <th scope="col">Prénom</th>
+                              <th scope="col">Classe</th>
+                              <th scope="col">Département</th>
+                              <th scope="col">Email</th>
+                              <th scope="col">Paiement</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            {this.state.etudiants.map(etudiant => {
+                              return (
+
+                                      <tr>
+                                        <th scope="row">{etudiant.numeroCarteEtudiant}</th>
+                                        <td>{etudiant.nom}</td>
+                                        <td>{etudiant.prenom}</td>
+                                        <td>{etudiant.classe}</td>
+                                        <td>{etudiant.departement}</td>
+                                        <td>{etudiant.email}</td>
+                                        <td className="justify-content-end"><Link to={`/comptable/validation-paiement/${etudiant.id}`} className="btn btn-primary">Générer un reçu</Link></td>
+                                      </tr>
+                              )
+                            } )}
+                          </tbody>
+                        </table>
+                    </div>
                   
                 </CCol>
             </CRow>
@@ -107,4 +95,8 @@ class Dashboard extends Component {
     }
 }
 
-export default Dashboard
+const mapStateToProps = state => ({
+  user: state.auth.user
+})
+
+export default connect(mapStateToProps,null)(Dashboard)

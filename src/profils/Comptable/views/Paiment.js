@@ -5,14 +5,7 @@ import '@fortawesome/fontawesome-free/css/all.min.css'; import
 import {connect} from "react-redux";
 
 import {
-  Button,
   Input,
-  Footer,
-  Card,
-  CardBody,
-  CardImage,
-  CardTitle,
-  CardText
 } from "mdbreact";
 
 import axios from 'axios';
@@ -26,12 +19,10 @@ class Search extends Component {
     etudiant : []
   };
 
-
-
   componentDidMount(){
      
-    let anneeScolaire = `${this.props.user.CurrentRoles[0].date_debut.split("-")[0]}-${this.props.user.CurrentRoles[0].date_fin.split("-")[0]}`
-    let url = `http://127.0.0.1:8000/api/InfoEtudiantByAnneeScolaire/${anneeScolaire}`;
+    let anneeScolaire = `${(this.props.user.CurrentRoles[0].annee.split("/")[0])}-${(this.props.user.CurrentRoles[0].annee.split("/")[1])}`
+    let url = `http://127.0.0.1:8000/api/InfoEtudiantByValidationComptable/${anneeScolaire}`;
     axios.get(url, {
       headers: {
         'content-type': 'multipart/form-data'
@@ -86,6 +77,7 @@ class Search extends Component {
       if(search.includes(etudiant.email)){
         return etudiant
       }
+    
    
     });
 

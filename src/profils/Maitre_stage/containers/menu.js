@@ -1,4 +1,4 @@
-import { id_maitre } from "../../../constants/SuiviStage/constant";
+
 
 
 export default [
@@ -15,7 +15,7 @@ export default [
     {
       _tag: 'CSidebarNavItem',
       name: 'Mes Stagiaires',
-      to: '/maitre_stage/'+ id_maitre,
+      to: '/maitre_stage',
       icon: 'cil-speedometer',
       badge: {
         color: 'danger',

@@ -35,7 +35,7 @@ const Content = () => {
                   )} />
               )
             })}
-          <Redirect from="/departement" to="/departement/dashboard" />
+          <Redirect from="/communication" to="/communication" />
           </Switch>
         </Suspense>
       </CContainer>

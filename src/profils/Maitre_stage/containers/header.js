@@ -14,17 +14,17 @@ import {
 import CIcon from '@coreui/icons-react'
 
 // routes config
-import routes from './../routes'
+import routes from '../routes'
 
 import { 
   TheHeaderDropdown,
-  TheHeaderDropdownMssg,
-  TheHeaderDropdownNotif,
 }  from './HeaderElements/index'
 
-const Header = () => {
+import {connect} from "react-redux";
+
+const Header = (props) => {
   const dispatch = useDispatch()
-  const sidebarShow = useSelector(state => state.sidebarShow)
+  const sidebarShow = useSelector(state => state.layout.sidebarShow)
 
   const toggleSidebar = () => {
     const val = [true, 'responsive'].includes(sidebarShow) ? false : 'responsive'
@@ -49,24 +49,17 @@ const Header = () => {
         onClick={toggleSidebar}
       />
       <CHeaderBrand className="mx-auto d-lg-none" to="/enseignant">
-        <p>ESPACE NUMERIQUE DE TRAVAIL</p>
+        <h5>ESPACE NUMERIQUE DE TRAVAIL</h5>
       </CHeaderBrand>
 
       <CHeaderNav className="d-md-down-none mr-auto">
         <CHeaderNavItem className="px-3" >
-          <CHeaderNavLink to="/dashboard">Dashboard</CHeaderNavLink>
-        </CHeaderNavItem>
-        <CHeaderNavItem  className="px-3">
-          <CHeaderNavLink to="/users">Users</CHeaderNavLink>
-        </CHeaderNavItem>
-        <CHeaderNavItem className="px-3">
-          <CHeaderNavLink>Settings</CHeaderNavLink>
+          <CHeaderNavLink><b className="py-2"><CIcon name="cil-user" height={15}/> Maitre Stage</b></CHeaderNavLink>
         </CHeaderNavItem>
       </CHeaderNav>
 
       <CHeaderNav className="px-3">
-        <TheHeaderDropdownNotif/>
-        <TheHeaderDropdownMssg/>
+      <span className="py-2">{props.user.first_name} {props.user.last_name}</span>
         <TheHeaderDropdown/>
       </CHeaderNav>
 
@@ -76,18 +69,15 @@ const Header = () => {
           routes={routes} 
         />
           <div className="d-md-down-none mfe-2 c-subheader-nav">
-            <CLink className="c-subheader-nav-link"href="#">
-              <CIcon name="cil-speech" alt="Settings" />
-            </CLink>
             <CLink 
               className="c-subheader-nav-link" 
               aria-current="page" 
-              to="/dashboard"
+              to="/maitre_stage/dashboard"
             >
               <CIcon name="cil-graph" alt="Dashboard" />&nbsp;Dashboard
             </CLink>
-            <CLink className="c-subheader-nav-link" href="#">
-              <CIcon name="cil-settings" alt="Settings" />&nbsp;Settings
+            <CLink className="c-subheader-nav-link" to="/maitre_stage/profil">
+              <CIcon name="cil-user" alt="Settings" />&nbsp;Mon profil
             </CLink>
           </div>
       </CSubheader>
@@ -95,4 +85,8 @@ const Header = () => {
   )
 }
 
-export default Header
+const mapStateTopProps = (state) => ({
+  user:state.auth.user
+})
+
+export default connect(mapStateTopProps,null)(Header)

@@ -25,7 +25,7 @@ import {
   cibStripe,
   cibPaypal,
   cibGooglePay,
-  cibCcAmex
+  cibCcAmex,
 } from '@coreui/icons'
 import {
   cifUs,
@@ -33,7 +33,8 @@ import {
   cifIn,
   cifFr,
   cifEs,
-  cifPl
+  cifPl,
+
 } from '@coreui/icons'
 import {
   cilAlignCenter,
@@ -88,6 +89,7 @@ import {
   cilLayers,
   cilLightbulb,
   cilList,
+  cilPlus,
   cilListNumbered,
   cilListRich,
   cilLocationPin,
@@ -126,7 +128,14 @@ import {
   cilUserUnfollow,
   cilX,
   cilXCircle,
-  cilWarning
+  cilWarning,
+  cilBook,
+  cilBarChart,
+  cilContact,
+  cilFeaturedPlaylist,
+  cilCopy,
+  cilLibraryAdd,
+  cilViewQuilt,
 } from '@coreui/icons'
 
 export const icons = Object.assign({}, {
@@ -134,6 +143,13 @@ export const icons = Object.assign({}, {
   logo,
   logoNegative
 }, {
+  cilViewQuilt,
+  cilLibraryAdd,
+  cilCopy,
+  cilFeaturedPlaylist,
+  cilContact,
+  cilBarChart,
+  cilBook,
   cilAlignCenter,
   cilAlignLeft,
   cilAlignRight,
@@ -144,6 +160,7 @@ export const icons = Object.assign({}, {
   cilBan,
   cilBasket,
   cilBell,
+  cilPlus,
   cilBold,
   cilBookmark,
   cilCalculator,
@@ -224,7 +241,8 @@ export const icons = Object.assign({}, {
   cilUserUnfollow,
   cilX,
   cilXCircle,
-  cilWarning
+  cilWarning,
+  
 }, {
   cifUs,
   cifBr,

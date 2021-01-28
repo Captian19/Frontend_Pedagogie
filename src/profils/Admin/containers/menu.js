@@ -1,59 +1,69 @@
 export default [
     {
       _tag: 'CSidebarNavItem',
-      name: 'Dashboard',
+      name: 'Tableau de bord',
       to: '/admin/dashboard',
-      icon: 'cil-speedometer',
-    },
-    {
-      _tag: 'CSidebarNavItem',
-      name: 'Profil',
-      to: '/admin/profil',
-      icon: 'cil-speedometer',
+      icon: 'cil-home',
     },
     {
       _tag: 'CSidebarNavTitle',
-      _children: ['Users']
+      _children: ['UTILISATEURS']
     },
     {
       _tag: 'CSidebarNavItem',
-      name: 'All Users',
+      name: 'Tous les utilisateurs',
       to: '/admin/users',
       icon: 'cil-people',
     },
     {
       _tag: 'CSidebarNavItem',
-      name: 'Users inactifs',
+      name: 'Les utilisateurs inactifs',
       to: '/admin/inactifs',
       icon: 'cil-user-unfollow',
     },
     {
       _tag: 'CSidebarNavItem',
-      name: 'Ajouter un user',
+      name: 'Ajouter un utilisateur',
       to: '/admin/addUser',
       icon: 'cil-user-follow',
     },
     {
+      _tag: 'CSidebarNavItem',
+      name: 'Nouveau role',
+      to: '/admin/nouveau-role',
+      icon: 'cil-plus',
+    },
+    {
       _tag: 'CSidebarNavTitle',
-      _children: ['Liste']
+      _children: ['Rechercher une Liste']
     },
     {
       _tag: 'CSidebarNavItem',
       name: 'Classe',
       to: '/admin/liste/classe',
-      icon: 'cil-user-follow',
+      icon: 'cil-list',
     },
     {
       _tag: 'CSidebarNavItem',
       name: 'Département',
       to: '/admin/liste/departement',
-      icon: 'cil-user-follow',
+      icon: 'cil-list',
     },
     {
       _tag: 'CSidebarNavItem',
       name: 'Role',
       to: '/admin/liste/role',
-      icon: 'cil-user-follow',
+      icon: 'cil-list',
+    },
+    {
+      _tag: 'CSidebarNavTitle',
+      _children: ['STATISTIQUES']
+    },
+    {
+      _tag: 'CSidebarNavItem',
+      name: 'Année Scolaire',
+      to: '/admin/statistiques/annee-scolaire',
+      icon: 'cil-list',
     },
 ]
 

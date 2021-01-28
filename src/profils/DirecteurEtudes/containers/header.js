@@ -24,7 +24,7 @@ import {
 
 const Header = () => {
   const dispatch = useDispatch()
-  const sidebarShow = useSelector(state => state.sidebarShow)
+  const sidebarShow = useSelector(state => state.layout.sidebarShow)
 
   const toggleSidebar = () => {
     const val = [true, 'responsive'].includes(sidebarShow) ? false : 'responsive'
@@ -76,12 +76,12 @@ const Header = () => {
             <CLink 
               className="c-subheader-nav-link" 
               aria-current="page" 
-              to="/dashboard"
+              to="/directeur-etudes/dashboard"
             >
               <CIcon name="cil-graph" alt="Dashboard" />&nbsp;Dashboard
             </CLink>
-            <CLink className="c-subheader-nav-link" href="#">
-              <CIcon name="cil-settings" alt="Settings" />&nbsp;Settings
+            <CLink className="c-subheader-nav-link" to="/directeur-etudes/profil">
+              <CIcon name="cil-settings" alt="Settings" />&nbsp;Mon profil
             </CLink>
           </div>
       </CSubheader>

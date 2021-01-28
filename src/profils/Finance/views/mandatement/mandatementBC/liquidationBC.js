@@ -42,7 +42,6 @@ function getStepContent(step) {
         case 2:
             return (
                 <>
-                    <PvBC/>
                     <PvReceptionUploadBC/>
                 </>
             )
@@ -85,7 +84,7 @@ export default function LiquidationBC() {
                                         onClick={handleBack}
                                         className={classes.button}
                                     >
-                                        Back
+                                        Retour
                                     </Button>
                                     <Button
                                         variant="contained"
@@ -93,7 +92,7 @@ export default function LiquidationBC() {
                                         onClick={handleNext}
                                         className={classes.button}
                                     >
-                                        {activeStep === steps.length - 1 ? 'Finish' : 'Next'}
+                                        {activeStep === steps.length - 1 ? 'Terminé' : 'Suivant'}
                                     </Button>
                                 </div>
                             </div>
@@ -103,9 +102,9 @@ export default function LiquidationBC() {
             </Stepper>
             {activeStep === steps.length && (
                 <Paper square elevation={0} className={classes.resetContainer}>
-                    <Typography>All steps completed - you&apos;re finished</Typography>
+                    <Typography>Toutes les étapes sont terminées</Typography>
                     <Button onClick={handleReset} className={classes.button}>
-                        Reset
+                        Réinitialisé
                     </Button>
                 </Paper>
             )}

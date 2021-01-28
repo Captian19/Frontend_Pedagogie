@@ -1,21 +1,12 @@
 import React, { Component } from "react";
 
-import {
-    CCard,
-    CCardBody,
-    CCardFooter,
-    CCardHeader,
-    CCol,
-    CRow,
-  } from '@coreui/react'
+
 
 import {connect} from "react-redux";
 import axios from 'axios';
 import VisiteMed from './VisiteMed'
 import FormulaireIns from './FormulaireIns'
 import FraisIns from './FraisIns'
-import { Link } from 'react-router-dom';
-import UnderList from './afficherUnder.js'
 import EndPage from "./InscriptionEnd";
 
 

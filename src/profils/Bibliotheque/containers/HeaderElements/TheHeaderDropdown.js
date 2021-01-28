@@ -23,7 +23,7 @@ class TheHeaderDropdown extends Component{
         <CDropdownToggle className="c-header-nav-link" caret={false}>
           <div className="c-avatar">
             <CImg
-              src={this.props.user.photo ? this.props.user.photo : ""}
+              src={this.props.user.photo ? this.props.user.photo : avatar}
               className="c-avatar-img"
               alt={this.props.user.email}
             />
@@ -36,14 +36,14 @@ class TheHeaderDropdown extends Component{
             color="light"
             className="text-center"
           >
-            <strong>Compte</strong>
+            <strong>Mon compte</strong>
           </CDropdownItem>
-          <CDropdownItem to="/admin/profil">
+          <CDropdownItem to="/bibliotheque/profil">
             <CIcon name="cil-user" className="mfe-2" />Profil
           </CDropdownItem>
-          <CDropdownItem>
+          <CDropdownItem to="/bibliotheque/changer-de-mot-de-passe">
             <CIcon name="cil-settings" className="mfe-2" /> 
-            Historique
+            Changer de mot de passe
           </CDropdownItem>
           <CDropdownItem divider />
           <CDropdownItem onClick={this.props.logout} >

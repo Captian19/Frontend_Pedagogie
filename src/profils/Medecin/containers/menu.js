@@ -1,26 +1,22 @@
 export default [
+
+    {
+      icon: 'cil-list',
+      _tag: 'CSidebarNavTitle',
+      _children: ['Visite Médicale']
+    },
     {
       _tag: 'CSidebarNavItem',
-      name: 'Visite Médicale',
+      name: 'Consultation',
       to: '/medecin',
-      icon: 'cil-speedometer',
-      badge: {
-        color: 'info',
-        text: 'NEW',
-      }
+      icon: 'cil-list',
     },
     {
       _tag: 'CSidebarNavItem',
       name: 'Dossier Médical',
       to: '/medecin/dossiers-etudiants',
-      icon: 'cil-speedometer',
-      badge: {
-        color: 'info',
-        text: 'NEW',
-      }
+      icon: 'cil-list',
     },
     
 ]
 
-
-  

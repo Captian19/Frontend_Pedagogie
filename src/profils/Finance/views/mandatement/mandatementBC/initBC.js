@@ -1,6 +1,7 @@
 import React from "react";
 import '../style.css';
 import folder from "./folder2.png";
+import coche from "../madantementAC/coche.png";
 import {
     Link
 } from "react-router-dom";
@@ -14,7 +15,7 @@ class InitBC extends React.Component{
       }
 
       componentDidMount(){
-        fetch('http://127.0.0.1:8000/mandatement/MandatementBc/')
+        fetch('http://localhost:8000/mandatement/MandatBcFinanceEnCours/')
         .then(res => res.json())
         .then(data => this.setState({liste: data}))
         .catch(err => console.error(err));
@@ -39,21 +40,25 @@ class InitBC extends React.Component{
                                                     <p><img className=" img-fluid"
                                                             src={folder}
                                                             alt-text="card image"
-                                                            style={{width:"150px"}}/></p><br/><br/>
-                                                    <h2 className="card-title">Mandat {i.mandat}</h2>
+                                                            style={{width:"150px"}}/>
+                                                            </p><br/>
+                                                    <h2 className="card-title">Mandat {i.id_Bc}</h2>
+                                                    <h4 className="card-body">Date: {i.date_Bc}</h4>
                                                 </div>
                                             </div>
                                         </div>
                                         <div className="backside">
-                                            <div className="card">
+                                            <div className="card" style={{marginBottom:"0px"}}>
                                                 <div className="card-body text-center mt-4">
-                                                    <h2 className="card-title">Mandat {i.mandat}</h2><br/>
-                                                    {i.valid_directeur && <h4 className="card-text">etat : validé </h4>}
-                                                    {!i.valid_directeur && <h4 className="card-text">etat : En cours </h4>}
-                                                    <h4 className="card-text">edite par : Daouda Thiaw</h4><br/><br/>
-                                                    <button
-                                                       className="btn btn-primary btn-lg"><i className="fa fa-plus"/>
-                                                       <Link to="mandatviewbc">voir plus</Link> </button>
+                                                <h2 className="card-title">Mandat {i.id_Ac}</h2><br/>
+                                                    {i.valid_directeur && i.valid_comptable && <div class="d-flex justify-content-center card-title"><img src={coche} width="45px" height="45px"/></div>}
+                                                    {!i.valid_directeur && <div class="spinner-border card-title" role="status"> <span class="sr-only">Loading...</span> </div>}<br/>
+                                                    <h3 className="card-text" style={{fontSize:"1.2em"}}>edite par : {i.editeur}</h3><br/>
+                                                    <button className="btn btn-primary btn-lg">
+                                                        {i.valid_directeur && i.valid_comptable && <Link to={`mandatviewbc/${i.id_Bc}`}>Apercu</Link> }
+                                                        {!i.valid_directeur && <Link to={`mandatupdatebc/${i.id_Bc}`}>Editer</Link>}
+                                                    </button>
+
                                                 </div>
                                             </div>
                                         </div>

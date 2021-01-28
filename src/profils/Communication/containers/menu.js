@@ -1,26 +1,24 @@
 export default [
+
+  {
+    icon: 'cil-list',
+    _tag: 'CSidebarNavTitle',
+    _children: ['Carte Etudiant']
+  },
+
     {
       _tag: 'CSidebarNavItem',
-      name: 'Carte Etudiant',
+      name: 'Carte',
       to: '/communication',
-      icon: 'cil-speedometer',
-      badge: {
-        color: 'info',
-        text: 'NEW',
-      }
+      icon: 'cil-list'
     },
     {
       _tag: 'CSidebarNavItem',
       name: 'Dossier Etudiant',
       to: '/communication/dossier',
-      icon: 'cil-speedometer',
-      badge: {
-        color: 'info',
-        text: 'NEW',
-      }
+      icon: 'cil-list',
     },
     
 ]
 
 
-  

@@ -1,5 +1,3 @@
-// Ce composant contient le formulaire d'ajout d'une nouvelle UE.
-
 import React, { useState, useEffect } from "react"
 
 import {CCard, CCardHeader, CCardBody,CCol, CRow,
@@ -8,6 +6,7 @@ import {CCard, CCardHeader, CCardBody,CCol, CRow,
 import {connect} from "react-redux";
 import axios from "axios";
 
+import {useForm} from "react-hook-form";
 import { API_URL_UE } from "../../../../constants/pedagogie";
 
 const AddUE = (props) => {
@@ -23,18 +22,16 @@ const AddUE = (props) => {
     const [departement, setDepartement] = useState('');
     const [message, setMessage] = useState('');
 
-
-    // // Recupération du departement de l'utilisateur en cours.
     const getDepartement = () => {
         props.roles.map((role) => {
-            if(role.role_type == "CHEF_DE_DEPARTEMENT"){
+            if(role.role_type == "ASSISTANT_CHEF_DEPARTEMENT"){
                 setDepartement(role.departement);
             }
         })
     }
 
     
-    // Soumission des données pour la creation d'un nouvel EC à l'aide de Axios
+
     const onSubmit = e => {
         e.preventDefault()
         axios.post(`http://localhost:8000/UE/POST_UE`,{"nom":nom,"codeUE":codeUE, "departement":departement, "classe":singleClasse, "coefUE":coefUE, "creditUE":creditUE, "semestre":singleSemestre})
@@ -60,7 +57,6 @@ const AddUE = (props) => {
     }
 
 
-    // Obtenir la liste de l'ensemble des classes de TC1 à la DIC3
     const getListClasse = () => {
         axios.get("https://users-ent.herokuapp.com/api/classes",config)
         .then(res => {
@@ -70,6 +66,13 @@ const AddUE = (props) => {
         .catch(err => console.log(err));
     }
 
+    // const getListDepartements = () => {
+    //     axios.get("https://users-ent.herokuapp.com/api/departements",config)
+    //     .then(res => {
+    //         setDepartments(res.data);
+    //     })
+    //     .catch(err => console.log(err));
+    // }
 
 
     useEffect(() => {
@@ -77,8 +80,8 @@ const AddUE = (props) => {
         getDepartement();
     },[])
 
+    // console.log(props.departement);
 
-    
     return (
         <CRow>
         <CCol xs="12" sm="12">

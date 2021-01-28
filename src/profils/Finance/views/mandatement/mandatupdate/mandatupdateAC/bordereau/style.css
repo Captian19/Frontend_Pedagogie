@@ -1,0 +1,280 @@
+.abc:focus{
+    background-color: #F7DC6F;
+    width: 100%;
+    border: none;
+    font-family: cursive;
+    color: dimgray;
+}
+.abc{
+    background-color: #F7DC6F;
+    width: 100%;
+    text-align: center;
+    border: none;
+    font-family: cursive;
+    color: dimgray;
+    font-size: 1.1em;
+}
+.cab:focus{
+    background-color: #F7DC6F;
+    width: 100%;
+    border: none;
+    font-family: cursive;
+    color: dimgray;
+}
+.cab{
+    background-color: #F7DC6F;
+    width: 100%;
+    text-align: center;
+    border: none;
+    font-family: cursive;
+    color: dimgray;
+    font-size: 0.95em;
+}
+
+.cq{
+    height:40px;
+}
+.sign{
+    display: none;
+}
+.sub{
+    background-color: #F7DC6F;
+    border: none;
+    font-weight: bold;
+    font-size: 1.4em;
+}
+
+.sub:focus {
+    background-color: #F7DC6F;
+    border: none;
+}
+
+/*  */
+
+.attent{
+    font-size: 0.8em;
+}
+.bas{
+    font-family: cursive;
+    color: dimgray;
+    font-style: oblique;
+}
+.largeur{
+    height: 800px;
+
+
+}
+.abcd:focus{
+    background-color: rgb(118, 196, 199);
+    width: 100%;
+    border: none;
+    font-family: cursive;
+    color: dimgray;
+    font-size: 1.10em;
+}
+.abcd{
+    background-color: rgb(118, 196, 199);
+    width: 100%;
+    text-align: center;
+    border: none;
+    font-family: cursive;
+    color: dimgray;
+    font-size: 1.10em;
+}
+.abcde{
+    background-color: rgb(118, 196, 199);
+    width: 100%;
+    text-align: center;
+    border: none;
+    font-family: cursive;
+    color: dimgray;
+    font-size: 0.95em;
+}
+.abcde:focus{
+    background-color: rgb(118, 196, 199);
+    width: 100%;
+    text-align: center;
+    border: none;
+    font-family: cursive;
+    color: dimgray;
+    font-size: 0.9em;
+}
+.subr{
+    background-color: rgb(118, 196, 199);
+    border: none;
+    font-weight: bold;
+    font-size: 1.5em;
+}
+
+.subr:focus {
+    background-color: rgb(118, 196, 199);
+    border: none;
+
+}
+.table{border-collapse:collapse!important;font-size: 0.7em; padding:.75rem;vertical-align:top; font-weight: bold;}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    /* display: none; <- Crashes Chrome on hover */
+    -webkit-appearance: none;
+    margin: 0; /* <-- Apparently some margin are still there even though it's hidden */
+}
+
+input[type=number] {
+    -moz-appearance:textfield; /* Firefox */
+}
+
+.bordure{
+    border:1px solid #dee2e6;
+    font-weight:bold;
+}
+
+
+
+.top{
+    margin-top: 50px;
+    margin-bottom: 20px;
+
+}
+.centre{
+    text-align: center;
+}
+thead{
+    color: #524A4A;
+}
+
+.lefta{
+    border-left: none;
+    font-size: 1em;
+}
+.taille{
+    font-size: 25px;
+    border-right: none;
+}
+.jaune{
+    background-color: #F7DC6F;
+}
+
+.spanner{
+
+    font-family: cursive;
+    color: dimgray;
+    font-style: oblique;
+    font-size: 1.05em;
+}
+.gr{
+    font-size: 0.8em;
+}
+.ecole{
+    margin-bottom: 40px;
+    font-size: 0.8em;
+    font-weight: bold;
+}
+.deux{
+    margin-left: 120px;
+}
+
+.creancier{
+    width:20%;
+    height:15px;
+}
+.bord{
+    width:7%;
+}
+.bordd{
+    width:9%;
+}
+.somme{
+    width:13%;
+}
+.reference{
+    width:60%;
+}
+.reference1{
+    width:57%;
+}
+.mandatee1{
+    width:15%;
+}
+.Date1{
+    width: 8%;
+}
+.comptable{
+    font-size: 0.8em;
+}
+.mille{
+    height:80px;
+}
+
+.sign{
+    width:80px; height:60px;
+}
+.douze{
+    width: 11%;
+}
+.bot{
+    margin-bottom: 300px;
+}
+.wit{
+    padding:20px;
+    padding-right: 25px;
+    background-color: white;
+
+}
+thead{
+    color: rgb(82, 74, 74);
+    font-weight: bold;
+}
+.alice{
+    background-color: rgb(118, 196, 199);
+}
+
+.container{width:100%;padding-right:15px;padding-left:15px;margin-right:auto;margin-left:auto}
+
+.ad:focus{
+    background-color: white;
+    width: 100%;
+    border: none;
+    font-family: cursive;
+    color: dimgray;
+}
+.ad{
+    background-color: White;
+    width: 100%;
+    text-align: center;
+    font-size: 1.8em;
+    font-family: cursive;
+    color: dimgray;
+    
+}
+.ap:focus{
+    background-color: white;
+    width: 100%;
+    border: none;
+    font-family: cursive;
+    color: dimgray;
+}
+.ap{
+    background-color: white;
+    width: 100%;
+    text-align: center;
+    font-size: 1.2em;
+    font-family: cursive;
+    color: dimgray;
+    
+}
+.ecart{
+    margin-top: 22px;
+}
+.eca{
+    margin-top: 10px;
+}
+.marge{
+    margin-right: -20px;
+}
+.siz{
+    font-size: 1.1em;
+}
+.neuf{
+    width:8%
+}

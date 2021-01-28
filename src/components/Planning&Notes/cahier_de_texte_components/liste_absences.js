@@ -14,12 +14,10 @@ import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import Paper from '@material-ui/core/Paper';
 import Checkbox from '@material-ui/core/Checkbox';
-import IconButton from '@material-ui/core/IconButton';
-import Tooltip from '@material-ui/core/Tooltip';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Switch from '@material-ui/core/Switch';
-import DeleteIcon from '@material-ui/icons/Delete';
-import FilterListIcon from '@material-ui/icons/FilterList';
+import { liste_de_classe } from '../../../actions/Planning&Notes/cahier_de_texte_services';
+import LoadingSpinner from '../loading_spinner';
 
 const rows = [
     { id: 1, prenom: 'Alioune', nom: 'Sarr' },
@@ -174,7 +172,7 @@ const useStyles = makeStyles((theme) => ({
         marginBottom: theme.spacing(2),
     },
     table: {
-        minWidth: 300,
+        minWidth: 400,
     },
     visuallyHidden: {
         border: 0,
@@ -197,11 +195,19 @@ export default function ListeAbsents(props) {
     const [page, setPage] = React.useState(0);
     const [dense, setDense] = React.useState(false);
     const [rowsPerPage, setRowsPerPage] = React.useState(5);
-    
+    const [loading, setLoadingState] = React.useState(true);
+    const [eleves, setElevesState] = React.useState([])
 
     React.useEffect(()=>
         props.handleListeAbsentsChange(selected) // Sends the liste of absents everytime the component mount or update
     , [selected]);
+
+    React.useEffect(async () => {
+        await liste_de_classe(props.classe.niveau, props.classe.departement).then(response => {
+            setElevesState(response);
+            setLoadingState(false);
+        });
+    }, [])
 
     const handleRequestSort = (event, property) => {
         const isAsc = orderBy === property && order === 'asc';
@@ -211,7 +217,7 @@ export default function ListeAbsents(props) {
 
     const handleSelectAllClick = (event) => {
         if (event.target.checked) {
-            const newSelecteds = rows.map((n) => n.id);
+            const newSelecteds = eleves.map((n) => n.id);
             setSelected(newSelecteds);
             return;
         }
@@ -253,9 +259,12 @@ export default function ListeAbsents(props) {
 
     const isSelected = (id) => selected.indexOf(id) !== -1;
 
-    const emptyRows = rowsPerPage - Math.min(rowsPerPage, rows.length - page * rowsPerPage);
-
+    const emptyRows = rowsPerPage - Math.min(rowsPerPage, eleves.length - page * rowsPerPage);
     return (
+        
+        loading ? 
+        <LoadingSpinner loading={loading} />
+        :
         <div className={classes.root}>
             <Paper className={classes.paper}>
                 <EnhancedTableToolbar numSelected={selected.length} />
@@ -273,10 +282,10 @@ export default function ListeAbsents(props) {
                             orderBy={orderBy}
                             onSelectAllClick={handleSelectAllClick}
                             onRequestSort={handleRequestSort}
-                            rowCount={rows.length}
+                            rowCount={eleves.length}
                         />
                         <TableBody>
-                            {stableSort(rows, getComparator(order, orderBy))
+                            {stableSort(eleves, getComparator(order, orderBy))
                                 .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                                 .map((row, index) => {
                                     const isItemSelected = isSelected(row.id);
@@ -299,9 +308,9 @@ export default function ListeAbsents(props) {
                                                 />
                                             </TableCell>
                                             <TableCell component="th" id={labelId} padding="none">
-                                                {row.prenom}
+                                                {row.user.first_name}
                                             </TableCell>
-                                            <TableCell align="left">{row.nom}</TableCell>
+                                            <TableCell align="left">{row.user.last_name}</TableCell>
 
                                         </TableRow>
                                     );
@@ -317,7 +326,7 @@ export default function ListeAbsents(props) {
                 <TablePagination
                     rowsPerPageOptions={[5, 10, 25]}
                     component="div"
-                    count={rows.length}
+                    count={eleves.length}
                     rowsPerPage={rowsPerPage}
                     page={page}
                     onChangePage={handleChangePage}

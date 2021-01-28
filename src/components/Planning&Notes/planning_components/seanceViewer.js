@@ -2,7 +2,10 @@ import React, { Component } from 'react';
 import { red, blueGrey } from '@material-ui/core/colors';
 import TableCell from '@material-ui/core/TableCell';
 import { Link } from 'react-router-dom';
-import { convertIdCourseToLibelle } from '../../../actions/Planning&Notes/planning_functions';
+import { convertIdCourseToLibelle, getProfFromId } from '../../../actions/Planning&Notes/planning_functions';
+import { IconButton } from '@material-ui/core';
+// import List from '@material-ui/icons/List';
+import List from '@material-ui/icons/ListTwoTone';
 
 export default class SeanceViewer extends Component {
     constructor(props) {
@@ -13,7 +16,7 @@ export default class SeanceViewer extends Component {
             prof: "",
             active: true,
         };
-        console.log(this.props.courses);
+
         this.handleView = this.handleView.bind(this);
         this.activeChanger = this.activeChanger.bind(this);
     }
@@ -82,23 +85,48 @@ export default class SeanceViewer extends Component {
     render() {
         const active = this.state.active;
         const courses = this.props.courses;
+        const profs = this.props.profs;
         return (
             active == true ? // If this cell is active, we display it
                 this.state.duree != "" ?
                     <TableCell rowSpan={this.state.duree} style={this.state.cours ? { backgroundColor: blueGrey[100], borderWidth: 1, borderStyle: "solid", borderTopWidth: 1.5, borderTopStyle: 'dashed', } : {}}>
-                        <Link to={ "/etudiant/remplir-cahier-de-texte/" + this.props.id_planning + "/" + this.props.id}>
+                        {this.state.prof == this.props.role.id ?
+                            <React.Fragment>
+                                <Link to={"/" + this.props.role.type.toLowerCase() + "/remplir-cahier-de-texte/" + this.props.id_planning + "/" + this.props.id}>
+                                    <div>
+                                        <center>
+                                            {courses != undefined ? convertIdCourseToLibelle(courses, this.state.cours) : this.state.cours}
+                                        </center>
+                                        <center style={{ fontStyle: "italic" }}>
+                                            {getProfFromId(profs, this.state.prof)}
+                                        </center>
+                                        <center>
+                                            Duree: {this.state.duree + " heure(s)"}
+                                        </center>
+                                    </div>
+                                </Link>
+                                {this.props.enseignant == true ?
+                                    <Link to={"/enseignant/faire-l-appel/" + this.props.id_planning + "/" + this.props.id}>
+                                        <IconButton>
+                                            <List color="secondary" />
+                                        </IconButton>
+                                    </Link>
+                                    : null
+                                }
+                            </React.Fragment>
+                            :
                             <div>
                                 <center>
-                                    { courses != undefined ? convertIdCourseToLibelle(courses ,this.state.cours) : this.state.cours}
+                                    {courses != undefined ? convertIdCourseToLibelle(courses, this.state.cours) : this.state.cours}
                                 </center>
                                 <center style={{ fontStyle: "italic" }}>
-                                    {this.state.prof}
+                                    {getProfFromId(profs, this.state.prof)}
                                 </center>
                                 <center>
                                     Duree: {this.state.duree + " heure(s)"}
                                 </center>
                             </div>
-                        </Link>
+                        }
                     </TableCell>
                     :
                     <TableCell></TableCell>

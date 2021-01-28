@@ -10,15 +10,6 @@ import {
     CBadge
 } from '@coreui/react'
 
-import {
-    Button,
-    FormGroup,
-    Form,
-    Input,
-    Row,
-    Col,
-} from "reactstrap";
-
 import {useForm} from "react-hook-form";
 import {connect} from "react-redux";
 import {useHistory} from "react-router-dom"
@@ -31,6 +22,7 @@ const ListClasse = (props) => {
     const [annees, setAnnee] = useState([]);
     const [classes, setClasse] = useState([]);
     const [departements,setDepartement] = useState([]);
+    const [loading, setLoading] = useState(true);
 
     const history = useHistory();
     const {register, handleSubmit} = useForm()
@@ -51,6 +43,7 @@ const ListClasse = (props) => {
         axios.get(`https://users-ent.herokuapp.com/api/auth/ETUDIANT/${classe}/${departement}/${annee}/`,config)
         .then(res =>{
             setEtudiant(res.data);
+            setLoading(false);
         })
         .catch(err => console.log(err))
     } 
@@ -91,10 +84,10 @@ const ListClasse = (props) => {
         <CCol lg={12}>
             <CCard>
             <CCardHeader>
-                Liste des etudiants 
+            <h4>Liste des étudiants par classe</h4>
             </CCardHeader>
             <CCardBody>
-                <form className="mb-2" onSubmit={handleSubmit(onSubmit)}>
+                <form className="mb-3 p-2 mx-2 shadow" onSubmit={handleSubmit(onSubmit)}>
                     <div className="row">
                         <div className="col-md-3">
                             <div className="form-group">
@@ -135,6 +128,10 @@ const ListClasse = (props) => {
                     sorter
                     hover
                     pagination
+                    loading={loading}
+                    noItemsViewSlot={
+                        'Choissisez une classe et une année scolaire'
+                    }
                     scopedSlots = {{
 
                         'Prénom':

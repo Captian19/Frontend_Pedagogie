@@ -3,12 +3,13 @@ import { makeStyles } from '@material-ui/core/styles';
 import Modal from '@material-ui/core/Modal';
 import TableCell from '@material-ui/core/TableCell';
 import Card from '@material-ui/core/Card';
-import { convertIdCourseToLibelle } from '../../../actions/Planning&Notes/planning_functions';
+import { convertIdCourseToLibelle, getProfFromId } from '../../../actions/Planning&Notes/planning_functions';
 // Form element
 import Button from '@material-ui/core/Button';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
 import InputLabel from '@material-ui/core/InputLabel';
+import { IconButton, MenuItem } from "@material-ui/core";
 
 // Importing all the icons i need
 import DeleteIcon from '@material-ui/icons/Delete';
@@ -18,7 +19,6 @@ import AddIcon from '@material-ui/icons/Add';
 
 // Importing colors
 import { green, red, blueGrey } from '@material-ui/core/colors';
-import { MenuItem } from "@material-ui/core";
 
 // Styling part !
 function getModalStyle() {
@@ -56,7 +56,9 @@ class SeanceCell extends Component {
             prof: "",
             active: true,
             courses: props.courses,
+            profs: props.profs
         };
+
         this.handleSubmit = this.handleSubmit.bind(this);
         this.activeChanger = this.activeChanger.bind(this);
         this.deleteCourse = this.deleteCourse.bind(this);
@@ -143,22 +145,24 @@ class SeanceCell extends Component {
             active ? // If this cell is active, we display it
                 this.state.cours === "" ?
                     <TableCell key={this.props.className}>
-                        <SeanceModal courses={this.props.courses} handleSubmit={this.handleSubmit} jour={this.props.jour} heureDebut={this.props.heureDebut} taken_cells={this.props.taken_cells}/>
+                        <SeanceModal courses={this.props.courses} profs={this.props.profs} handleSubmit={this.handleSubmit} jour={this.props.jour} heureDebut={this.props.heureDebut} taken_cells={this.props.taken_cells} />
                     </TableCell>
                     :
-                    <TableCell rowSpan={this.state.duree} style={this.state.cours ? { backgroundColor: blueGrey[100], borderWidth: 1, borderStyle: "solid", borderBottomColor: red, borderTopWidth: 3, borderTopStyle: 'dashed', } : {}}>
+                    <TableCell rowSpan={this.state.duree} style={this.state.cours ? { backgroundColor: blueGrey[90], borderWidth: 1, borderStyle: "inset", borderBottomColor: red, borderTopWidth: 2, borderTopStyle: 'dashed', } : {}}>
                         <div>
                             <center>
                                 {convertIdCourseToLibelle(this.props.courses, this.state.cours)}
                             </center>
                             <center style={{ fontStyle: "italic" }}>
-                                {this.state.prof}
+                                {getProfFromId(this.props.profs, this.state.prof)}
                             </center>
                             <center>
                                 Duree: {this.state.duree + " heure(s)"}
                             </center>
                             <center>
-                                <Button startIcon={<DeleteIcon />} variant="contained" color="secondary" onClick={this.deleteCourse}>Suppr</Button>
+                                <IconButton onClick={this.deleteCourse} color="secondary" >
+                                    <DeleteIcon />
+                                </IconButton>
                             </center>
                         </div>
                     </TableCell>
@@ -189,21 +193,22 @@ function SeanceModal(props) {
     var handleChange = (e) => {
         let target = e.target;
         seance[target.name] = target.value;
+        // console.log(target.name, target.value);
     };
 
     var handleSubmit = (e) => {
-        if (parseInt(props.heureDebut) >= 8 && seance.heureFin < 13 && seance.prof.length > 0 && seance.cours.length > 0) {
+        if (parseInt(props.heureDebut) >= 8 && seance.heureFin < 13 && seance.prof != undefined && seance.cours.length > 0) {
             props.handleSubmit(seance);
             handleClose();
-            console.log(props.heureDebut);
         }
 
-        else if (parseInt(props.heureDebut) >= 15 && seance.heureFin < 20 && seance.prof.length > 0 && seance.cours.length > 0) {
+        else if (parseInt(props.heureDebut) >= 15 && seance.heureFin < 20 && seance.prof != undefined && seance.cours.length > 0) {
             props.handleSubmit(seance);
             handleClose();
         }
+
         else alert("Veuillez remplir correctement les champs!");
-        console.log();
+
         e.preventDefault();
     };
 
@@ -223,8 +228,8 @@ function SeanceModal(props) {
                 <InputLabel id="demo-simple-select-label">Cours</InputLabel>
                 <Select name="cours" onChange={handleChange} labelId="demo-simple-select-label"
                     id="demo-simple-select">
-                    {props.courses.map(course => 
-                        <MenuItem value={course['_id']} key={course['_id']}>{course.libelle}</MenuItem>
+                    {props.courses.map(course =>
+                        <MenuItem value={course['id']} key={course['nom']}>{course.nom}</MenuItem>
                     )}
                 </Select>
 
@@ -232,11 +237,9 @@ function SeanceModal(props) {
                     <InputLabel id="demo-simple-select-label2">Prof</InputLabel>
                     <Select name="prof" onChange={handleChange} labelId="demo-simple-select-label2"
                         id="demo-simple-select2">
-                        <MenuItem value=""></MenuItem>
-                        <MenuItem value="M. A. Faye">M. A. Faye</MenuItem>
-                        <MenuItem value="Docteur A. A. Ciss">Docteur A. A. Ciss</MenuItem>
-                        <MenuItem value="Docteur A. Wade">Docteur A. Wade</MenuItem>
-                        <MenuItem value="Fallou Java">Fallou Java</MenuItem>
+                        {props.profs.map(prof =>
+                            <MenuItem value={prof['id']} key={prof['id']}>{prof.user.sexe + ". " + prof.user.first_name + " " + prof.user.last_name}</MenuItem>
+                        )}
                     </Select>
                 </FormControl>
                 <FormControl>

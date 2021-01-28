@@ -11,9 +11,12 @@ import {
   } from '@coreui/react'
 import  UnderCreate from  "../../../../components/moduleInscription/dossier/createUnder.js";
 import fin from "../../../../assets/moduleInscription/img/fin.svg"
+import { connect } from "react-redux";
 
 class EndPage extends Component {
     render(){
+        const role = `${this.props.user.CurrentRoles[0].role_type}`
+        const phrase = role==="MEMBRE_SCOLARITE" ?<b>L'étudiant a déjà été inscrit </b>:<b>Vous vous êtes déjà inscrit</b>
         return(
             <CCard>
             <CCardBody>
@@ -24,7 +27,7 @@ class EndPage extends Component {
                     </div>
                     <div className="text-center pb-5">
                         <div className="card container   bg-primary white-text">
-                            <h1 style={{color:"white"}}>Inscription Terminée</h1>
+                            <h1 style={{color:"white"}}>Inscription bouclée pour cette année</h1>
                         </div>
 
                         <div class="row mt-5">
@@ -41,7 +44,7 @@ class EndPage extends Component {
                                                     <path fill-rule="evenodd" d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z"/>
                                                 </svg>
                                             </div>
-                                            <h3 className="mt-5"><b>Vous vous êtes déja inscrit !</b></h3>
+                                            <h3 className="mt-5"><b>{phrase}</b></h3>
                                         </div>
                                     </label>     
                                 </div> 
@@ -56,5 +59,7 @@ class EndPage extends Component {
         );
     }
 }
-
-export default EndPage;
+const mapStateToProps = state => ({
+    user: state.auth.user
+  })
+export default connect(mapStateToProps,null)(EndPage);

@@ -5,8 +5,6 @@ import axios from 'axios';
 import {
     CCard,
     CCardBody,
-    CCardFooter,
-    CCardHeader,
     CCol,
     CRow,
   } from '@coreui/react'
@@ -19,7 +17,7 @@ class AfficheMed extends Component {
         Etudiant : {},
     }
     componentDidMount(){
-        let anneeScolaire = `${this.props.user.CurrentRoles[0].date_debut.split("-")[0]}-${this.props.user.CurrentRoles[0].date_fin.split("-")[0]}`
+        let anneeScolaire = `${this.props.match.params.anneeScolaire}`
         let email = this.props.user.email
         let url =`http://127.0.0.1:8000/api/InfoEtudiantByAnneeScolaireEmail/${anneeScolaire}/${email}`
         axios.get(url, {

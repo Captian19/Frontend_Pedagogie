@@ -4,6 +4,8 @@ import {  useParams } from 'react-router-dom';
 import ClipLoader from "react-spinners/ClipLoader";
 import { css } from "@emotion/core";
 
+import {connect} from 'react-redux';
+
 
 import Stages from './entGenieClasse';
 
@@ -33,35 +35,39 @@ const correspondance_genie = {
 
 
 
-function Tableau (){
+function Tableau (props){
     
     //donnees {classe et genie} de l'etudiant
     const [etudiant, setEtudiant] = useState({}); 
     
     //id est defini dans le dossier 'Constants'
-    const {id} = useParams()
+    // const {id} = useParams()
     
     
 
     useEffect(()=>{
-        refreshEtudiant()
+       // refreshEtudiant()
     },[])
    
 
     // recevoir les donnees relatives à l'etudiant depuis l'api
+    //inutile pour l'instant
     const refreshEtudiant = () => {
-        axios.get(`http://localhost:8000/api/stage/entreprises/${id}/offres/`)
-            .then(res => setEtudiant(res.data) ) 
+        axios.get(`http://localhost:8000/api/stage/entreprises/${props.id || 8}/offres/`)
+            .then(res => {
+                setEtudiant(res.data) 
+                console.log(res.data)
+            }) 
            
     }
 
     return (
 
         <div>
-            {etudiant.classe ? 
+            {props.role ? 
             <Stages
-            classe={etudiant.classe}
-            genie={correspondance_genie[`${etudiant.genie}`]}
+            classe={props.role.classe}
+            genie={correspondance_genie[`${props.role.departement}`]}
             fields = {fields}
             />:
             <div className="sweet-loading">
@@ -69,7 +75,7 @@ function Tableau (){
                         css={override}
                         size={100}
                         color={"#123abc"}
-                        loading={etudiant}
+                        loading={props.role}
                     />
             </div>
             }
@@ -80,4 +86,12 @@ function Tableau (){
 }
 
 
-export default Tableau;
+
+const MapToState = state =>({
+    role: state.auth.user.CurrentRoles[0]
+})
+
+
+
+
+export default connect(MapToState, null)(Tableau);

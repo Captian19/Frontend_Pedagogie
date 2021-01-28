@@ -7,8 +7,8 @@ class PvReceptionUploadBC extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            document : null,
-            liste:[]
+            document : [],
+            liste: []
         }
     }
 
@@ -20,21 +20,19 @@ class PvReceptionUploadBC extends Component {
     }
 
 
-
     handleChangedocument = (event) => {
         this.setState({
-            document: event.target.files[0],
+            file_uploaded: event.target.files[0],
 
         });
     }
-
 
 
     saveDocumentsEtudiant = (event) => {
         event.preventDefault();
 
         let form_data = new FormData();
-        form_data.append('document', this.state.document, this.state.document.name);
+        form_data.append('file_uploaded', this.state.file_uploaded, this.state.file_uploaded.name);
 
         fetch(`http://127.0.0.1:8000/mandatement/uploadPvReceptionBc/${this.state.liste[8]}/`, {
             method: 'PUT',
@@ -49,20 +47,20 @@ class PvReceptionUploadBC extends Component {
 
     fileData = () => {
 
-        if (this.state.document) {
+        if (this.state.file_uploaded) {
 
             return (
                 <div className="card">
                     <h2 className="mt-3">Les Informations Du Fichier</h2>
-                    <p>Nom: {this.state.document.name}</p>
-                    <p>Type Fichier: {this.state.document.type}</p>
+                    <p>Nom: {this.state.file_uploaded.name}</p>
+                    <p>Type Fichier: {this.state.file_uploaded.type}</p>
                 </div>
             );
         }
     };
 
     fileColor = () =>{
-        if(this.state.document){
+        if(this.state.file_uploaded){
             return "fa fa-file-pdf-o"
         }
         else{
@@ -71,7 +69,7 @@ class PvReceptionUploadBC extends Component {
     }
 
     fileColor2 = () =>{
-        if(this.state.document){
+        if(this.state.file_uploaded){
             return "red"
         }
         else{
@@ -92,12 +90,12 @@ class PvReceptionUploadBC extends Component {
                                 </div>
                                 <div id="file-upload-form" class="uploader mt-5">
                                     <input id="file-upload"  accept="file/pdf"
-                                           onChange={this.handleChangedocument} type="file" name="fileUpload"  />
+                                           onChange={this.handleChangedocument} type="file" name="file_uploaded"  />
 
                                     <label for="file-upload" id="file-drag">
                                         <div id="start">
                                             <i class={this.fileColor()} style={{color : this.fileColor2()}}  aria-hidden="true"></i>
-                                            <div><b>PV de Reception</b></div>
+                                            <div><b>Pv de reception</b></div>
                                             {this.fileData()}
                                             <span id="file-upload-btn" class="btn btn-primary">Joindre le fichier</span>
                                         </div>

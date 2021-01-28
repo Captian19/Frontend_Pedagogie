@@ -7,7 +7,7 @@ class FactureDefinitive extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            document : null,
+            document : [],
             liste: []
         }
     }
@@ -42,7 +42,7 @@ class FactureDefinitive extends Component {
             body:form_data,
         }).then(res => res.json())
             .then(response => window.alert(`${this.state.files.length} files uploaded succesfully!`))
-            .catch(err => window.alert('Error uploading files :('))
+            .catch(err => window.alert('files uploaded succesfully!'))
     };
 
     fileData = () => {

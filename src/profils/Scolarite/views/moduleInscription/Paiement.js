@@ -6,18 +6,16 @@ import f from '../../../../assets/moduleInscription/img/f.svg'
 import {
     CCard,
     CCardBody,
-    CCardFooter,
-    CCardHeader,
     CCol,
     CRow,
   } from '@coreui/react'
-import RecuScolarite from '../../../../components/moduleInscription/RecuScolarite';
+import RecuInscription from '../../../../components/moduleInscription/RecuInscription';
 
 class Paiement extends Component {
     constructor(props) {
         super(props);
         this.state = { 
-            validationComptable : true,
+            validationComptable : false,
             Etudiant : '',
             redirect : "",
             etudiant : {},
@@ -27,8 +25,9 @@ class Paiement extends Component {
 
     componentDidMount(){
 
-        // const id = this.props.match.params.id;
-        let url = 'http://127.0.0.1:8000/api/InfoEtudiantDetail/1';
+  
+        let url =`http://127.0.0.1:8000/api/InfoEtudiantDetail/${this.props.match.params.id}`
+
         axios.get(url, {
           headers: {
             'content-type': 'multipart/form-data'
@@ -36,7 +35,8 @@ class Paiement extends Component {
         })
         .then(response => {
             this.setState({
-               Etudiant : response.data
+               Etudiant : response.data,
+               validationComptable : response.data.validationComptable
             })
             console.log(response.data)
     
@@ -47,18 +47,7 @@ class Paiement extends Component {
             console.log("Error")
         })
 
-        axios.get(`http://localhost:8000/api/etudiantDetail/1`)
-        .then(res => {
-            const etudiant = res.data;
-            this.setState({ etudiant });
-            axios.get(`http://localhost:8000/api/dossierEtudiant/${res.data.id}`)
-            .then(response => {
-                const dossier = response.data;
-                this.setState({ dossier });
-                console.log(this.state.dossier)
-               
-              })
-          })
+
      
     }
 
@@ -87,30 +76,32 @@ class Paiement extends Component {
     }
    /////////////////////////////////////////////////////////////////
     //POur créer le dossier
-    createFolder = event => {
+    createUnder = event => {
         event.preventDefault();
-        axios.post(`http://localhost:8000/api/dossierEtudiant/${this.state.etudiant.id}`,{proprietaire : this.state.etudiant.id,
-                       nom : "dossierEtudiant1"
-                    })
-             .then(res => {
-                    console.log(res);
-                    console.log(res.data);
-                      })
-        const redirect = "/scolarite/FolderCreation"
-        this.setState({redirect})
+            axios.post(`http://localhost:8000/api/sousDossierDetails/${this.state.Etudiant.id}`,{
+                        nom : this.state.Etudiant.anneeScolaire,
+                        etudiant : this.state.Etudiant.id,
+                        classe : this.state.Etudiant.classe
+                        })
+                .then(res => {
+                        console.log(res);
+                        console.log(res.data);
+                        })
+            const redirect = "/scolarite/UnderCreation"
+            this.setState({redirect})
     }
     
 
     DisplayEtatPaiement = (etat) =>{
 
-        if (etat==false) { 
+        if (etat===false) { 
           
             return ( 
                 <div id="file-upload-form" class="uploader mt-5">
                     <label for="file-upload" id="file-drag">
                         <div id="start">
                                 <i  aria-hidden="true"></i>
-                                <h3 className="mb-5"><b>Validation des frais d'inscription en cours !</b></h3>
+                                <h3 className="mb-5"><b>Validation des  frais d'inscription en cours !</b></h3>
                                 <div class="text-center">
                                 <div class="spinner-border" style={{width : "8rem", height: "8rem"}}  role="status">
                                     <span class="sr-only">Loading...</span>
@@ -144,7 +135,7 @@ class Paiement extends Component {
 
 
     render() { 
-        if(this.state.redirect=="/scolarite/FolderCreation"){
+        if(this.state.redirect=="/scolarite/UnderCreation"){
             return (<Redirect to={this.state.redirect}/>)
         }
        
@@ -174,7 +165,7 @@ class Paiement extends Component {
                 </div>
 
                 <div className={this.displayRecu(this.state.validationComptable)} >
-                    <RecuScolarite Etudiant={this.state.Etudiant} OnClick={this.createFolder }></RecuScolarite>     
+                    <RecuInscription Etudiant={this.state.Etudiant} OnClick={this.createUnder }></RecuInscription>     
                 </div>
                 
 
@@ -190,8 +181,10 @@ class Paiement extends Component {
 
                             <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordionExample">
                             <div class="card-body">
-                                Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
-                            </div>
+                                Veuillez vous rendre au niveau de l'agence comptable pour payer vos frais d'inscription<br></br>
+                                Ensuite vous pouvez vous reconnecter au niveau de la plateforme pour continuer votre<br></br> 
+                                inscription administrative.<br></br>
+                                Merci !                            </div>
                             </div>
                         </div>
                 </div>

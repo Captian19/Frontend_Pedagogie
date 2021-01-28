@@ -9,7 +9,6 @@ export default [
         text: 'NEW',
       }
     },
-
     /********************  Pedagogie ******************/
     {
       _tag: 'CSidebarNavDropdown',
@@ -18,12 +17,20 @@ export default [
       _children: [
         {
           _tag: 'CSidebarNavItem',
-          name: 'Liste des Enseignants',
-          to: '/chef-departement/gestionEnseignants',
-          icon: 'cil-list',
+          name: 'Liste des enseignants',
+          to: '/chef-departement/Enseignants',
+          icon: 'cil-people',
         },
+        {
+          _tag: 'CSidebarNavItem',
+          name: 'Liste des vacataires',
+          to: '/chef-departement/Vacataires',
+          icon: 'cil-people',
+        }
+        
       ]
     },
+
     {
       _tag: 'CSidebarNavDropdown',
       name: 'Gestion Maquette',
@@ -70,8 +77,8 @@ export default [
           }
         }
     ]},
-    /********************  Pedagogie ******************/
     
+    /********************  Pedagogie ******************/
 ]
 
 

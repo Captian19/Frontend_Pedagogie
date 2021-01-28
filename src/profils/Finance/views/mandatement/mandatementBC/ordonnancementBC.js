@@ -7,13 +7,10 @@ import StepContent from '@material-ui/core/StepContent';
 import Button from '@material-ui/core/Button';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
-import Mandat from "../madantementAC/mandat/Mandat";
-import Bordereau from "../madantementAC/bordereau/bordereau";
-import BonCaisse from "./bon_de_caisse/BonCaisse";
-import MandatBC from "./mandatBC/MandatBC";
-import MandatUploadBC from "./Piece_jointe/MandatUploadBC";
 import BordereauBC from "./bordereauBC/bordereauBC";
-import BordereauUploadBC from "./Piece_jointe/BordereauUploadBC";
+import MandatBC from "./mandatBC/MandatBC";
+import BonCaisse from "./bon_de_caisse/BonCaisse";
+
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -41,7 +38,6 @@ function getStepContent(step) {
             return (
                 <>
                     <MandatBC/>
-                    <MandatUploadBC/>
                 </>
             )
         case 1:
@@ -54,7 +50,6 @@ function getStepContent(step) {
             return (
                 <>
                     <BordereauBC/>
-                    <BordereauUploadBC/>
                 </>
             )
         default:
@@ -94,7 +89,7 @@ export default function OrdonnancementBC() {
                                         onClick={handleBack}
                                         className={classes.button}
                                     >
-                                        Back
+                                        Retour
                                     </Button>
                                     <Button
                                         variant="contained"
@@ -102,7 +97,7 @@ export default function OrdonnancementBC() {
                                         onClick={handleNext}
                                         className={classes.button}
                                     >
-                                        {activeStep === steps.length - 1 ? 'Finish' : 'Next'}
+                                        {activeStep === steps.length - 1 ? 'Terminé' : 'Suivant'}
                                     </Button>
                                 </div>
                             </div>
@@ -112,9 +107,9 @@ export default function OrdonnancementBC() {
             </Stepper>
             {activeStep === steps.length && (
                 <Paper square elevation={0} className={classes.resetContainer}>
-                    <Typography>All steps completed - you&apos;re finished</Typography>
+                    <Typography>Toutes les étapes sont terminées</Typography>
                     <Button onClick={handleReset} className={classes.button}>
-                        Reset
+                        Réinitialisé
                     </Button>
                 </Paper>
             )}

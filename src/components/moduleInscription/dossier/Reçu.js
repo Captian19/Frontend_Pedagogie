@@ -2,11 +2,10 @@ import React, {Component} from 'react';
 import html2PDF from 'jspdf-html2canvas';
 import logoEPT from '../../../../src/assets/moduleInscription/img/0.png'
 import cachet from '../../../../src/assets/moduleInscription/img/2.png'
-import { Link } from 'react-router-dom';
+import moment from 'moment';
+import localization from 'moment/locale/fr';
 
-    
-
-
+moment.updateLocale('fr', localization);// Pour formater la date
 class Reçu extends Component {
     constructor(props) {
         super(props);
@@ -97,7 +96,7 @@ class Reçu extends Component {
                                 </div>
                                 <div className="row">
                                     <div className="ml-5 mt-3">
-                                        Né(e) le &nbsp;&nbsp; <b>{this.props.Etudiant.dateNaissance} </b>
+                                        Né(e) le &nbsp;&nbsp; <b>{moment(this.props.Etudiant.dateNaissance).format("Do MMMM YYYY")} </b>
                                     </div>
                                     <div className="col-lg-4">
                                         A <b>{this.props.Etudiant.lieuNaissance}</b>

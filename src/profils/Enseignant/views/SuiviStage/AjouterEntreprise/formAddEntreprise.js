@@ -1,26 +1,13 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { useForm } from "react-hook-form";
 import axios from 'axios';
 
-import {
-    CCol,
-    CRow,
-    CContainer,
-    CForm,
-    CFormGroup,
-    CLabel,
-    CInput,
-    CFormText,
-    CSelect, 
-    CInputRadio} from '@coreui/react'
+import {CCol,CRow,CContainer,CForm,CFormGroup,CLabel,CInput,CFormText,CSelect} from '@coreui/react'
 
 
-function AddEntreprise(){
+function AddEntreprise(props){
 
-    useEffect(()=>{
-        refresh();
-        
-    })
+   
 
     const {register, handleSubmit, formState, errors} = useForm({
         mode:"onSubmit",
@@ -29,30 +16,31 @@ function AddEntreprise(){
     const {isSubmitting, isSubmitted , isSubmitSuccessful} = formState
 
     const [donnees, setDonnees] = useState({})
-
     const onSubmit = (data) => {
         setDonnees(data) ;
+        refresh(data);
         cancelCourse();
     }
 
     const cancelCourse = () => { 
         document.getElementById("create-entreprise-form").reset();
-        refreshPage();
     }
 
-    function refreshPage() {
-        window.location.reload(false);
-    }
-   
 
-    const refresh = () =>{
-        axios.post('http://localhost:8000/api/stage/entreprises/', donnees,{
+    
+
+
+    const refresh = (donnes) =>{
+        donnes.annee_ajout_entreprise = new Date().getFullYear().toString();
+
+        axios.post('http://localhost:8000/api/stage/entreprises/ajouter/', donnes,{
         headers: {
             'content-type': 'application/json'
           }
         })
-        .then(() => {
-            //console.log(res.data);
+        .then((res) => {
+            console.log('resdata',res.data);
+            props.clickLoad()
         })
         .catch(err => console.log(err));
     }
@@ -155,35 +143,25 @@ function AddEntreprise(){
                 </CCol>
                 </CRow>
                 <CRow>
-                <CCol sm="4">
-                <CFormGroup>
-                  <CLabel htmlFor="classe_stage">Niveau</CLabel>
-                  <CSelect
-                    type="text"
-                    id="classe_stage"
-                    name="classe_stage"
-                    placeholder="Entrez le niveau..."
-                    autoComplete="text"
-                    innerRef={register}
-                    >
-                    <option value="Tronc commun">Tronc commun</option>
-                    <option value="DIC1">DIC1</option>
-                    <option value="DIC2">DIC2</option>
-                    <option value="DIC3">DIC3</option>
-                  </CSelect>
-                </CFormGroup>
+              
+                 <CCol xs="4">
+                 <CFormGroup>
+                    <CLabel htmlFor="adresse_entreprise">Adresse</CLabel>
+                    <CInput
+                      type="text"
+                      name="adresse_entreprise"
+                      id="adresse_entreprise"
+                      placeholder="Adresse de l'entreprise..."
+                      innerRef={register({required:true})}
+                    />
+                  </CFormGroup>
+                
                 </CCol>
-                <CCol xs="4">
-                <CFormGroup>
-                  <CLabel htmlFor="partenaire" >Est partenaire ?</CLabel> <br></br>
-                    <div className="ml-4"><CInputRadio  id="partenaire-true" name="partenaire" value = "true" /> OUI </div><br></br>
-                    <div className="ml-4"><CInputRadio  id="partenaire-false" name="partenaire" value = "false" checked/>  NON</div>
-                </CFormGroup>
-                </CCol>
-                </CRow>
-                <CRow>
-                <CCol sm="4">
-                <CFormGroup>
+
+
+                 <CCol sm="4">
+                 
+                 <CFormGroup>
                   <CLabel htmlFor="type_stage">Type de stage</CLabel>
                   <CSelect
                     type="text"
@@ -198,20 +176,34 @@ function AddEntreprise(){
                   </CSelect>
                   <CFormText className="help-block">Veuillez renseigner le type </CFormText>
                 </CFormGroup>
+
+                </CCol>
+               
+                </CRow>
+                <CRow>
+                  
+                <CCol sm="4">
+                <CFormGroup>
+                  <CLabel htmlFor="partenaire" >Est partenaire ?</CLabel> <br></br>
+                  <CSelect
+                    type="checkbox"
+                    id="partenaire"
+                    name="partenaire"
+                    autoComplete="text"
+                    innerRef={register}
+                    
+                    >
+                    <option value="False">NON</option>
+                    <option value="true">OUI</option>
+                  </CSelect>
+                       
+                </CFormGroup>
+                
                 </CCol>
                 <CCol sm="4">
-                  <CFormGroup>
-                    <CLabel htmlFor="adresse_entreprise">Adresse</CLabel>
-                    <CInput
-                      type="text"
-                      name="adresse_entreprise"
-                      id="adresse_entreprise"
-                      placeholder="Adresse de l'entreprise..."
-                      innerRef={register({required:true})}
-                    />
-                  </CFormGroup>
+                  
                     <div className='ml-4 mt-4'> 
-                        <button type='submit' className="btn btn-pill btn-ghost-success mr-3" disabled={isSubmitting} >Valider</button>
+                        <button type='submit' className="btn btn-pill btn-ghost-success mr-3" disabled={isSubmitting} onClick={props.clickLoad}>Valider</button>
                         <button type='reset' className="btn btn-pill btn-ghost-danger" disabled={isSubmitting}> reset</button>
                     </div>
                 </CCol>

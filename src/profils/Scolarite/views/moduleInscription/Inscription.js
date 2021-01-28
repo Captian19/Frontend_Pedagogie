@@ -1,11 +1,11 @@
 import React, { Component } from "react";
+import { withRouter } from 'react-router-dom';
+
 
 import axios from 'axios';
 import {
     CCard,
     CCardBody,
-    CCardFooter,
-    CCardHeader,
     CCol,
     CRow,
   } from '@coreui/react'
@@ -13,6 +13,13 @@ import {
 class Inscription extends Component {
      
     state = { 
+        IDE:this.props.IDE,
+        nom:this.props.nom, 
+        prenom:this.props.prenom,
+        email:this.props.email, 
+        classe:this.props.classe, 
+        departement:this.props.departement, 
+        anneeScolaire:this.props.anneeScolaire,
         dateNaissance : '',
         lieuNaissance : '',
         numeroCarteEtudiant : '',
@@ -48,6 +55,26 @@ class Inscription extends Component {
         validationMedecin : false,
         exactitudeRenseignements : false
 };
+
+componentDidMount(){
+    let url = `http://127.0.0.1:8000/api/GenerateCNI/${this.props.anneeScolaire}`;
+
+    axios.get(url, {
+      headers: {
+        'content-type': 'multipart/form-data'
+      }
+    })
+    .then(response => {
+        this.setState({
+            numeroCarteEtudiant : response.data
+        })
+    })
+    .catch(e =>{
+        console.log(e)    
+    
+    })
+
+}
 
 
 
@@ -263,22 +290,14 @@ handleExactitudeRenseignementsChange = (e) => {
 handleSubmit = (e) => {
     e.preventDefault();
 
-    let IDE = 1;
-    let nom = 'DIAKHATE';
-    let prenom = 'Fallou';
-    let email = 'dfallou@ept.sn';
-    let classe = 'DIC1';
-    let departement = 'GIT';
-    let anneeScolaire = '2019/2020';
-
     let form_data = new FormData();
-    form_data.append('IDE', IDE);
-    form_data.append('nom', nom);
-    form_data.append('prenom', prenom);
-    form_data.append('email', email);
-    form_data.append('classe', classe);
-    form_data.append('departement', departement);
-    form_data.append('anneeScolaire', anneeScolaire);
+    form_data.append('IDE', this.state.IDE);
+    form_data.append('nom', this.state.nom);
+    form_data.append('prenom', this.state.prenom);
+    form_data.append('email', this.state.email);
+    form_data.append('classe', this.state.classe);
+    form_data.append('departement', this.state.departement);
+    form_data.append('anneeScolaire', this.state.anneeScolaire);
     form_data.append('dateNaissance', this.state.dateNaissance);
     form_data.append('lieuNaissance', this.state.lieuNaissance);
     form_data.append('paysOrigine', this.state.paysOrigine);
@@ -624,7 +643,7 @@ displayInputProfession = (eta) =>{
                             
                                 <div class="form-group col-md-4">
                                         <label for="inputPassword4">Téléphone du Tuteur</label>
-                                        <input value={this.state.telephoneTuteur} onChange={this.handleTelephoneTuteurChange} type="text" class="form-control"  required />
+                                        <input value={this.state.telephoneTuteur}  onChange={this.handleTelephoneTuteurChange} type="text" class="form-control"  required />
                                 </div>
                             
                             
@@ -648,4 +667,4 @@ displayInputProfession = (eta) =>{
     }
 }
 
-export default Inscription
+export default withRouter(Inscription)

@@ -36,10 +36,10 @@ class TheHeaderDropdown extends Component{
             color="light"
             className="text-center"
           >
-            <strong>Comptable</strong>
+            <strong>Comptes</strong>
           </CDropdownItem>
-          <CDropdownItem to="/admin/profil">
-            <CIcon name="cil-user" className="mfe-2" />Profile
+          <CDropdownItem to="/directeur/profil">
+            <CIcon name="cil-user" className="mfe-2" />Profil
           </CDropdownItem>
           <CDropdownItem>
             <CIcon name="cil-settings" className="mfe-2" /> 

@@ -9,7 +9,7 @@ export const loadUser = () => (dispatch, getState) => {
       .then((res) => {
         dispatch({
           type: 'USER_LOADED',
-          payload: res.data,
+          payload: res.data
         });
       })
       .catch((err) => {
@@ -17,6 +17,30 @@ export const loadUser = () => (dispatch, getState) => {
     });
 };
   
+export const modifyProfil=(body,id)=>dispatch=>{
+  const config={
+    headers:{
+      'Content-Type':'multipart/form-data',
+    },
+  };
+  let url=`http://localhost:8000/api/modifyProfil/${id}/`;
+ 
+  axios
+      .put(url,body,config)
+      .then((res)=>{
+        dispatch({
+          type:'MODIF_SUCCESS',
+          payload:res.data,
+        });
+      })
+      .catch((err)=>{
+        dispatch({
+          type:'MODIF_FAIL',
+          payload:err.response.data,
+        })
+      })
+}
+
 export const login = (email, password) => dispatch => {
     
     const config = {
@@ -52,10 +76,10 @@ export const logout = () => (dispatch, getState) => {
         dispatch({
           type: 'LOGOUT_SUCCESSFUL',
         });
-        console.log(res);
       })
       .catch((err) => {
         console.log(err);
+        window.location.reload();
       });
 };
 

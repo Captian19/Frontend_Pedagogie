@@ -6,8 +6,7 @@ import {
     CDataTable,
     CCardHeader,
     CCol,
-    CRow,
-    CBadge
+    CRow
 } from '@coreui/react'
 
 import {useForm} from "react-hook-form";
@@ -21,6 +20,7 @@ const ListClasse = (props) => {
     const [etudiants, setEtudiant] = useState([]);
     const [annees, setAnnee] = useState([]);
     const [departements,setDepartement] = useState([]);
+    const [loading, setLoading] = useState(true);
 
     const history = useHistory();
     const {register, handleSubmit} = useForm()
@@ -40,6 +40,7 @@ const ListClasse = (props) => {
         axios.get(`https://users-ent.herokuapp.com/api/auth/ETUDIANT/${departement}/${annee}/`,config)
         .then(res =>{
             setEtudiant(res.data);
+            setLoading(false);
         })
         .catch(err => console.log(err))
     } 
@@ -70,15 +71,15 @@ const ListClasse = (props) => {
         <CCol lg={12}>
             <CCard>
             <CCardHeader>
-                Liste des etudiants 
+            <h4>Liste des étudiants d'un département</h4>
             </CCardHeader>
             <CCardBody>
-                <form className="mb-2" onSubmit={handleSubmit(onSubmit)}>
+                <form className="mb-3 p-2 shadow mx-2" onSubmit={handleSubmit(onSubmit)}>
                     <div className="row">
                         <div className="col-md-4">
                             <div className="form-group">
                             <select className="form-control" name="departement" ref={register}>
-                            {departements.map(departement => <option value={departement.id}>{departement.nom_dept}</option>)}
+                            {departements.map(departement => <option value={departement.nom_dept}>{departement.nom_dept}</option>)}
                             </select>
                             </div>
                         </div>
@@ -107,6 +108,10 @@ const ListClasse = (props) => {
                     sorter
                     hover
                     pagination
+                    loading={loading}
+                    noItemsViewSlot={
+                        'Choissisez un département et une année scolaire'
+                    }
                     scopedSlots = {{
 
                         'Prénom':
